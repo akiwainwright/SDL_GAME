@@ -29,7 +29,7 @@ int main(int argc, char* args[])
 		{
 			screenSurface = SDL_GetWindowSurface(window);
 
-			SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
+			SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0x00, 0x00, 0x00));
 
 			SDL_UpdateWindowSurface(window);
 
@@ -53,8 +53,6 @@ int main(int argc, char* args[])
 
 		SDL_Quit();
 	}
-
-
 
 	return 0;
 }

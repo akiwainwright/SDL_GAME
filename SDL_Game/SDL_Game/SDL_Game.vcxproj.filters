@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\fatpa\Downloads\01_hello_SDL\01_hello_SDL\01_hello_SDL.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source files</Filter>
     </ClCompile>

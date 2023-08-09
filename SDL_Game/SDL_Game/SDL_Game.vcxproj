@@ -133,7 +133,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\fatpa\Downloads\01_hello_SDL\01_hello_SDL\01_hello_SDL.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

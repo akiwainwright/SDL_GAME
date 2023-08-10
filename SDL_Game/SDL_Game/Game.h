@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include "consts.h"
 
-
+//make this a singleton for the different gamemodes
 class Game
 {
 public:

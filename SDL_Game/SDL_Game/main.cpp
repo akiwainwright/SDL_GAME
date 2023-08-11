@@ -8,7 +8,6 @@ int main(int argc, char* args[])
 	
 	//This is just a temporary window it will probably be changed
 	//Just wanted something to start with
-
 	SDL_Window* window = NULL;
 
 	SDL_Surface* screenSurface = NULL;

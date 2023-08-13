@@ -20,8 +20,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Custom_Maths.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
     <ClInclude Include="consts.h">
-      <Filter>Resources</Filter>
+      <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,9 +2,36 @@
 #include <SDL.h>
 #include <stdio.h>
 #include "consts.h"
+#include "Custom_Maths.h"
+
 
 int main(int argc, char* args[])
 {
+
+	//maths testing
+
+	Vector2 postion = Vector2(5, 6);
+
+	std::cout << "New Vector2 --> (" << postion.x << ", " << postion.y << ")" << std::endl;
+
+	float andgleRadians = 0.5;
+	float angleDegrees = 180;
+
+	std::cout << "0.5 radians is " << radToDeg(andgleRadians) << " degrees" << std::endl;
+	std::cout << "180 degrees is " << degToRad(angleDegrees) << " radians" << std::endl;
+
+	Vector2 newPos = postion / 2;
+
+	std::cout << "Moved to --> (" << newPos.x << ", " << newPos.y << ")" << std::endl;
+
+	Vector2 lengthCheck = Vector2(6, 2);
+	Vector2 direction = lengthCheck.Normalise();
+
+	std::cout << "direction is: (" << direction.x << "," << direction.y << ") " << std::endl;
+
+	//maths end
+
+
 	SDL_Window* window = NULL;
 
 	SDL_Surface* screenSurface = NULL;
@@ -47,6 +74,7 @@ int main(int argc, char* args[])
 	SDL_DestroyWindow(window);
 
 	SDL_Quit();
+
 
 	return 0;
 }

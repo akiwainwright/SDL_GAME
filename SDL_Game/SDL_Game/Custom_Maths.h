@@ -14,6 +14,14 @@ float radToDeg(float radians)
 	return radians * 180 / M_PI;
 }
 
+void floatEpsilonCheck(float &num)
+{
+	if (num <= FLT_EPSILON && num >= -FLT_EPSILON)
+	{
+		num = 0;
+	}
+}
+
 struct Vector2
 {
 	float x;
@@ -91,14 +99,41 @@ Vector2 translateVector2(Vector2 startPos, Vector2 displacementVector)
 
 // need to do rotate vectors next
 
-Vector2 rotateVector2()
+/// <summary>
+/// Rotate a vector around the origin anti-clockwise by given angle in radians
+/// </summary>
+/// <param name="position">Position to rotate</param>
+/// <param name="angle">Angle in radians</param>
+/// <returns>New position after being rotated</returns>
+Vector2 rotateVector2(Vector2 position, float angle)
 {
-	return Vector2();
+	Vector2 result;
+
+	result.x = (position.x * cos(angle)) - (position.y * sin(angle));
+	result.y = (position.x * sin(angle)) + (position.y * cos(angle));
+
+	floatEpsilonCheck(result.x);
+	floatEpsilonCheck(result.y);
+
+	return result;
 }
 
-Vector2 rotateVector2pivot()
+/// <summary>
+/// Rotates a point around a given pivot anti-clockwise by a given angle in radians
+/// </summary>
+/// <param name="position">position to rotate</param>
+/// <param name="pivot">point to rotate around</param>
+/// <param name="angle">angle to rotate in radians</param>
+/// <returns></returns>
+Vector2 rotateVector2pivot(Vector2 position, Vector2 pivot, float angle)
 {
-	return Vector2();
+	Vector2 rotPosition = position - pivot;
+
+	Vector2 result = rotateVector2(rotPosition, angle);
+
+	result = result + pivot;
+
+	return result;
 }
 
 #endif // CUSTOM_MATHS_H

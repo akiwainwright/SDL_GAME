@@ -5,7 +5,7 @@
 class GameObject : public Actor
 {
 public:
-	GameObject(class Game* _game,string _name, ActorState _state, Actor* _parent = nullptr);
+	GameObject(class Game* _game, string _name, ActorState _state, Actor* _parent = nullptr);
 	virtual ~GameObject();
 
 	//this is the update fuction that will be called from the game class
@@ -25,7 +25,7 @@ public:
 	T* GetComponent() {
 		for (auto comp : m_Components)
 		{
-			if (dynamic_cast<T*>comp)
+			if (dynamic_cast<T*>(comp))
 			{
 				return (T*)comp;
 			}

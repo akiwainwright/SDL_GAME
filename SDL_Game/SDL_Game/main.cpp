@@ -2,54 +2,70 @@
 #include <SDL.h>
 #include <stdio.h>
 #include "consts.h"
-#include "Custom_Maths.h"
-
+#include <iostream>
+#include "Game.h"
+using namespace std;
 
 int main(int argc, char* args[])
 {
+	
+	//This is just a temporary window it will probably be changed
+	//Just wanted something to start with
 
-	SDL_Window* window = NULL;
+	//SDL_Window* window = NULL;
 
-	SDL_Surface* screenSurface = NULL;
+	//SDL_Surface* screenSurface = NULL;
 
-	SDL_Event e;
+	//if (SDL_Init(SDL_INIT_VIDEO))
+	//{
+	//	std::cout << "Failed to initilize SDL! SDL_error: " << SDL_GetError() << std::endl;
+	//}
+	//else
+	//{
+	//	window = SDL_CreateWindow("SDL_Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREENWIDTH, SCREENHEIGHT, SDL_WINDOW_SHOWN);
 
-	bool running = true;
+	//	if (!window)
+	//	{
+	//		std::cout << "Failed to create window! SDL_error: " << SDL_GetError() << std::endl; 
+	//	}
+	//	else
+	//	{
+	//		screenSurface = SDL_GetWindowSurface(window);
 
-	if (SDL_Init(SDL_INIT_VIDEO))
+	//		SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
+
+	//		SDL_UpdateWindowSurface(window);
+
+	//		SDL_Event e;
+
+	//		bool quit = false;
+
+	//		while (!quit)
+	//		{
+	//			while (SDL_PollEvent(&e))
+	//			{
+	//				if (e.type == SDL_QUIT)
+	//				{
+	//					quit = true;
+	//				}
+	//			}
+	//		}
+	//	}
+
+	//	SDL_DestroyWindow(window);
+
+	//	SDL_Quit();
+	//}
+
+
+	Game game;
+	bool success = game.Initialize();
+	if (success)
 	{
-		std::cout << "Failed to initilize SDL! SDL_error: " << SDL_GetError() << std::endl;
-
-		return 1;
+		game.RunLoop();
 	}
 
-	if (!(window = SDL_CreateWindow("SDL_Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREENWIDTH, SCREENHEIGHT, SDL_WINDOW_SHOWN)))
-	{
-		std::cout << "Failed to create window! SDL_error: " << SDL_GetError() << std::endl;
-
-		return 1;
-	}
-
-	screenSurface = SDL_GetWindowSurface(window);
-
-	SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0x00, 0x00, 0x00));
-
-	SDL_UpdateWindowSurface(window);
-
-	while (running)
-	{
-		while (SDL_PollEvent(&e))
-		{
-			if (e.type == SDL_QUIT)
-			{
-				running = false;
-			}
-		}
-	}
-
-	SDL_DestroyWindow(window);
-
-	SDL_Quit();
+	game.Shutdown();
 
 
 	return 0;

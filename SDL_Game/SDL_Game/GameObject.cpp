@@ -4,7 +4,7 @@
 GameObject::GameObject(Game* _game, string _name, ActorState _state, Actor* _parent):Actor(_game)
 {
 	m_Name = _name;
-	m_State = _state;
+	m_ActorState = _state;
 	m_Parent = _parent;
 }
 
@@ -15,7 +15,7 @@ GameObject::~GameObject()
 
 void GameObject::Update(float _deltaTime)
 {
-	if (m_State == EActive)
+	if (m_ActorState == EActive)
 	{
 		UpdateComponents(_deltaTime);
 		UpdateGameObject(_deltaTime);

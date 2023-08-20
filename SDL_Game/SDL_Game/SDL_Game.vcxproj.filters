@@ -16,6 +16,12 @@
     <Filter Include="Header files\Components">
       <UniqueIdentifier>{fdd63c28-74d3-4729-b269-afcaaf44317e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header files\AIComponents">
+      <UniqueIdentifier>{31c086a3-f2ec-4184-b234-347f4d00691b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DesignPatterns">
+      <UniqueIdentifier>{932d3638-08b3-4733-bde0-763e8b252223}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -32,6 +38,15 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestAgent.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Events.cpp">
+      <Filter>DesignPatterns</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +67,15 @@
     </ClInclude>
     <ClInclude Include="BasicIncludes.h">
       <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header files\AIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="TestAgent.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>DesignPatterns</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

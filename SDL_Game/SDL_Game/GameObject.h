@@ -9,12 +9,13 @@ public:
 	virtual ~GameObject();
 
 	//this is the update fuction that will be called from the game class
-	void Update(float _deltaTime);
+	void Update(float _deltaTime)override;
 	void UpdateComponents(float _deltaTime);
 
 	//game object specific update code i.e. move 
 	virtual void UpdateGameObject(float _deltaTime){}
 
+	virtual bool HandleMessage(const Telegram& _msg){}
 
 	void AddComponent(Component* _comp);
 	void RemoveComponent(Component* _comp);
@@ -35,10 +36,10 @@ public:
 
 protected:
 	string m_Name;
-
-private:
 	vector<Component*> m_Components;
 	Actor* m_Parent;
+private:
+
 	///Transform Component
 };
 

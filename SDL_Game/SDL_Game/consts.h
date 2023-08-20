@@ -1,11 +1,10 @@
-
 #ifndef CONSTS_H
 #define CONSTS_H
 
 #define SCREENWIDTH 1280
 #define SCREENHEIGHT 720
 
-#define Dispatch MessageDispatcher::Instance()
+#define FRAMELIMIT 60.0f
 
 #endif // CONSTS_H
 

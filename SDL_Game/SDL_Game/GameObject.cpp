@@ -24,7 +24,8 @@ void GameObject::Update(float _deltaTime)
 
 void GameObject::UpdateComponents(float _deltaTime)
 {
-	for (auto comp : m_Components) {
+	for (Component* comp : m_Components)
+	{
 		comp->Update(_deltaTime);
 	}
 }

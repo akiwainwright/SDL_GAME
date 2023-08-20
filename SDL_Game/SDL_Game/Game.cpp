@@ -1,4 +1,6 @@
 #include "Game.h"
+#include <iostream>
+
 
 
 Game::Game()
@@ -6,6 +8,9 @@ Game::Game()
 	m_Window = nullptr;
 	m_Renderer = nullptr;
 	m_IsRunning = true;
+
+	m_Timer = GameTime();
+
 }
 
 Game::~Game()
@@ -14,10 +19,10 @@ Game::~Game()
 
 bool Game::Initialize()
 {
-	int sdlResults = SDL_Init(SDL_INIT_VIDEO);
-	if (sdlResults != 0)
+	if (SDL_Init(SDL_INIT_VIDEO))
 	{
 		SDL_Log("Unable to initialise SDL: %s", SDL_GetError());
+
 		return false;
 	}
 
@@ -26,16 +31,20 @@ bool Game::Initialize()
 	if (!m_Window)
 	{
 		SDL_Log("Failed to create window: %s ", SDL_GetError());
+
 		return false;
 	}
+
 	m_Renderer = SDL_CreateRenderer(m_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
 	if (!m_Renderer)
 	{
 		SDL_Log("Renderer Unsuccessful:  %s", SDL_GetError());
 		return false;
 	}
-	return true;
 
+
+	return true;
 }
 
 void Game::RunLoop()
@@ -43,7 +52,7 @@ void Game::RunLoop()
 	while (m_IsRunning)
 	{
 		ProcessInput();
-		UpdateGame();
+		UpdateGame(m_Timer.GetDeltaTime());
 		GenerateOutput();
 	}
 }
@@ -60,6 +69,7 @@ void Game::Shutdown()
 void Game::ProcessInput()
 {
 	SDL_Event event;
+
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
@@ -73,13 +83,19 @@ void Game::ProcessInput()
 	}
 }
 
-void Game::UpdateGame()
+void Game::UpdateGame(float deltaTime)
 {
+	for (int i = 0; i < 10; ++i)
+	{
+		std::cout << i << ", ";
+	}
+
+	std::cout << "\n" << deltaTime << "\n";
 }
 
 void Game::GenerateOutput()
 {
-	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 255, 255);
+	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_Renderer);
 	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 

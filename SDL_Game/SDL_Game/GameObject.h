@@ -5,7 +5,7 @@
 class GameObject : public Actor
 {
 public:
-	GameObject(class Game* _game,string _name, ActorState _state, Actor* _parent = nullptr);
+	GameObject(class Game* _game, string _name, ActorState _state, Actor* _parent = nullptr);
 	virtual ~GameObject();
 
 	//this is the update fuction that will be called from the game class

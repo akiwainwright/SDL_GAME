@@ -2,6 +2,10 @@
 #include <SDL.h>
 #include "consts.h"
 #include "BasicIncludes.h"
+#include "GameTime.h"
+
+
+
 
 
 //make this a singleton for the different gamemodes
@@ -18,12 +22,16 @@ public:
 
 private:
 	void ProcessInput();
-	void UpdateGame();
+	void UpdateGame(float _deltaTime);
 	void GenerateOutput();
+
 	bool m_IsRunning;
+
 	SDL_Window* m_Window;
 	SDL_Renderer* m_Renderer;
 	vector<class Actor*> m_Actors;
 
+
+	GameTime m_Timer;
 };
 

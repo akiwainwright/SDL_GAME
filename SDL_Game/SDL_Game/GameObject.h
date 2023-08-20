@@ -26,7 +26,7 @@ public:
 	T* GetComponent() {
 		for (auto comp : m_Components)
 		{
-			if (dynamic_cast<T*>comp)
+			if (dynamic_cast<T*>(comp))
 			{
 				return (T*)comp;
 			}

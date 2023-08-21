@@ -26,12 +26,12 @@ void MessageDispatcher::DispatchMessage(double _delay,class Actor* _sender, clas
 
 void MessageDispatcher::DispatchDelayedMessages()
 {
-	double currentTime;//=
+	double currentTime = 0.0f;//=
 	//now peek at the queue to see if any telegrams need dispatching
 	//remove all telegrams from the front of the queue that have gone past their sell-by date
-	while (m_PriorityQueue.begin()->m_DispatchTime < currentTime && m_PriorityQueue.begin()->m_DispatchTime > 0)
+	while (!m_PriorityQueue.empty() && m_PriorityQueue.begin()->m_DispatchTime < currentTime && m_PriorityQueue.begin()->m_DispatchTime > 0)
 	{
-		Telegram telegram = *m_PriorityQueue.begin();
+		const Telegram& telegram = *m_PriorityQueue.begin();
 		auto receiver = m_Game->GetActor(telegram.m_Receiver);
 		Discharge(receiver, telegram);
 		m_PriorityQueue.erase(m_PriorityQueue.begin());

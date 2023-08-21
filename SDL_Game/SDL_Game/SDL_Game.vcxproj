@@ -138,20 +138,29 @@
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="SteeringBehaviours.cpp" />
     <ClCompile Include="TestAgent.cpp" />
+    <ClCompile Include="TestVehicleAgent.cpp" />
+    <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="BasicIncludes.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="consts.h" />
+    <ClInclude Include="Custom_Maths.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameTime.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="SteeringBehaviours.h" />
     <ClInclude Include="TestAgent.h" />
+    <ClInclude Include="TestVehicleAgent.h" />
+    <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

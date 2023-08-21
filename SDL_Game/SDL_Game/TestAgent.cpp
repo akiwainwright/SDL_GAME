@@ -15,7 +15,7 @@ void TestAgent::UpdateGameObject(float _deltaTime)
 
 bool TestAgent::HandleMessage(const Telegram& _msg)
 {
-	return false;
+	return m_StateMachine->HandleMessage(_msg);
 }
 
 TestAgent::~TestAgent()

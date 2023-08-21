@@ -18,7 +18,7 @@ public:
 	void RunLoop();
 	void Shutdown();
 
-	class Actor* GetActor(class Actor*);
+	class Actor* GetActor(class Actor* _actor);
 
 private:
 	void ProcessInput();

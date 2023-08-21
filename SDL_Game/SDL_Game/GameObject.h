@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+#include "TransformComponent.h"
 
 
 class GameObject : public Actor
@@ -15,7 +16,7 @@ public:
 	//game object specific update code i.e. move 
 	virtual void UpdateGameObject(float _deltaTime){}
 
-	virtual bool HandleMessage(const Telegram& _msg){}
+	virtual bool HandleMessage(const Telegram& _msg) { return false; }
 
 	void AddComponent(Component* _comp);
 	void RemoveComponent(Component* _comp);
@@ -34,13 +35,18 @@ public:
 		return nullptr;
 	}
 
+	TransformComponent* GetTransform() {
+		return m_Transform;
+	}
+
 protected:
 	string m_Name;
 	vector<Component*> m_Components;
 	Actor* m_Parent;
+	TransformComponent* m_Transform;
 private:
 
-	///Transform Component
+	
 };
 
 

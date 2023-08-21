@@ -8,6 +8,7 @@ enum MessageType
 
 struct Telegram
 {
+public:
 	//the entity that sent this telegram
 	class Actor* m_Sender;
 
@@ -32,6 +33,11 @@ struct Telegram
 		m_Msg = _msg;
 		m_ExtraInfo = _extraInfo;
 	}
+
+	bool operator<(const Telegram& _tele) const noexcept {
+		return m_DispatchTime < _tele.m_DispatchTime;
+	}
+
 };
 
 
@@ -54,6 +60,7 @@ public:
 
 private:
 	static MessageDispatcher* m_Instance;
+
 	//the set is used as the container for the delayed messages because of the benefit of automatic sorting and avoidance of duplicates. 
 	//Messages are sorted by their dispatch time
 	set<Telegram> m_PriorityQueue;

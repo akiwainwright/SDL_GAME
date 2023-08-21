@@ -33,7 +33,7 @@ public:
 	bool IsInState(const State<Actor>& _state) const { return _state == m_CurrentState || _state == m_GlobalState; }
 
 public:
-	StateMachine(class Actor* _agent):m_Agent(_agent){}
+	StateMachine(Actor* _agent):m_Agent(_agent), m_GlobalState(nullptr), m_CurrentState(nullptr), m_PreviousState(nullptr){}
 
 	void ChangeState(State<Actor>* _newState) {
 		if (_newState == m_CurrentState )

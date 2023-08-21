@@ -66,6 +66,11 @@ void Game::Shutdown()
 	SDL_Quit();
 }
 
+Actor* Game::GetActor(Actor* _actor)
+{
+	return nullptr;
+}
+
 void Game::ProcessInput()
 {
 	SDL_Event event;
@@ -91,6 +96,8 @@ void Game::UpdateGame(float deltaTime)
 	}
 
 	std::cout << "\n" << deltaTime << "\n";
+
+	MessageDispatcher::Instance()->DispatchDelayedMessages();
 }
 
 void Game::GenerateOutput()

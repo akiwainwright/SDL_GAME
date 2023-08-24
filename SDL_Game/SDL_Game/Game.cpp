@@ -1,6 +1,6 @@
 #include "Game.h"
+#include "TextureManager.h"
 #include <iostream>
-
 
 
 Game::Game()
@@ -43,6 +43,10 @@ bool Game::Initialize()
 		return false;
 	}
 
+	TextureManager::GetInstance()->SetRenderer(*m_Renderer);
+	TextureManager::GetInstance()->CreateTexture("pie", "Assets/Textures/pie.png");
+
+	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 
 	return true;
 }
@@ -85,12 +89,7 @@ void Game::ProcessInput()
 
 void Game::UpdateGame(float deltaTime)
 {
-	for (int i = 0; i < 10; ++i)
-	{
-		std::cout << i << ", ";
-	}
-
-	std::cout << "\n" << deltaTime << "\n";
+	
 }
 
 void Game::GenerateOutput()
@@ -99,6 +98,7 @@ void Game::GenerateOutput()
 	SDL_RenderClear(m_Renderer);
 	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 
+	TextureManager::GetInstance()->DrawTexture("pie", 190, 80, 900, 561, SDL_FLIP_NONE);
 	SDL_RenderPresent(m_Renderer);
 }
 

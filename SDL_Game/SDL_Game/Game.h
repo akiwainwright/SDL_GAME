@@ -3,9 +3,7 @@
 #include "consts.h"
 #include "GameTime.h"
 
-
-
-
+class TextureManager;
 
 //make this a singleton for the different gamemodes
 class Game
@@ -29,5 +27,7 @@ private:
 	SDL_Renderer* m_Renderer;
 
 	GameTime m_Timer;
+
+	TextureManager* m_TextureManager;
 };
 

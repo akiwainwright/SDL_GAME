@@ -36,6 +36,9 @@
     <ClCompile Include="GameTime.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Custom_Maths.h">
@@ -60,6 +63,9 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="GameTime.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

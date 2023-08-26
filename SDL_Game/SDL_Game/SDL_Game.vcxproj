@@ -141,6 +141,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Custom_Maths.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />

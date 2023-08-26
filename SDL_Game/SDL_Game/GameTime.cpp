@@ -1,14 +1,22 @@
 #include "GameTime.h"
 
+GameTime* GameTime::s_Instance = nullptr;
+
+GameTime* GameTime::GetInstance()
+{
+	if (!s_Instance)
+	{
+		s_Instance = new GameTime();
+	}
+
+	return s_Instance;
+}
+
 using namespace std::chrono;
 
 GameTime::GameTime()
 {
 	m_CurrentFrame = high_resolution_clock::now();
-}
-
-GameTime::~GameTime()
-{
 }
 
 float GameTime::GetDeltaTime()

@@ -1,22 +1,23 @@
 #ifndef CUSTOM_MATHS_H
 #define CUSTOM_MATHS_H
 
+#include <float.h>
 #include <cmath>
 
 #define PI 3.141592653589793f
 
 
-float degToRad(float degrees)
+inline float degToRad(float degrees)
 {
 	return degrees * PI / 180;
 }
 
-float radToDeg(float radians)
+inline float radToDeg(float radians)
 {
 	return radians * 180 / PI;
 }
 
-void floatEpsilonCheck(float &num)
+inline void floatEpsilonCheck(float &num)
 {
 	if (num <= FLT_EPSILON && num >= -FLT_EPSILON)
 	{
@@ -94,12 +95,7 @@ struct Vector2
 };
 
 
-Vector2 translateVector2(Vector2 startPos, Vector2 displacementVector)
-{
-	return startPos + displacementVector;
-}
-
-// need to do rotate vectors next
+inline Vector2 translateVector2(Vector2 startPos, Vector2 displacementVector) { return startPos + displacementVector; }
 
 /// <summary>
 /// Rotate a vector around the origin anti-clockwise by given angle in radians
@@ -107,18 +103,7 @@ Vector2 translateVector2(Vector2 startPos, Vector2 displacementVector)
 /// <param name="position">Position to rotate</param>
 /// <param name="angle">Angle in radians</param>
 /// <returns>New position after being rotated</returns>
-Vector2 rotateVector2(Vector2 position, float angle)
-{
-	Vector2 result;
-
-	result.x = (position.x * cos(angle)) - (position.y * sin(angle));
-	result.y = (position.x * sin(angle)) + (position.y * cos(angle));
-
-	floatEpsilonCheck(result.x);
-	floatEpsilonCheck(result.y);
-
-	return result;
-}
+Vector2 rotateVector2(Vector2 position, float angle);
 
 /// <summary>
 /// Rotates a point around a given pivot anti-clockwise by a given angle in radians
@@ -127,16 +112,7 @@ Vector2 rotateVector2(Vector2 position, float angle)
 /// <param name="pivot">point to rotate around</param>
 /// <param name="angle">angle to rotate in radians</param>
 /// <returns></returns>
-Vector2 rotateVector2pivot(Vector2 position, Vector2 pivot, float angle)
-{
-	Vector2 rotPosition = position - pivot;
-
-	Vector2 result = rotateVector2(rotPosition, angle);
-
-	result = result + pivot;
-
-	return result;
-}
+Vector2 rotateVector2pivot(Vector2 position, Vector2 pivot, float angle);
 
 #endif // CUSTOM_MATHS_H
 

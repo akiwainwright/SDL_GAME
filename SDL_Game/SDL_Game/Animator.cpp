@@ -38,6 +38,16 @@ void Animator::PlayAnimation(float _deltatTime)
 	TextureManager::GetInstance()->DrawFrame("Player Run", 250, 250, m_SpritesheetWidth, m_SpritesheetHeight, m_TotalSpritesheetRows, m_TotalSpritesheetCols, m_Animation, m_Frame, SDL_FLIP_NONE, 2);
 }
 
+/// <summary>
+/// Set start values for the animator
+/// </summary>
+/// <param name="_width">width of whole spritesheet</param>
+/// <param name="_height">height of whole spritesheet</param>
+/// <param name="_totalRows">total rows in spritesheet</param>
+/// <param name="_totalColumns">total coloumns in spritesheet</param>
+/// <param name="_animation">row of animation to play</param>
+/// <param name="_frame">column of animation to play</param>
+/// <param name="_animSpeed">animation playback speed</param>
 void Animator::SetAnimValues(int _width, int _height, int _totalRows, int _totalColumns, int _animation, int _frame, int _animSpeed)
 {
 	m_SpritesheetWidth = _width;

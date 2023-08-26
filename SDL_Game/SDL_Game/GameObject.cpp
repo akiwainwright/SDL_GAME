@@ -32,6 +32,7 @@ void GameObject::UpdateComponents(float _deltaTime)
 
 void GameObject::AddComponent(Component* _comp)
 {
+
 	auto iter = m_Components.begin();
 	//if we want to do order
 	//for (;iter
@@ -42,6 +43,7 @@ void GameObject::AddComponent(Component* _comp)
 
 	m_Components.insert(iter, _comp);
 
+	//m_Components.emplace_back(_comp);
 }
 
 void GameObject::RemoveComponent(Component* _comp)

@@ -1,6 +1,9 @@
 #include "Game.h"
+#include "TextureManager.h"
+#include "GameObject.h"
+#include "Animator.h"
+#include "GameTime.h"
 #include <iostream>
-
 
 
 Game::Game()
@@ -9,8 +12,9 @@ Game::Game()
 	m_Renderer = nullptr;
 	m_IsRunning = true;
 
-	m_Timer = GameTime();
+	m_TestObject = new GameObject(this, "test", EActive);
 
+	m_deltaTime = GameTime::GetInstance()->GetDeltaTime();
 }
 
 Game::~Game()
@@ -43,6 +47,13 @@ bool Game::Initialize()
 		return false;
 	}
 
+	TextureManager::GetInstance()->SetRenderer(*m_Renderer);
+	TextureManager::GetInstance()->CreateTexture("Player Run", "Assets/Textures/noBKG_KnightRun_strip.png");
+
+	m_TestObject->AddComponent(new Animator(m_TestObject));
+	m_TestObject->GetComponent<Animator>()->SetAnimValues(768, 64, 1, 8, 1, 8, 30.0f);
+
+	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 
 	return true;
 }
@@ -51,9 +62,10 @@ void Game::RunLoop()
 {
 	while (m_IsRunning)
 	{
+		m_deltaTime = GameTime::GetInstance()->GetDeltaTime();
 		ProcessInput();
-		UpdateGame(m_Timer.GetDeltaTime());
-		GenerateOutput();
+		UpdateGame(m_deltaTime);
+		RenderLoop(m_deltaTime);
 	}
 }
 
@@ -88,8 +100,9 @@ void Game::ProcessInput()
 	}
 }
 
-void Game::UpdateGame(float deltaTime)
+void Game::UpdateGame(float _deltaTime)
 {
+<
 	for (int i = 0; i < 10; ++i)
 	{
 		std::cout << i << ", ";
@@ -100,12 +113,15 @@ void Game::UpdateGame(float deltaTime)
 	MessageDispatcher::Instance()->DispatchDelayedMessages();
 }
 
-void Game::GenerateOutput()
+void Game::RenderLoop(float _deltatime)
 {
 	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_Renderer);
 	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 
+	
+	//TextureManager::GetInstance()->DrawFrame("Player Run", 250, 250, 768, 64, 1, 8, 1, 8, SDL_FLIP_NONE, 2);
+	m_TestObject->GetComponent<Animator>()->PlayAnimation(_deltatime);
 	SDL_RenderPresent(m_Renderer);
 }
 

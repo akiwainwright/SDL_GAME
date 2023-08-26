@@ -44,7 +44,7 @@ bool Game::Initialize()
 	}
 
 	TextureManager::GetInstance()->SetRenderer(*m_Renderer);
-	TextureManager::GetInstance()->CreateTexture("pie", "Assets/Textures/pie.png");
+	TextureManager::GetInstance()->CreateTexture("Player Run", "Assets/Textures/noBKG_KnightRun_strip.png");
 
 	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 
@@ -98,7 +98,7 @@ void Game::GenerateOutput()
 	SDL_RenderClear(m_Renderer);
 	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 
-	TextureManager::GetInstance()->DrawTexture("pie", 190, 80, 900, 561, SDL_FLIP_NONE);
+	TextureManager::GetInstance()->DrawFrame("Player Run", 250, 250, 768, 64, 1, 8, 1, 8, SDL_FLIP_NONE, 2);
 	SDL_RenderPresent(m_Renderer);
 }
 

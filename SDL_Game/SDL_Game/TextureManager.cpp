@@ -1,5 +1,6 @@
 #include "TextureManager.h"
 #include<SDL_image.h>
+#include "Custom_Maths.h"
 #include<iostream>
 #include<utility>
 
@@ -45,6 +46,19 @@ void TextureManager::DrawTexture(std::string _textureID, int _xPos, int _yPos, i
 {
 	SDL_Rect srcRect = { 0, 0, _width, _height };
 	SDL_Rect dstRect = { _xPos, _yPos, _width, _height };
+	SDL_RenderCopyEx(m_Renderer, m_Textures[_textureID], &srcRect, &dstRect, 0, nullptr, _flip);
+}
+
+
+void TextureManager::DrawFrame(std::string _textureID, int _xPos, int _yPos, int _width, int _height, int _rows, int _cols, int _frameRow, int _frameColumn, SDL_RendererFlip _flip, float scale)
+{
+	int frameWidth = _width / _cols;
+	int frameHeight = _height / _rows;
+
+	Vector2 frameStart = { frameWidth * (float)(_frameColumn - 1), frameHeight * (float)(_frameRow - 1) };
+
+	SDL_Rect srcRect = { frameStart.x, frameStart.y, frameWidth, frameHeight};
+	SDL_Rect dstRect = { _xPos, _yPos, frameWidth * scale, frameHeight * scale};
 	SDL_RenderCopyEx(m_Renderer, m_Textures[_textureID], &srcRect, &dstRect, 0, nullptr, _flip);
 }
 

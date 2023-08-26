@@ -15,6 +15,8 @@ public:
 
 	void DrawTexture(std::string _textureID, int _xPos, int _yPos, int _width, int _height, SDL_RendererFlip _flip);
 
+	void DrawFrame(std::string _textureID, int _xPos, int _yPos, int _width, int _height, int _rows, int _cols, int _frameRow, int frameColumn, SDL_RendererFlip _flip, float scale = 1);
+
 	void SetRenderer(SDL_Renderer& _renderer);
 	
 	

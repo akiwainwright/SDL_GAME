@@ -49,7 +49,20 @@ void TextureManager::DrawTexture(std::string _textureID, int _xPos, int _yPos, i
 	SDL_RenderCopyEx(m_Renderer, m_Textures[_textureID], &srcRect, &dstRect, 0, nullptr, _flip);
 }
 
-
+/// <summary>
+/// Display a single frame from a spritesheet
+/// </summary>
+/// <param name="_textureID">Name of texture</param>
+/// <param name="_xPos">x location to display the frame</param>
+/// <param name="_yPos">y location to display the frame</param>
+/// <param name="_width">width of spritesheet</param>
+/// <param name="_height">height of spritesheet</param>
+/// <param name="_rows">number of rows in spritesheet</param>
+/// <param name="_cols">number of columns in sprite sheet</param>
+/// <param name="_frameRow">row of frame to display</param>
+/// <param name="_frameColumn">column of frame to display</param>
+/// <param name="_flip">facing direction of sprite</param>
+/// <param name="scale">scale of frame</param>
 void TextureManager::DrawFrame(std::string _textureID, int _xPos, int _yPos, int _width, int _height, int _rows, int _cols, int _frameRow, int _frameColumn, SDL_RendererFlip _flip, float scale)
 {
 	int frameWidth = _width / _cols;

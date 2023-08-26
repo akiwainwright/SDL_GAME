@@ -6,5 +6,6 @@
 
 #define FRAMELIMIT 60.0f
 
+
 #endif // CONSTS_H
 

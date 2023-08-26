@@ -27,7 +27,5 @@ private:
 	SDL_Renderer* m_Renderer;
 
 	GameTime m_Timer;
-
-	TextureManager* m_TextureManager;
 };
 

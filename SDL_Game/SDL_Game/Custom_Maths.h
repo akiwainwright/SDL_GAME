@@ -3,15 +3,17 @@
 
 #include <cmath>
 
+#define PI 3.141592653589793f
+
 
 float degToRad(float degrees)
 {
-	return degrees * M_PI / 180;
+	return degrees * PI / 180;
 }
 
 float radToDeg(float radians)
 {
-	return radians * 180 / M_PI;
+	return radians * 180 / PI;
 }
 
 void floatEpsilonCheck(float &num)
@@ -35,7 +37,7 @@ struct Vector2
 
 	float Length()
 	{
-		return SDL_sqrt((x * x) + (y * y));
+		return sqrt((x * x) + (y * y));
 	}
 
 	float LenghtSqrd()

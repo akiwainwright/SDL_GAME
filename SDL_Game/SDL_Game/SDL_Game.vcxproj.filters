@@ -51,6 +51,24 @@
     <ClCompile Include="GameTime.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="SteeringBehaviours.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestVehicleAgent.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Custom_Maths.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Custom_Maths.h">
@@ -85,6 +103,21 @@
     </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>DesignPatterns</Filter>
+    </ClInclude>
+    <ClInclude Include="SteeringBehaviours.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestVehicleAgent.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animator.h">
+      <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

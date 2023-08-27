@@ -5,7 +5,7 @@ Actor::Actor(Game* _game)
 	m_Game = _game;
 	//use game to add actor
 
-	m_State = ActorState::EActive;
+	m_ActorState = ActorState::EActive;
 }
 
 Actor::~Actor()

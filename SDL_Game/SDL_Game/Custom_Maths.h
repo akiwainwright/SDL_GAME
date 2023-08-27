@@ -51,6 +51,7 @@ struct Vector2
 
 	void Truncate(float _upperBound) {
 		float sqrLen = LenghtSqrd();
+
 		if (sqrLen > _upperBound * _upperBound)
 		{
 			float mult = _upperBound / SDL_sqrt(sqrLen);
@@ -136,14 +137,16 @@ struct Vector2
 		return Vector2(-this->y, this->x);
 	}
 
-	static Vector2 Normalized(Vector2 _vec) {
+	Vector2 Normalized(Vector2 _vec)
+	{
 		return _vec / _vec.Length();
 	}
 
-	static float DotProduct(Vector2& _vec1, Vector2& _vec2) {
+	float DotProduct(Vector2& _vec1, Vector2& _vec2)
+	{
 		float newX = _vec1.x * _vec2.x;
 		float newY = _vec1.y * _vec2.y;
-		//auto theta = SDL_acos((newX * newY) / (_vec1.Length() * _vec2.Length()));
+		
 		return newX + newY;
 	}
 

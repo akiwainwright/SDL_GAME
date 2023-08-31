@@ -76,13 +76,8 @@ void TextureManager::DrawFrame(std::string _textureID, float _xPos, float _yPos,
 	SDL_RenderCopyEx(Game::GetInstance()->GetRenderer(), m_Textures[_textureID], &srcRect, &dstRect, 0, nullptr, _flip);
 }
 
-//void TextureManager::SetRenderer(SDL_Renderer& _renderer)
-//{
-//	m_Renderer = &_renderer;
-//}
-
 TextureManager::TextureManager()
 {
-	//m_Renderer = nullptr;
+	
 }
 

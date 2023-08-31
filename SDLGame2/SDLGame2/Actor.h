@@ -16,7 +16,7 @@ enum ActorState
 class Actor
 {
 public:
-	Actor(class GameModeBase* _gameMode);
+	Actor(GameModeBase* _gameMode);
 	virtual void Update(float _deltaTime) {}
 	virtual ~Actor();
 

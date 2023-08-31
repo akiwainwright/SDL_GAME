@@ -5,11 +5,12 @@
 #include "consts.h"
 #include "CustomMaths.h"
 
+class GameModeBase;
 
 class TestVehicleAgent : public GameObject
 {
 public:
-	TestVehicleAgent(class GameModeBase* _gameMode, std::string _name, ActorState _state, Actor* _parent = nullptr);
+	TestVehicleAgent(GameModeBase* _gameMode, std::string _name, ActorState _state, Actor* _parent = nullptr);
 
 	void UpdateGameObject(float _deltaTime)override;
 

@@ -2,10 +2,14 @@
 #include "CustomMaths.h"
 #include "BasicIncludes.h"
 
+class TestVehcicleAgent;
+class GameObject;
+class Actor;
+
 class SteeringBehaviours
 {
 public:
-	SteeringBehaviours(class TestVehicleAgent* _agent);
+	SteeringBehaviours(TestVehicleAgent* _agent);
 	~SteeringBehaviours();
 
 	Vector2 Calculate();
@@ -14,7 +18,7 @@ public:
 
 	void SetPath();
 	void SetTarget(Vector2 _pos);
-	void SetTargetAgent(class Actor* _agent);
+	void SetTargetAgent(Actor* _agent);
 	void SeekOn();
 	void FleeOn();
 	void ArriveOn();
@@ -26,13 +30,13 @@ private:
 	Vector2 Seek(Vector2& _target);
 	Vector2 Flee(Vector2& _target);
 	Vector2 Arrive(Vector2& _target, float _deceleration = 2);
-	Vector2 Pursuit(class TestVehicleAgent* _target);
+	Vector2 Pursuit(TestVehicleAgent* _target);
 	Vector2 Evade(TestVehicleAgent* _target);
 	Vector2 Wander();
-	Vector2 ObstacleAvoidance(const vector<class GameObject*>& _obstacles);
-	Vector2 WallAvoidance(const vector<class GameObject*>& _walls);
+	Vector2 ObstacleAvoidance(const vector<GameObject*>& _obstacles);
+	Vector2 WallAvoidance(const vector<GameObject*>& _walls);
 
-	class TestVehicleAgent* m_Agent;
+	TestVehicleAgent* m_Agent;
 
 	double m_WanderRadius;
 	double m_WanderDistance;

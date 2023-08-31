@@ -3,6 +3,8 @@
 #include "BasicIncludes.h"
 #include "Events.h"
 
+class GameModeBase;
+
 enum ActorState
 {
 	EActive,
@@ -14,14 +16,14 @@ enum ActorState
 class Actor
 {
 public:
-	Actor(class Game* _game);
+	Actor(class GameModeBase* _gameMode);
 	virtual void Update(float _deltaTime) {}
 	virtual ~Actor();
 
 	virtual bool HandleMessage(const Telegram& _msg) = 0;
 
 protected:
-	class Game* m_Game;
+	GameModeBase* m_GameMode;
 	ActorState m_ActorState;
 
 private:

@@ -3,6 +3,7 @@
 #include "CustomMaths.h"
 #include<iostream>
 #include<utility>
+#include "Game.h"
 
 TextureManager* TextureManager::s_Instance = nullptr;
 
@@ -26,7 +27,7 @@ void TextureManager::CreateTexture(std::string _textureID, std::string _filePath
 		return;
 	}
 
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(m_Renderer, texSurface);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(Game::GetInstance()->GetRenderer(), texSurface);
 
 	if (!texture)
 	{
@@ -46,7 +47,7 @@ void TextureManager::DrawTexture(std::string _textureID, int _xPos, int _yPos, i
 {
 	SDL_Rect srcRect = { 0, 0, _width, _height };
 	SDL_Rect dstRect = { _xPos, _yPos, _width, _height };
-	SDL_RenderCopyEx(m_Renderer, m_Textures[_textureID], &srcRect, &dstRect, 0, nullptr, _flip);
+	SDL_RenderCopyEx(Game::GetInstance()->GetRenderer(), m_Textures[_textureID], &srcRect, &dstRect, 0, nullptr, _flip);
 }
 
 /// <summary>
@@ -70,18 +71,18 @@ void TextureManager::DrawFrame(std::string _textureID, int _xPos, int _yPos, int
 
 	Vector2 frameStart = { frameWidth * (float)(_frameColumn - 1), frameHeight * (float)(_frameRow - 1) };
 
-	SDL_Rect srcRect = { frameStart.x, frameStart.y, frameWidth, frameHeight };
+	SDL_Rect srcRect = { (int)frameStart.x, (int)frameStart.y, frameWidth, frameHeight };
 	SDL_Rect dstRect = { _xPos, _yPos, frameWidth * scale, frameHeight * scale };
-	SDL_RenderCopyEx(m_Renderer, m_Textures[_textureID], &srcRect, &dstRect, 0, nullptr, _flip);
+	SDL_RenderCopyEx(Game::GetInstance()->GetRenderer(), m_Textures[_textureID], &srcRect, &dstRect, 0, nullptr, _flip);
 }
 
-void TextureManager::SetRenderer(SDL_Renderer& _renderer)
-{
-	m_Renderer = &_renderer;
-}
+//void TextureManager::SetRenderer(SDL_Renderer& _renderer)
+//{
+//	m_Renderer = &_renderer;
+//}
 
 TextureManager::TextureManager()
 {
-	m_Renderer = nullptr;
+	//m_Renderer = nullptr;
 }
 

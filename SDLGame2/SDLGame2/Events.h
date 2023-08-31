@@ -1,6 +1,8 @@
 #pragma once
 #include "BasicIncludes.h"
 
+class GameModeBase;
+
 enum MessageType
 {
 	MsgExample
@@ -52,8 +54,8 @@ public:
 	//send out any delay messages. this method is called each time through the main game loop
 	void DispatchDelayedMessages();
 
-	inline void SetGame(class Game* _game) {
-		m_Game = _game;
+	inline void SetGame(class GameModeBase* _gameMode) {
+		m_GameMode = _gameMode;
 	}
 
 	~MessageDispatcher();
@@ -71,7 +73,7 @@ private:
 
 	MessageDispatcher();
 
-	class Game* m_Game;
+	GameModeBase* m_GameMode;
 
 };
 

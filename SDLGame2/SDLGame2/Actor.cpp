@@ -1,8 +1,8 @@
 #include "Actor.h"
 
-Actor::Actor(Game* _game)
+Actor::Actor(GameModeBase* _gameMode)
 {
-	m_Game = _game;
+	m_GameMode = _gameMode;
 	//use game to add actor
 
 	m_ActorState = ActorState::EActive;

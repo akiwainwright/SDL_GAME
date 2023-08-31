@@ -27,6 +27,7 @@
     <ClInclude Include="CustomMaths.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameModeBase.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="State.h" />
@@ -43,6 +44,7 @@
     <ClCompile Include="CustomMaths.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameModeBase.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="main.cpp" />

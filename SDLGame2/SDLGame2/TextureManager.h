@@ -17,17 +17,16 @@ public:
 
 	void DrawFrame(std::string _textureID, int _xPos, int _yPos, int _width, int _height, int _rows, int _cols, int _frameRow, int frameColumn, SDL_RendererFlip _flip, float scale = 1);
 
-	void SetRenderer(SDL_Renderer& _renderer);
+	//void SetRenderer(SDL_Renderer& _renderer);
 
 
 private:
-
 	TextureManager();
 	static TextureManager* s_Instance;
 
 	std::map<std::string, SDL_Texture*> m_Textures;
 
-	SDL_Renderer* m_Renderer;
+	//SDL_Renderer* m_Renderer;
 
 };
 

@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(Game* _game, string _name, ActorState _state, Actor* _parent) :Actor(_game)
+GameObject::GameObject(GameModeBase* _gameMode, string _name, ActorState _state, Actor* _parent) :Actor(_gameMode)
 {
 	m_Name = _name;
 	m_ActorState = _state;

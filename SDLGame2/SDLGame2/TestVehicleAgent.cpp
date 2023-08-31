@@ -1,7 +1,8 @@
 #include "TestVehicleAgent.h"
+#include "GameModeBase.h"
 
 
-TestVehicleAgent::TestVehicleAgent(class Game* _game, string _name, ActorState _state, Actor* _parent) : GameObject(_game, _name, _state, _parent)
+TestVehicleAgent::TestVehicleAgent(class GameModeBase* _game, string _name, ActorState _state, Actor* _parent) : GameObject(_game, _name, _state, _parent)
 {
 
 }

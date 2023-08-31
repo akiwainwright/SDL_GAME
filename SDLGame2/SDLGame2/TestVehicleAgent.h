@@ -9,7 +9,7 @@
 class TestVehicleAgent : public GameObject
 {
 public:
-	TestVehicleAgent(class Game* _game, string _name, ActorState _state, Actor* _parent = nullptr);
+	TestVehicleAgent(class GameModeBase* _gameMode, std::string _name, ActorState _state, Actor* _parent = nullptr);
 
 	void UpdateGameObject(float _deltaTime)override;
 

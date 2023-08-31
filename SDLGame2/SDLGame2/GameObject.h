@@ -4,6 +4,8 @@
 #include "TransformComponent.h"
 #include "CustomMaths.h"
 
+class TextureComponent;
+
 
 class GameObject : public Actor
 {
@@ -37,15 +39,17 @@ public:
 		return nullptr;
 	}
 
-	TransformComponent* GetTransform() {
-		return m_Transform;
-	}
+	inline TransformComponent* GetTransform() { return m_Transform; }
+
+	inline TextureComponent* GetTexture() { return m_Texture; }
 
 protected:
 	string m_Name;
 	vector<Component*> m_Components;
 	Actor* m_Parent;
 	TransformComponent* m_Transform;
+	TextureComponent* m_Texture;
+
 private:
 
 

@@ -34,6 +34,7 @@
     <ClInclude Include="SteeringBehaviours.h" />
     <ClInclude Include="TestAgent.h" />
     <ClInclude Include="TestVehicleAgent.h" />
+    <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
@@ -52,6 +53,7 @@
     <ClCompile Include="SteeringBehaviours.cpp" />
     <ClCompile Include="TestAgent.cpp" />
     <ClCompile Include="TestVehicleAgent.cpp" />
+    <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>

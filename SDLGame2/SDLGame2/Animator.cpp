@@ -48,7 +48,7 @@ void Animator::PlayAnimation(float _deltatTime)
 /// <param name="_animation">row of animation to play</param>
 /// <param name="_frame">column of animation to play</param>
 /// <param name="_animSpeed">animation playback speed</param>
-void Animator::SetAnimValues(int _width, int _height, int _totalRows, int _totalColumns, int _animation, int _frame, int _animSpeed)
+void Animator::SetAnimValues(int _width, int _height, int _totalRows, int _totalColumns, int _animation, int _frame, float _animSpeed)
 {
 	m_SpritesheetWidth = _width;
 	m_SpritesheetHeight = _height;

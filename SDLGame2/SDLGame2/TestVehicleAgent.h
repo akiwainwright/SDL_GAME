@@ -41,4 +41,6 @@ public:
 	float m_MaxTurnRate;
 
 
+
+
 };

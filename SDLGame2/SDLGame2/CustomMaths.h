@@ -4,6 +4,7 @@
 #include "BasicIncludes.h"
 #include <float.h>
 #include <cmath>
+#include <math.h>
 #include <SDL_stdinc.h>
 
 #define PI 3.141592653589793f
@@ -99,6 +100,7 @@ struct Vector2
 		return result;
 	}
 
+
 	Vector2 operator*(const float& scalar)
 	{
 		Vector2 result;
@@ -125,6 +127,16 @@ struct Vector2
 
 		return temp / Length();
 	}
+	
+
+	void Normalised()
+	{
+		Vector2 temp = Vector2(x, y);
+
+		temp =  temp / Length();
+		x = temp.x;
+		y = temp.y;
+	}
 
 	Vector2 PerpendicularClockwise()
 	{
@@ -149,7 +161,23 @@ struct Vector2
 		return newX + newY;
 	}
 
+	static Vector2 LocalPointToWorld(Vector2 _point, Vector2 _up, Vector2 _right, Vector2 _objPosition) {
+		Vector2 worldOffset = _right * _point.x + _up * _point.y;
+		return (Vector2)_objPosition + worldOffset;
+	}
+
 };
+
+
+Vector2 operator-(const Vector2& lhs, const Vector2& rhs)
+{
+	Vector2 result(lhs);
+
+	result.x -= rhs.x ;
+	result.y -= rhs.y;
+
+	return result;
+}
 
 inline Vector2 translateVector2(Vector2 startPos, Vector2 displacementVector) { return startPos + displacementVector; }
 
@@ -161,6 +189,22 @@ inline Vector2 translateVector2(Vector2 startPos, Vector2 displacementVector) { 
 /// <returns>New position after being rotated</returns>
 Vector2 rotateVector2(Vector2 position, float angle);
 
+
+Vector2 rotateVector2(Vector2 position, float angle, bool _clockwise) {
+	Vector2 temp;
+	if (_clockwise)
+	{
+		temp.x = position.x * cosf(angle) + position.y * sinf(angle);
+		temp.x = -1 * (position.x * sinf(angle)) + position.y * cosf(angle);
+	}
+	else
+	{
+		temp.x = position.x * cosf(angle) - position.y * sinf(angle);
+		temp.x =  (position.x * sinf(angle)) + position.y * cosf(angle);
+	}
+	return temp;
+}
+
 /// <summary>
 /// Rotates a point around a given pivot anti-clockwise by a given angle in radians
 /// </summary>
@@ -169,6 +213,68 @@ Vector2 rotateVector2(Vector2 position, float angle);
 /// <param name="angle">angle to rotate in radians</param>
 /// <returns></returns>
 Vector2 rotateVector2pivot(Vector2 position, Vector2 pivot, float angle);
+
+//given 2 lines in 2d space AB, CD this returns true if an intersection occurs
+bool LineIntersection(Vector2 _a, Vector2 _b, Vector2 _c, Vector2 _d);
+
+//given 2 lines in 2d space AB, CD this returns true if an intersection occurs and sets dist to the dist the intersection occurs along AB
+bool LineIntersection(Vector2 _a, Vector2 _b, Vector2 _c, Vector2 _d, float &_dist);
+
+//given 2 lines in 2d space AB, CD this returns true if an intersection occurs and sets dist to the dist the intersection occurs along AB. Also sets the 2D vector point to the point of intersection
+bool LineIntersection(Vector2 _a, Vector2 _b, Vector2 _c, Vector2 _d, float &_dist, Vector2& _point);
+
+//compares two real numbers. Returns true if they are equal
+bool IsEqual(float _a, float _b)
+{
+	if (fabs(_a - _b) < 1E-12)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+//returns a random double between zero and 1
+inline double RandFloat() { return ((rand()) / (RAND_MAX + 1.0)); }
+
+inline double RandInRange(double x, double y)
+{
+	return x + RandFloat() * (y - x);
+}
+
+//class to create and render 2D walls. Defined as the two vectors A - B with a perpendicular normal. 
+class Walls2D
+{
+public:
+	Walls2D(){}
+	Walls2D(Vector2 _a, Vector2 _b): m_A(_a), m_B(_b) {
+		CalculateNormal();
+	}	
+	Walls2D(Vector2 _a, Vector2 _b, Vector2 _normal): m_A(_a), m_B(_b), m_Normal(_normal){}
+	
+	Vector2 From() const { return m_A; }
+	void SetFrom(Vector2 _pos) { m_A = _pos; CalculateNormal(); }
+
+	Vector2 To() const { return m_B; }
+	void SetTo(Vector2 _pos) { m_B = _pos; CalculateNormal(); }
+
+	Vector2 Normal() const { return m_Normal; }
+	void SetNormal(Vector2 _normal) { m_Normal = _normal; }
+
+	Vector2 Center() { return (m_A + m_B) / 2.0f; }
+
+protected:
+	Vector2 m_A, m_B, m_Normal;
+	void CalculateNormal() {
+		Vector2 temp = (m_B - m_A).Normalise();
+		m_Normal.x = -temp.y;
+		m_Normal.y = temp.x;
+	}
+
+private:
+
+};
+
 
 
 #endif // CUSTOM_MATHS_H

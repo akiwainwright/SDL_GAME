@@ -29,6 +29,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="Path.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="SteeringBehaviours.h" />
     <ClInclude Include="TestAgent.h" />
@@ -46,6 +47,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Path.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="SteeringBehaviours.cpp" />
     <ClCompile Include="TestAgent.cpp" />

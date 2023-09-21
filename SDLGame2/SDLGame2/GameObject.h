@@ -18,6 +18,9 @@ public:
 	//game object specific update code i.e. move 
 	virtual void UpdateGameObject(float _deltaTime) {}
 
+	void ProcessInput(const uint8_t* _keyState);
+	virtual void GameObjectInput(const uint8_t* _keyState);
+
 	virtual bool HandleMessage(const Telegram& _msg) { return false; }
 
 	void AddComponent(Component* _comp);
@@ -31,18 +34,19 @@ public:
 		{
 			if (dynamic_cast<T*>(comp))
 			{
-				return (T*)comp;
+				return static_cast<T*>(comp);
 			}
 		}
 		return nullptr;
 	}
+
+	bool HasComponent(Component* _comp);
 
 	TransformComponent* GetTransform() {
 		return m_Transform;
 	}
 
 protected:
-	string m_Name;
 	vector<Component*> m_Components;
 	Actor* m_Parent;
 	TransformComponent* m_Transform;

@@ -8,6 +8,8 @@ public:
 
 	float GetDeltaTime();
 
+	std::chrono::steady_clock::time_point GetCurrentFrame()const { return m_CurrentFrame; }
+
 private:
 	GameTime();
 	static GameTime* s_Instance;

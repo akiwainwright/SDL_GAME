@@ -5,7 +5,12 @@
 Component::Component(GameObject* _owner)
 {
 	m_Owner = _owner;
-	m_Owner->AddComponent(this);
+	if (!m_Owner->HasComponent(this))
+	{
+		m_Owner->AddComponent(this);
+	}
+	
+	
 }
 
 Component::~Component()

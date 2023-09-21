@@ -15,7 +15,8 @@ public:
 	bool Initialize();
 	void RunLoop();
 	void Shutdown();
-
+	void AddActor(class Actor* _actor);
+	void RemoveActor(class Actor* _actor);
 	class Actor* GetActor(class Actor* _actor);
 
 private:
@@ -30,6 +31,8 @@ private:
 	SDL_Window* m_Window;
 	SDL_Renderer* m_Renderer;
 	vector<class Actor*> m_Actors;
+	vector<class Actor*> m_PendingActors;
+	bool m_UpdatingActor;
 
 
 	GameObject* m_TestObject;

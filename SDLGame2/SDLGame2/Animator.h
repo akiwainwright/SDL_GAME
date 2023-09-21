@@ -8,7 +8,7 @@ public:
 
 	void PlayAnimation(float _deltaTime);
 
-	void SetAnimValues(int _width, int _height, int _totalRows, int _totalColumns, int _animation, int _frame, int _animSpeed);
+	void SetAnimValues(int _width, int _height, int _totalRows, int _totalColumns, int _animation, int _frame, float _animSpeed);
 
 	inline void SetAnimSpeed(float _speed) { m_AnimSpeed = _speed; }
 	inline void SetAnimation(int _row) { m_Animation = _row; }

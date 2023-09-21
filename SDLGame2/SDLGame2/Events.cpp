@@ -1,13 +1,13 @@
 #include "Events.h"
 #include "GameObject.h"
-#include "Game.h"
+#include "GameModeBase.h"
 
 
 MessageDispatcher* MessageDispatcher::m_Instance = nullptr;
 
 void MessageDispatcher::DispatchMessage(double _delay, class Actor* _sender, class Actor* _receiver, MessageType _msg, void* _extraInfo)
 {
-	auto receiver = m_Game->GetActor(_receiver);
+	Actor* receiver = m_GameMode->GetActor(_receiver);
 	Telegram telegram(0, _sender, _receiver, _msg, _extraInfo);
 
 	if (receiver == NULL)
@@ -39,7 +39,7 @@ void MessageDispatcher::DispatchDelayedMessages()
 	while (!m_PriorityQueue.empty() && (m_PriorityQueue.begin()->m_DispatchTime < currentTime) && (m_PriorityQueue.begin()->m_DispatchTime > 0))
 	{
 		const Telegram& telegram = *m_PriorityQueue.begin();
-		auto receiver = m_Game->GetActor(telegram.m_Receiver);
+		auto receiver = m_GameMode->GetActor(telegram.m_Receiver);
 		Discharge(receiver, telegram);
 		m_PriorityQueue.erase(m_PriorityQueue.begin());
 	}

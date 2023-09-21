@@ -3,6 +3,8 @@
 #include "BasicIncludes.h"
 #include "Events.h"
 
+class GameModeBase;
+
 enum ActorState
 {
 	EActive,
@@ -29,7 +31,7 @@ public:
 	virtual bool HandleMessage(const Telegram& _msg) = 0;
 
 protected:
-	class Game* m_Game;
+	GameModeBase* m_GameMode;
 	ActorState m_ActorState;
 	string m_Name;
 	Tag m_Tag;

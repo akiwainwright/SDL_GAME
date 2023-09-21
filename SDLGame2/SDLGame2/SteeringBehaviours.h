@@ -2,10 +2,14 @@
 #include "CustomMaths.h"
 #include "BasicIncludes.h"
 
+class TestVehcicleAgent;
+class GameObject;
+class Actor;
+
 class SteeringBehaviours
 {
 public:
-	SteeringBehaviours(class TestVehicleAgent* _agent);
+	SteeringBehaviours(TestVehicleAgent* _agent);
 	~SteeringBehaviours();
 
 	Vector2 Calculate();
@@ -14,7 +18,7 @@ public:
 
 	void SetPath();
 	void SetTarget(Vector2 _pos);
-	void SetTargetAgent(class Actor* _agent);
+	void SetTargetAgent(Actor* _agent);
 	void SeekOn();
 	void FleeOn();
 	void ArriveOn();

@@ -4,6 +4,7 @@
 #include "Events.h"
 
 template<class Actor>
+
 class State
 {
 public:

@@ -4,14 +4,23 @@
 #include "Animator.h"
 #include "GameTime.h"
 
+Game* Game::s_Instance = nullptr;
+
+Game* Game::GetInstance()
+{
+	if (!s_Instance)
+	{
+		s_Instance = new Game();
+	}
+
+	return s_Instance;
+}
 
 Game::Game()
 {
 	m_Window = nullptr;
 	m_Renderer = nullptr;
 	m_IsRunning = true;
-
-	m_TestObject = new GameObject(this, "test", EActive);
 
 	m_deltaTime = GameTime::GetInstance()->GetDeltaTime();
 }
@@ -46,11 +55,7 @@ bool Game::Initialize()
 		return false;
 	}
 
-	TextureManager::GetInstance()->SetRenderer(*m_Renderer);
-	TextureManager::GetInstance()->CreateTexture("Player Run", "Assets/Textures/noBKG_KnightRun_strip.png");
-
-	m_TestObject->AddComponent(new Animator(m_TestObject));
-	m_TestObject->GetComponent<Animator>()->SetAnimValues(768, 64, 1, 8, 1, 8, 30.0f);
+	//TextureManager::GetInstance()->SetRenderer(*m_Renderer);
 
 	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 
@@ -59,12 +64,15 @@ bool Game::Initialize()
 
 void Game::RunLoop()
 {
+	MainMenu = new GameModeBase();
+
 	while (m_IsRunning)
 	{
 		m_deltaTime = GameTime::GetInstance()->GetDeltaTime();
-		ProcessInput();
-		UpdateGame(m_deltaTime);
-		RenderLoop(m_deltaTime);
+		
+		MainMenu->ProcessInput();
+		MainMenu->UpdateGame(m_deltaTime);
+		MainMenu->RenderLoop(m_deltaTime);
 	}
 }
 

@@ -2,14 +2,12 @@
 #include "GameObject.h"
 #include "State.h"
 
-
-
-
+class GameModeBase;
 
 class TestAgent : public GameObject
 {
 public:
-	TestAgent(class Game* _game, string _name, ActorState _state);
+	TestAgent(GameModeBase* _gameMode, string _name, ActorState _state);
 	void UpdateGameObject(float _deltaTime) override;
 	virtual bool HandleMessage(const Telegram& _msg);
 	~TestAgent();

@@ -2,7 +2,7 @@
 #include "Game.h"
 
 
-TestAgent::TestAgent(Game* _game, string _name, ActorState _state) : GameObject(_game, _name, _state)
+TestAgent::TestAgent(GameModeBase* _gameMode, string _name, ActorState _state) : GameObject(_gameMode, _name, _state)
 {
 	m_StateMachine = new StateMachine<TestAgent>(this);
 }

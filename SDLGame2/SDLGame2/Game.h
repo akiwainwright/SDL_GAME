@@ -4,14 +4,13 @@
 #include "BasicIncludes.h"
 #include "GameTime.h"
 
-class GameObject;
+
+class GameModeBase;
 
 //make this a singleton for the different gamemodes
 class Game
 {
 public:
-	Game();
-	~Game();
 	bool Initialize();
 	void RunLoop();
 	void Shutdown();
@@ -19,10 +18,21 @@ public:
 	void RemoveActor(class Actor* _actor);
 	class Actor* GetActor(class Actor* _actor);
 
+	SDL_Window* GetWindow() { return m_Window; }
+
+	SDL_Renderer* GetRenderer() { return m_Renderer; }
+
+	bool GetRunning() { return m_IsRunning; }
+
+	void SetRunning(bool running) { m_IsRunning = running;  }
+
+	static Game* GetInstance();
+
 private:
-	void ProcessInput();
-	void UpdateGame(float _deltaTime);
-	void RenderLoop(float _deltaTime);
+	Game();
+	~Game();
+
+	static Game* s_Instance;
 
 	bool m_IsRunning;
 
@@ -34,6 +44,6 @@ private:
 	vector<class Actor*> m_PendingActors;
 	bool m_UpdatingActor;
 
+	GameModeBase* MainMenu;
 
-	GameObject* m_TestObject;
 };

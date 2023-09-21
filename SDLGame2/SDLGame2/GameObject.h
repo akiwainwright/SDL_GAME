@@ -4,11 +4,13 @@
 #include "TransformComponent.h"
 #include "CustomMaths.h"
 
+class TextureComponent;
+
 
 class GameObject : public Actor
 {
 public:
-	GameObject(class Game* _game, string _name, ActorState _state, Actor* _parent = nullptr);
+	GameObject(class GameModeBase* _gameMode, string _name, ActorState _state, Actor* _parent = nullptr);
 	virtual ~GameObject();
 
 	//this is the update fuction that will be called from the game class
@@ -42,14 +44,16 @@ public:
 
 	bool HasComponent(Component* _comp);
 
-	TransformComponent* GetTransform() {
-		return m_Transform;
-	}
+	inline TransformComponent* GetTransform() { return m_Transform; }
+
+	inline TextureComponent* GetTexture() { return m_Texture; }
 
 protected:
 	vector<Component*> m_Components;
 	Actor* m_Parent;
 	TransformComponent* m_Transform;
+	TextureComponent* m_Texture;
+
 private:
 
 

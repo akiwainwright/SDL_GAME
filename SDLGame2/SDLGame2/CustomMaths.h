@@ -30,8 +30,6 @@ inline void floatEpsilonCheck(float& num)
 
 struct Vector2
 {
-
-public:
 	float x;
 	float y;
 
@@ -123,11 +121,6 @@ public:
 		return result;
 	}
 
-	bool operator!=(const Vector2& rhs)const
-	{
-		return (x != rhs.x) || (y != rhs.y);
-	}
-
 	Vector2 Normalise()
 	{
 		Vector2 temp = Vector2(x, y);
@@ -143,12 +136,6 @@ public:
 		temp =  temp / Length();
 		x = temp.x;
 		y = temp.y;
-	}	
-
-	void Zero()
-	{
-		x = 0.0f;
-		y = 0.0f;
 	}
 
 	Vector2 PerpendicularClockwise()
@@ -167,13 +154,6 @@ public:
 	}
 
 	static float DotProduct(Vector2& _vec1, Vector2& _vec2)
-	{
-		float newX = _vec1.x * _vec2.x;
-		float newY = _vec1.y * _vec2.y;
-
-		return newX + newY;
-	}
-	static float DotProduct(Vector2 _vec1, Vector2 _vec2)
 	{
 		float newX = _vec1.x * _vec2.x;
 		float newY = _vec1.y * _vec2.y;

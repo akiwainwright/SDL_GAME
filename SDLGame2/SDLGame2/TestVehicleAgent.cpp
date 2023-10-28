@@ -1,14 +1,13 @@
-#include "VehicleAgent.h"
+#include "TestVehicleAgent.h"
 #include "GameModeBase.h"
 
 
-VehicleAgent::VehicleAgent(class Game* _game, string _name, ActorState _state, Actor* _parent, SteeringVehicleParameter* _vehicleParams) : GameObject(_game, _name, _state, _parent)
+TestVehicleAgent::TestVehicleAgent(class GameModeBase* _game, string _name, ActorState _state, Actor* _parent) : GameObject(_game, _name, _state, _parent)
 {
-	m_SteeringBehaviours = new SteeringBehaviours(this);
-	m_VehicleParams = _vehicleParams;
+
 }
 
-void VehicleAgent::UpdateGameObject(float _deltaTime)
+void TestVehicleAgent::UpdateGameObject(float _deltaTime)
 {
 	//calculate the combined force from each steering behaviour in the vehicle's list
 	Vector2 steeringForce = m_SteeringBehaviours->Calculate();
@@ -29,15 +28,7 @@ void VehicleAgent::UpdateGameObject(float _deltaTime)
 
 }
 
-void VehicleAgent::RotateToFaceDirection()
-{
-}
-
-void VehicleAgent::SetHeading(Vector2 _heading)
-{
-}
-
-VehicleAgent::~VehicleAgent()
+TestVehicleAgent::~TestVehicleAgent()
 {
 
 }

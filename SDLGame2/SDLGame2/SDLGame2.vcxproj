@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,32 +21,20 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Animator.h" />
-    <ClInclude Include="Ball.h" />
     <ClInclude Include="BasicIncludes.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="consts.h" />
     <ClInclude Include="CustomMaths.h" />
     <ClInclude Include="Events.h" />
-    <ClInclude Include="FieldPlayerStates.h" />
-    <ClInclude Include="FootballFieldPlayer.h" />
-    <ClInclude Include="FootballGame.h" />
-    <ClInclude Include="FootballGoal.h" />
-    <ClInclude Include="FootballGoalKeeper.h" />
-    <ClInclude Include="FootballPitch.h" />
-    <ClInclude Include="FootballPlayer.h" />
-    <ClInclude Include="FootballTeam.h" />
-    <ClInclude Include="FootballTeamStates.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameModeBase.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameTime.h" />
-    <ClInclude Include="GoalKeeperStates.h" />
-    <ClInclude Include="Parameters.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="SteeringBehaviours.h" />
     <ClInclude Include="TestAgent.h" />
-    <ClInclude Include="VehicleAgent.h" />
+    <ClInclude Include="TestVehicleAgent.h" />
     <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TransformComponent.h" />
@@ -54,30 +42,19 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Animator.cpp" />
-    <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CustomMaths.cpp" />
     <ClCompile Include="Events.cpp" />
-    <ClCompile Include="FieldPlayerStates.cpp" />
-    <ClCompile Include="FootballFieldPlayer.cpp" />
-    <ClCompile Include="FootballGame.cpp" />
-    <ClCompile Include="FootballGoal.cpp" />
-    <ClCompile Include="FootballGoalKeeper.cpp" />
-    <ClCompile Include="FootballPitch.cpp" />
-    <ClCompile Include="FootballPlayer.cpp" />
-    <ClCompile Include="FootballTeam.cpp" />
-    <ClCompile Include="FootballTeamStates.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameModeBase.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
-    <ClCompile Include="GoalKeeperStates.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="SteeringBehaviours.cpp" />
     <ClCompile Include="TestAgent.cpp" />
-    <ClCompile Include="VehicleAgent.cpp" />
+    <ClCompile Include="TestVehicleAgent.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TransformComponent.cpp" />

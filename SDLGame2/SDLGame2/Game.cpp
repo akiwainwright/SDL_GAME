@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Animator.h"
 #include "GameTime.h"
+#include "GameModeBase.h"
 
 Game* Game::s_Instance = nullptr;
 
@@ -64,15 +65,19 @@ bool Game::Initialize()
 
 void Game::RunLoop()
 {
-	MainMenu = new GameModeBase();
+	//MainMenu = new GameModeBase();
 
 	while (m_IsRunning)
 	{
 		m_deltaTime = GameTime::GetInstance()->GetDeltaTime();
 		
-		MainMenu->ProcessInput();
-		MainMenu->UpdateGame(m_deltaTime);
-		MainMenu->RenderLoop(m_deltaTime);
+		//MainMenu->ProcessInput();
+		//MainMenu->UpdateGame(m_deltaTime);
+		//MainMenu->RenderLoop(m_deltaTime);
+
+		ProcessInput();
+		UpdateGame(m_deltaTime);
+		RenderLoop(m_deltaTime);
 	}
 }
 

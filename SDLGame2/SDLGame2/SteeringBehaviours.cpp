@@ -1,9 +1,9 @@
 #include "SteeringBehaviours.h"
-#include "TestVehicleAgent.h"
+#include "VehicleAgent.h"
 #include "Path.h"
 
 
-SteeringBehaviours::SteeringBehaviours(TestVehicleAgent* _agent) : m_Agent(_agent)
+SteeringBehaviours::SteeringBehaviours(VehicleAgent* _agent) : m_Agent(_agent)
 {
 
 }
@@ -14,17 +14,22 @@ SteeringBehaviours::~SteeringBehaviours()
 
 Vector2 SteeringBehaviours::Calculate()
 {
-	return Vector2();
+	m_SteeringForce.Zero();
+
+	//steeringForce = the combination of chosen forces
+
+	m_SteeringForce.Truncate(m_Agent->GetVehicleParams()->GetMaxSteeringForce());
+	return m_SteeringForce;
 }
 
-Vector2 SteeringBehaviours::ForwardComponent()
+float SteeringBehaviours::ForwardComponent()
 {
-	return Vector2();
+	return Vector2::DotProduct(m_Agent->Heading(), m_SteeringForce);
 }
 
-Vector2 SteeringBehaviours::SideComponent()
+float SteeringBehaviours::SideComponent()
 {
-	return Vector2();
+	return Vector2::DotProduct(m_Agent->Side(),( m_SteeringForce* m_Agent->GetVehicleParams()->GetMaxTurnRate()));
 }
 
 void SteeringBehaviours::SetPath()
@@ -63,11 +68,46 @@ void SteeringBehaviours::ArriveOff()
 {
 }
 
+void SteeringBehaviours::FindNeighbours()
+{
+}
+
+/// <summary>
+/// this calculates how much of its max steering force the vehicle has left to apply and then applies that amount of force to add
+/// </summary>
+/// <param name="_steeringForce"></param>
+/// <param name="_forceToAdd"></param>
+/// <returns></returns>
+bool SteeringBehaviours::AccumulateForce(Vector2& _steeringForce, Vector2 _forceToAdd)
+{
+	float magnitudeSoFar = _steeringForce.Length();
+
+	float remainingMagnitude = m_Agent->GetVehicleParams()->GetMaxSteeringForce() - magnitudeSoFar;
+
+	if (remainingMagnitude <= 0.0f)
+	{
+		return false;
+	}
+
+	//calculates the magnitude of the force we want to add
+	float magnitudeToAdd = _forceToAdd.Length();
+
+	if (magnitudeToAdd < remainingMagnitude)
+	{
+		_steeringForce += magnitudeToAdd;
+	}
+	else
+	{
+		_steeringForce += (Vector2::Normalized(_forceToAdd) * remainingMagnitude);
+	}
+	return true;
+}
+
 Vector2 SteeringBehaviours::Seek(const Vector2& _target)
 {
 	Vector2 desiredVelocity = Vector2::Normalized(_target - m_Agent->GetTransform()->m_Pos) * (m_Agent)->m_MaxSpeed;
 
-	return (desiredVelocity - (m_Agent)->m_Velocity);
+	return (desiredVelocity - (m_Agent)->GetVelocity());
 
 }
 
@@ -75,7 +115,7 @@ Vector2 SteeringBehaviours::Flee(Vector2& _target)
 {
 	Vector2 desiredVelocity = Vector2::Normalized(m_Agent->GetTransform()->m_Pos - _target) * m_Agent->m_MaxSpeed;
 
-	return (desiredVelocity - (m_Agent)->m_Velocity);
+	return (desiredVelocity - (m_Agent)->GetVelocity());
 
 }
 
@@ -108,7 +148,7 @@ Vector2 SteeringBehaviours::Arrive(const Vector2& _target, float _deceleration)
 
 }
 
-Vector2 SteeringBehaviours::Pursuit(TestVehicleAgent* _target)
+Vector2 SteeringBehaviours::Pursuit(VehicleAgent* _target)
 {
 	//if the evaderis ahead and facing the agent then we can just seek for the evader's current position
 	Vector2 toEvader = _target->GetTransform()->m_Pos - m_Agent->GetTransform()->m_Pos;
@@ -132,7 +172,7 @@ Vector2 SteeringBehaviours::Pursuit(TestVehicleAgent* _target)
 
 }
 
-Vector2 SteeringBehaviours::Evade(TestVehicleAgent* _target)
+Vector2 SteeringBehaviours::Evade(VehicleAgent* _target)
 {
 	//not necessary to include the check for facing direction this time
 	Vector2 toPursuer = _target->GetTransform()->m_Pos - m_Agent->GetTransform()->m_Pos;
@@ -219,7 +259,7 @@ Vector2 SteeringBehaviours::WallAvoidance(const vector< Walls2D*>& _walls)
 
 }
 
-Vector2 SteeringBehaviours::Interpose( TestVehicleAgent* _agent1, TestVehicleAgent* _agent2)
+Vector2 SteeringBehaviours::Interpose( VehicleAgent* _agent1, VehicleAgent* _agent2)
 {
 	//first we need to figure out where the 2 agents are going to be at time T in the future. This is approximated by determining the time taken to reach the midway point at the current time and max speed
 	Vector2 midPoint = (_agent1->GetTransform()->m_Pos + _agent2->GetTransform()->m_Pos) / 2.0f;
@@ -252,7 +292,7 @@ Vector2 SteeringBehaviours::GetHidingPos(const Vector2& _posOb, const float _rad
 
 }
 
-Vector2 SteeringBehaviours::Hide( TestVehicleAgent* _agent, vector<class GameObject*>& _obstacle)
+Vector2 SteeringBehaviours::Hide( VehicleAgent* _agent, vector<class GameObject*>& _obstacle)
 {
 	float distToClosest = FLT_MAX;
 	Vector2 bestHidingSpot;

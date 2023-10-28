@@ -10,7 +10,8 @@ class TextureComponent;
 class GameObject : public Actor
 {
 public:
-	GameObject(class GameModeBase* _gameMode, string _name, ActorState _state, Actor* _parent = nullptr);
+	//GameObject(class GameModeBase* _gameMode, string _name, ActorState _state, Actor* _parent = nullptr);
+	GameObject(class Game* _gameMode, string _name, ActorState _state, Actor* _parent = nullptr);
 	virtual ~GameObject();
 
 	//this is the update fuction that will be called from the game class
@@ -19,6 +20,8 @@ public:
 
 	//game object specific update code i.e. move 
 	virtual void UpdateGameObject(float _deltaTime) {}
+
+	void Render() override {}
 
 	void ProcessInput(const uint8_t* _keyState);
 	virtual void GameObjectInput(const uint8_t* _keyState);

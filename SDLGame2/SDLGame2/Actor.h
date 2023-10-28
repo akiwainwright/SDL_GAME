@@ -24,6 +24,7 @@ class Actor
 public:
 	Actor(class Game* _game, string _Name, Tag _tag = UNTAGGED);
 	virtual void Update(float _deltaTime) {}
+	virtual void Render(){}
 	virtual ~Actor();
 	ActorState GetState() const{ return m_ActorState; }
 	Tag GetTag()const {}
@@ -31,7 +32,8 @@ public:
 	virtual bool HandleMessage(const Telegram& _msg) = 0;
 
 protected:
-	GameModeBase* m_GameMode;
+	//GameModeBase* m_GameMode;
+	class Game* m_Game;
 	ActorState m_ActorState;
 	string m_Name;
 	Tag m_Tag;

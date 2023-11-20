@@ -3,6 +3,8 @@
 #include "FootballTeam.h"
 #include "Ball.h"
 #include "Events.h"
+#include "FootballGoal.h"
+#include "FootballPitch.h"
 
 GlobalFieldPlayerState* GlobalFieldPlayerState::m_Instance = nullptr;
 ChaseBallState* ChaseBallState::m_Instance = nullptr;
@@ -27,10 +29,12 @@ void GlobalFieldPlayerState::Execute(FootballFieldPlayer* _agent)
 	if (_agent->BallWithinReceivingRange() && _agent->IsPossessingPlayer())
 	{
 		//_agent->SetMaxSpeed();//create a class for parameter//maxspeed with ball
+		_agent->GetVehicleParams()->SetMaxSpeed();
 	}
 	else
 	{
 		//_agent->SetMaxSpeed();//create a class for parameter//maxspeed without  ball
+		_agent->GetVehicleParams()->SetMaxSpeed();
 	}
 
 }
@@ -106,7 +110,7 @@ bool GlobalFieldPlayerState::OnMessage(FootballFieldPlayer* _agent, const Telegr
 
 		_agent->GetStateMachine()->ChangeState(WaitState::Instance());
 
-		//_agent-> //find support
+		_agent->FindSupport();//find support
 
 		return true;
 
@@ -125,7 +129,7 @@ bool GlobalFieldPlayerState::OnMessage(FootballFieldPlayer* _agent, const Telegr
 
 void ChaseBallState::Enter(FootballFieldPlayer* _agent)
 {
-	//_agent->seek //activate seek
+	_agent->GetSteering()->Seek(true); //activate seek
 }
 
 void ChaseBallState::Execute(FootballFieldPlayer* _agent)
@@ -152,7 +156,8 @@ void ChaseBallState::Execute(FootballFieldPlayer* _agent)
 
 void ChaseBallState::Exit(FootballFieldPlayer* _agent)
 {
-	//deactivate seek
+	_agent->GetSteering()->Seek(false); //deactivate seek
+
 }
 
 bool ChaseBallState::OnMessage(FootballFieldPlayer* _agent, const Telegram&)
@@ -173,13 +178,13 @@ void DribbleState::Enter(FootballFieldPlayer* _agent)
 void DribbleState::Execute(FootballFieldPlayer* _agent)
 {
 
-	float dot = Vector2::DotProduct( , _agent->m_Heading);//home goal facing dir 
+	float dot = Vector2::DotProduct( _agent->GetTeam()->HomeGoal()->Facing(), _agent->Heading());//home goal facing dir 
 
 	//if the ball is between the player and the home goal, the player needs to turn around with the ball by doing multiple small kicks and turns until the player is facing in the correct direction
 	if (dot < 0)
 	{
 		//the player's heading is going to be rotated by a small amount (Pi/4) and then the ball will be kicked in that direction 
-		Vector2 dir = _agent->m_Heading;
+		Vector2 dir = _agent->Heading();
 
 		//then calculate the sign (+/-) of the angle between the player heading and the facing direction of the goal so that the player rotates around in the correct direction 
 		float angle = PI / 4.0f * -1.0f;//* home goal facing dir
@@ -194,7 +199,7 @@ void DribbleState::Execute(FootballFieldPlayer* _agent)
 	}
 	else //kick the ball down the field
 	{
-		_agent->GetFootball()->Kick( ,1.2f);//create a parameter class and put the variable max dribbling force here
+		_agent->GetFootball()->Kick(_agent->GetTeam()->HomeGoal()->Facing(),1.2f);//create a parameter class and put the variable max dribbling force here
 	}
 
 
@@ -223,7 +228,7 @@ void KickBallState::Enter(FootballFieldPlayer* _agent)
 	_agent->GetTeam()->SetControllingPlayer(_agent);
 	
 	//The player can only make so many kick attempts per second
-	if (_agent->)//isReadyForNextKick
+	if (!_agent->IsReadyForNextKick())//isReadyForNextKick
 	{
 		_agent->GetStateMachine()->ChangeState(ChaseBallState::Instance());
 
@@ -236,10 +241,10 @@ void KickBallState::Execute(FootballFieldPlayer* _agent)
 	//calculates the dot product of the vector pointing to the ball and the player's heading
 	Vector2 toBall = _agent->GetFootball()->GetTransform()->m_Pos - _agent->GetTransform()->m_Pos;
 	Vector2 normalizedToBall = Vector2::Normalized(toBall);
-	float dot = Vector2::DotProduct(_agent->m_Heading, normalizedToBall);
+	float dot = Vector2::DotProduct(_agent->Heading(), normalizedToBall);
 
 	//cannot kick the ball if the goalkeeper is in possession or if it is behind the player or if there is already an assigned receiver. so just chase the ball
-	if (_agent->GetTeam()->Receiver() != nullptr || dot < 0 || _agent)//goal keeper has the ball
+	if (_agent->GetTeam()->Receiver() != nullptr || dot < 0 || _agent->GetFootballPitch()->GoalKeeperHasBall())//goal keeper has the ball
 	{
 		_agent->GetStateMachine()->ChangeState(ChaseBallState::Instance());
 		return;
@@ -326,14 +331,15 @@ void ReceiveBallState::Enter(FootballFieldPlayer* _agent)
 	//is in the opponents half
 
 	const float passThreatRadius = 70.0f;
-	if (_agent-> || )//in opp's region
+	if (_agent-> || && !_agent->GetTeam()->IsOpponentWithinRadius(_agent->GetTransform()->m_Pos, ))//in opp's region//parameter - pass threat radius
 	{
+		_agent->GetSteering()->Arrive(true);
 		//activate arrive
 	}
 	else
 	{
 		//activate pursuit
-
+		_agent->GetSteering()->Pursuit(true, _agent->GetFootballPitch()->Ball());
 	}
 
 }
@@ -347,15 +353,16 @@ void ReceiveBallState::Execute(FootballFieldPlayer* _agent)
 
 	}
 
-	if (_agent->)//pursuit is activate
+	if (_agent->GetSteering()->)//pursuit is activate
 	{
 		_agent->SetTarget(_agent->GetFootball()->GetTransform()->m_Pos);
 	}
 
 	if (_agent->AtTarget())
 	{
-		//deactivate pursuit
-		//deactivate arrive
+
+		_agent->GetSteering()->Arrive(false);
+		_agent->GetSteering()->Pursuit(false, _agent->GetFootballPitch()->Ball());
 		_agent->TrackBall();
 		_agent->SetVelocity(Vector2(0, 0));
 	}
@@ -364,8 +371,9 @@ void ReceiveBallState::Execute(FootballFieldPlayer* _agent)
 
 void ReceiveBallState::Exit(FootballFieldPlayer* _agent)
 {
-	//deactivate arrive
-	//deactivate pursuit
+
+	_agent->GetSteering()->Arrive(false);
+	_agent->GetSteering()->Pursuit(false, _agent->GetFootballPitch()->Ball());
 	_agent->GetTeam()->SetReceiver(nullptr);
 }
 
@@ -381,7 +389,9 @@ bool ReceiveBallState::OnMessage(FootballFieldPlayer* _agent, const Telegram&)
 void SupportAttackerState::Enter(FootballFieldPlayer* _agent)
 {
 	//activate arrive
+
 	_agent->SetTarget(_agent->GetTeam()->GetSupportSpot());
+	_agent->GetSteering()->Arrive(true);
 }
 
 void SupportAttackerState::Execute(FootballFieldPlayer* _agent)
@@ -398,7 +408,7 @@ void SupportAttackerState::Execute(FootballFieldPlayer* _agent)
 	{
 		_agent->SetTarget(_agent->GetTeam()->GetSupportSpot());
 
-		//activate arrive
+		_agent->GetSteering()->Arrive(true);
 	}
 
 	//if this player has a shot at the goal and the attacker can pass the ball to him, the attacker should pass the ball to this player
@@ -410,7 +420,7 @@ void SupportAttackerState::Execute(FootballFieldPlayer* _agent)
 	//If the player is located at the support spot and the team still have the ball, they should remain still and turn to face the ball
 	if (_agent->AtTarget())
 	{
-		//deactivate arrive
+		_agent->GetSteering()->Arrive(false);
 		_agent->TrackBall();
 
 		_agent->SetVelocity(Vector2(0,0));
@@ -428,7 +438,7 @@ void SupportAttackerState::Execute(FootballFieldPlayer* _agent)
 void SupportAttackerState::Exit(FootballFieldPlayer* _agent)
 {
 	_agent->GetTeam()->SetSupportingPlayer(nullptr);
-
+	_agent->GetSteering()->Arrive(false);
 	//deactivate arrive
 }
 
@@ -443,15 +453,16 @@ bool SupportAttackerState::OnMessage(FootballFieldPlayer* _agent, const Telegram
 void ReturnToHomeRegionState::Enter(FootballFieldPlayer* _agent)
 {
 	//activate arrive
-	//if (!_agent) //region code
+	_agent->GetSteering()->Arrive(true);
+	if (!_agent->HomeRegion()->) //region code// inside steering target and halfsize
 	{
-		_agent->SetTarget();//home region
+		_agent->SetTarget(_agent->HomeRegion()->m_Centre);//home region
 	}
 }
 
 void ReturnToHomeRegionState::Execute(FootballFieldPlayer* _agent)
 {
-	if (_agent->GetFootballPitch()->GameOn)
+	if (_agent->GetFootballPitch()->GameIsActive())
 	{
 		//if the ball is nearer this player than any other team member and the receiver is null and the goalkeeper does not have the ball then chase it
 		if (_agent->IsClosestTeamMemberToBall() && _agent->GetTeam()->Receiver() == nullptr && !_agent->GetFootballPitch())
@@ -464,14 +475,14 @@ void ReturnToHomeRegionState::Execute(FootballFieldPlayer* _agent)
 
 	//if game is in play and close enough to home, change state to wait and set the player target to his current position.
 	//So that if they gets pushed out of the position they can move back
-	if ()
+	if (_agent->GetFootballPitch()->GameIsActive() && _agent->HomeRegion()->)//inside, pos and halfsize
 	{
 		_agent->SetTarget(_agent->GetTransform()->m_Pos);
 		_agent->GetStateMachine()->ChangeState(WaitState::Instance());
 	}
 
 	//if game is not in play the player must return much closer to the center of their home region
-	else if ()
+	else if (!_agent->GetFootballPitch()->GameIsActive() && _agent->AtTarget())
 	{
 		_agent->GetStateMachine()->ChangeState(WaitState::Instance());
 	}
@@ -481,6 +492,7 @@ void ReturnToHomeRegionState::Execute(FootballFieldPlayer* _agent)
 void ReturnToHomeRegionState::Exit(FootballFieldPlayer* _agent)
 {
 	//_agent->//deactivate arrive
+	_agent->GetSteering()->Arrive(false);
 }
 
 bool ReturnToHomeRegionState::OnMessage(FootballFieldPlayer* _agent, const Telegram&)
@@ -495,9 +507,9 @@ bool ReturnToHomeRegionState::OnMessage(FootballFieldPlayer* _agent, const Teleg
 void WaitState::Enter(FootballFieldPlayer* _agent)
 {
 	//if the game is not in play, make sure the target is the center of the player's home region. This makes sure all the players are in the correct region
-	if ()//game is not in play
+	if (!_agent->GetFootballPitch()->GameIsActive())//game is not in play
 	{
-		_agent->SetTarget(_agent);//region centre
+		_agent->SetTarget(_agent->HomeRegion()->m_Centre);//region centre
 
 	}
 }
@@ -507,25 +519,27 @@ void WaitState::Execute(FootballFieldPlayer* _agent)
 	if (!_agent->AtTarget())
 	{
 		//activate arrive
+		_agent->GetSteering()->Arrive(true);
 		return;
 	}
 	else
 	{
 		//deactivate arrive
+		_agent->GetSteering()->Arrive(false);
 		_agent->SetVelocity(Vector2(0, 0));
 		_agent->TrackBall();
 	}
 
-	if (_agent->GetTeam()->InPossession() && !_agent->IsPossessingPlayer() && _agent->IS)
+	if (_agent->GetTeam()->InPossession() && !_agent->IsPossessingPlayer() && _agent->IsAheadOfAttacker())
 	{
 		_agent->GetTeam()->RequestPass(_agent);
 		return;
 
 	}
 
-	if ()//pitch is in play
+	if (_agent->GetFootballPitch()->GameIsActive())//pitch is in play
 	{
-		if (_agent->IsClosestTeamMemberToBall() && _agent->GetTeam()->Receiver == nullptr && )//goal keeper does not have the ball
+		if (_agent->IsClosestTeamMemberToBall() && _agent->GetTeam()->Receiver() == nullptr&&!_agent->GetFootballPitch()->GoalKeeperHasBall())//goal keeper does not have the ball
 		{
 			_agent->GetStateMachine()->ChangeState(ChaseBallState::Instance());
 		}

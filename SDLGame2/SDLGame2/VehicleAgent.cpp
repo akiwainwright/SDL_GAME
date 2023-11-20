@@ -2,7 +2,7 @@
 #include "GameModeBase.h"
 
 
-VehicleAgent::VehicleAgent(class Game* _game, string _name, ActorState _state, Actor* _parent, SteeringVehicleParameter* _vehicleParams) : GameObject(_game, _name, _state, _parent)
+VehicleAgent::VehicleAgent(class Game* _game, string _name, ActorState _state,SteeringVehicleParameter* _vehicleParams, Actor* _parent) : GameObject(_game, _name, _state, _parent)
 {
 	m_SteeringBehaviours = new SteeringBehaviours(this);
 	m_VehicleParams = _vehicleParams;

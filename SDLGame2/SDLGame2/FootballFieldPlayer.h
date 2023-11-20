@@ -4,7 +4,7 @@
 class FootballFieldPlayer : public FootballPlayer
 {
 public:
-	FootballFieldPlayer(class FootbalTeam* _homeTeam, int _homeRegion, State<FootballFieldPlayer>* _startState, Vector2 _heading, Vector2 _velocity,SteeringBehaviours* _SteeringBehaviours, FootballParameters* _FootballParams ,float _scale, Position _playerPosition);
+	FootballFieldPlayer(class FootbalTeam* _homeTeam, int _homeRegion, State<FootballFieldPlayer>* _startState, Vector2 _heading, Vector2 _velocity,FootballParameters* _FootballParams ,float _scale, Position _playerPosition);
 
 	~FootballFieldPlayer();
 
@@ -12,13 +12,10 @@ public:
 	void Render()override;//remove override and implement in base class if there's a base class called SteeringGameObject (a base class GO that moves)
 
 	//a ball doesnt need to handle messages
-	bool HandleMessage(const Telegram& _msg)override { return false; }
+	bool HandleMessage(const Telegram& _msg)override;
 
 	StateMachine<FootballFieldPlayer>* GetStateMachine() { return m_StateMachine; }
 
-	bool BallWithinRangeForIntercept() const;
-
-	bool FarFromGoal() const;
 	
 	bool IsReadyForNextKick()const;
 

@@ -150,6 +150,15 @@ public:
 		x = 0.0f;
 		y = 0.0f;
 	}
+	bool IsZero()
+	{
+		 
+		return (x == 0.0f && y == 0.0f);
+	}
+	//static Vector2 Zero()
+	//{
+	//	return Vector2(0, 0);
+	//}
 
 	Vector2 PerpendicularClockwise()
 	{

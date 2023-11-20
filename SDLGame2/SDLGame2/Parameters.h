@@ -86,6 +86,10 @@ class SteeringVehicleParameter
 public:
 
 	SteeringVehicleParameter() {
+		m_WanderRadius = -1.0f;
+		m_WanderDistance = -1.0f;
+		m_WanderJitter = -1.0f;
+		m_BoxLength = -1.0f;
 		m_MinDetectionBoxLength = -1.0f;
 		m_WallDetectionFeelerLength = -1.0f;
 		m_MinObstacleRadius = -1.0f;
@@ -125,8 +129,8 @@ public:
 		m_ArriveProbability = -1.0f;
 	}
 
-	SteeringVehicleParameter(float _minDetectionBoxLength,float _wallDetectionFeelerLength, float _minObstacleRadius, float _maxObstacleRadius, float _forceTweaker, float _maxSteeringForce, float _maxSpeed, float _vehicleMass, float _maxTurnRate, float _separationWeight, float _alignmentWeight, float _cohesionWeight, float _obstacleAvoidanceWeight, float _wallAvoidanceWeight, float _wanderWeight, float _seekWeight, float _fleeWeight, float _arriveWeight, float _pursuitWeight, float _offsetPursuitWeight, float _interposeWeight, float _hideWeight, float _evadeWeight, float _followPathWeight, float _wallAvoidanceProbability, float _obstacleAvoidanceProbability,float _separationProbability, float _alignmentProbability, float _cohesionProbability, float _wanderProbability, float _seekProbability, float _fleeProbability, float _evadeProbability, float _hideProbability, float _arriveProbability) {
-		SetSteeringBehaviour( _minDetectionBoxLength,  _wallDetectionFeelerLength,  _minObstacleRadius,  _maxObstacleRadius,  _forceTweaker,  _maxSteeringForce,  _maxSpeed,  _vehicleMass,  _maxTurnRate);
+	SteeringVehicleParameter(float _wanderRadius, float _wanderDistance, float _wanderJitter, float _boxLength, float _minDetectionBoxLength,float _wallDetectionFeelerLength, float _minObstacleRadius, float _maxObstacleRadius, float _forceTweaker, float _maxSteeringForce, float _maxSpeed, float _vehicleMass, float _maxTurnRate, float _separationWeight, float _alignmentWeight, float _cohesionWeight, float _obstacleAvoidanceWeight, float _wallAvoidanceWeight, float _wanderWeight, float _seekWeight, float _fleeWeight, float _arriveWeight, float _pursuitWeight, float _offsetPursuitWeight, float _interposeWeight, float _hideWeight, float _evadeWeight, float _followPathWeight, float _wallAvoidanceProbability, float _obstacleAvoidanceProbability,float _separationProbability, float _alignmentProbability, float _cohesionProbability, float _wanderProbability, float _seekProbability, float _fleeProbability, float _evadeProbability, float _hideProbability, float _arriveProbability) {
+		SetSteeringBehaviour(_wanderRadius,  _wanderDistance,  _wanderJitter,  _boxLength, _minDetectionBoxLength,  _wallDetectionFeelerLength,  _minObstacleRadius,  _maxObstacleRadius,  _forceTweaker,  _maxSteeringForce,  _maxSpeed,  _vehicleMass,  _maxTurnRate);
 		SetSteeringBehaviourWeights( _separationWeight, _alignmentWeight,  _cohesionWeight, _obstacleAvoidanceWeight,  _wallAvoidanceWeight, _wanderWeight,  _seekWeight, _fleeWeight, _arriveWeight, _pursuitWeight, _offsetPursuitWeight, _interposeWeight, _hideWeight,  _evadeWeight,  _followPathWeight);
 		SetSteeringBehaviourProbability( _wallAvoidanceProbability,  _obstacleAvoidanceProbability,  _separationProbability,  _alignmentProbability,  _cohesionProbability,  _wanderProbability, _seekProbability, _fleeProbability,  _evadeProbability,  _hideProbability, _arriveProbability);
 	}
@@ -167,7 +171,11 @@ public:
 			m_FollowPathWeight = _followPathWeight;
 	}
 
-	void SetSteeringBehaviour(float _minDetectionBoxLength,float _wallDetectionFeelerLength, float _minObstacleRadius,float _maxObstacleRadius,float _forceTweaker,float _maxSteeringForce,float _maxSpeed,float _vehicleMass,float _maxTurnRate) {
+	void SetSteeringBehaviour(float _wanderRadius, float _wanderDistance, float _wanderJitter, float _boxLength, float _minDetectionBoxLength,float _wallDetectionFeelerLength, float _minObstacleRadius,float _maxObstacleRadius,float _forceTweaker,float _maxSteeringForce,float _maxSpeed,float _vehicleMass,float _maxTurnRate) {
+		m_WanderRadius = _wanderRadius;
+		m_WanderDistance = _wanderDistance;
+		m_WanderJitter = _wanderJitter;
+		m_BoxLength = _boxLength;
 		m_MinDetectionBoxLength = _minDetectionBoxLength;
 		m_WallDetectionFeelerLength = _wallDetectionFeelerLength;
 		m_MinObstacleRadius = _minObstacleRadius;
@@ -178,6 +186,11 @@ public:
 		m_VehicleMass = _vehicleMass;
 		m_MaxTurnRate = _maxTurnRate;
 	}
+
+	float GetWanderRadius(){return m_WanderRadius;}
+	float GetWanderDistance() { return m_WanderDistance;}
+	float GetWanderJitter() { return m_WanderJitter;}
+	float GetBoxLength() { return m_BoxLength; }
 
 	float GetMinObstacleRadius() { return m_MinObstacleRadius; }
 	float GetMaxObstacleRadius() { return m_MaxObstacleRadius; }
@@ -219,7 +232,10 @@ public:
 	float GetArriveProbability() { return m_ArriveProbability; }
 
 
-
+	void SetWanderRadius(float& _val) { m_WanderRadius = _val; }
+	void SetWanderDistance(float& _val) { m_WanderDistance = _val; }
+	void SetWanderJitter(float& _val) { m_WanderJitter = _val; }
+	void SetBoxLength(float& _val) { m_BoxLength = _val; }
 	void SetMinObstacleRadius(float& _val) { m_MinObstacleRadius = _val;}
 	void SetMaxObstacleRadius(float& _val) { m_MaxObstacleRadius = _val;}
 	void SetForceTweaker(float& _val) { m_ForceTweaker = _val;}
@@ -271,9 +287,15 @@ private:
 	float m_VehicleMass;
 	float m_MaxTurnRate;
 
+	float m_WanderRadius;
+	float m_WanderDistance;
+	float m_WanderJitter;
 
+	float m_BoxLength;
+	//float m_WallDetectorLength;
 
-
+	float m_MinDetectionBoxLength;//obstacle avoidance 
+	float m_WallDetectionFeelerLength;//wall Avoidance
 
 	float m_SeparationWeight;
 	float m_AlignmentWeight;
@@ -291,8 +313,7 @@ private:
 	float m_EvadeWeight;
 	float m_FollowPathWeight;
 
-	float m_MinDetectionBoxLength;//obstacle avoidance 
-	float m_WallDetectionFeelerLength;//wall Avoidance
+
 
 	//these are the probabilities that a steering behavior will be used
   //when the prioritized dither calculate method is used

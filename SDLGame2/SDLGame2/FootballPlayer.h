@@ -17,7 +17,7 @@ enum Position
 class FootballPlayer : public VehicleAgent
 {
 public:
-	FootballPlayer(FootballTeam* _homeTeam, int _homeRegion, Vector2 _heading, Vector2 _velocity, SteeringBehaviours* _SteeringBehaviours, FootballParameters* _FootballParams, float _scale, Position _playerPosition);
+	FootballPlayer(FootballTeam* _homeTeam, int _homeRegion, Vector2 _heading, Vector2 _velocity,  FootballParameters* _FootballParams, float _scale, Position _playerPosition);
 	virtual ~FootballPlayer();
 
 	void UpdateGameObject(float _deltaTime) override;

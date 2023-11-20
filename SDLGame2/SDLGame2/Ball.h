@@ -5,12 +5,12 @@
 class Ball: public VehicleAgent
 {
 public:
-	Ball(Vector2 _pos, float _ballSize, float _mass, vector<Walls2D>& _PitchBoundary);
+	Ball(Game* _game, SteeringVehicleParameter* _vehicleParams,string _name, ActorState _state, Vector2 _pos, float _ballSize, float _mass, vector<Walls2D>& _PitchBoundary);
 	~Ball();
 
 	//tests to see if the ball has collided with a wall and reflects
 //the ball's velocity accordingly
-	void TestCollisionWithWalls(const vector<Walls2D>& _walls);
+	void CheckCollisionWithWalls(const vector<Walls2D>& _walls);
 
 	void UpdateGameObject(float _deltaTime) override;
 	void Render()override;//remove override and implement in base class if there's a base class called SteeringGameObject (a base class GO that moves)
@@ -34,8 +34,13 @@ public:
 	
 	Vector2 GetOldPos()const { return m_OldPos; }
 
-	void PlaceAtPosition(Vector2 _newPos) { m_Transform->m_Pos = _newPos; }
+	void PlaceAtPosition(Vector2 _newPos) {
+		m_Transform->m_Pos = _newPos;
+		m_OldPos = GetTransform()->m_Pos;
+		SetVelocity(Vector2(0, 0));
+	}
 
+	//this can be used to vary the accuracy of a player's kick.
 	Vector2 AddNoiseToKick(Vector2& _ballPos, Vector2& _ballTarget);
 
 private:

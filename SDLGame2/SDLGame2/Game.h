@@ -18,6 +18,7 @@ public:
 	void RemoveActor(class Actor* _actor);
 	class Actor* GetActor(class Actor* _actor);
 
+	vector <Actor*>& GetAllActors();
 	SDL_Window* GetWindow() { return m_Window; }
 
 	SDL_Renderer* GetRenderer() { return m_Renderer; }

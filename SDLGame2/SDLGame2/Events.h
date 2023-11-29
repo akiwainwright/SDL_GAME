@@ -6,7 +6,12 @@ class Actor;
 
 enum MessageType
 {
-	MsgExample
+	MsgExample,
+	MSG_ReceiveBall,
+	MSG_SupportAttacker,
+	MSG_Wait,
+	MSG_GoHome,
+	MSG_PassToMe,
 };
 
 struct Telegram

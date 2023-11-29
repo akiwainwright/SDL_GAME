@@ -137,15 +137,18 @@ struct Vector2
 		x = temp.x;
 		y = temp.y;
 	}
+
 	bool IsZero()
 	{
 		 
-		return (x == 0.0f && y == 0.0f);
+		return (x == FLT_EPSILON && y == FLT_EPSILON);
 	}
-	//static Vector2 Zero()
-	//{
-	//	return Vector2(0, 0);
-	//}
+
+	void Zero()
+	{
+		x = 0.0f;
+		y = 0.0f;
+	}
 
 	Vector2 PerpendicularClockwise()
 	{
@@ -243,6 +246,8 @@ bool IsEqual(float _a, float _b)
 	return false;
 }
 
+inline Vector2 Vec2_Zero() { return Vector2(0.0f); }
+
 //returns a random double between zero and 1
 inline double RandFloat() { return ((rand()) / (RAND_MAX + 1.0)); }
 
@@ -271,6 +276,7 @@ public:
 	void SetNormal(Vector2 _normal) { m_Normal = _normal; }
 
 	Vector2 Center() { return (m_A + m_B) / 2.0f; }
+
 
 protected:
 	Vector2 m_A, m_B, m_Normal;

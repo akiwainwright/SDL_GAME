@@ -5,6 +5,7 @@
 
 class GameObject;
 class Actor;
+class VehicleAgent;
 
 class GameModeBase
 {
@@ -23,15 +24,25 @@ public:
 	const vector <GameObject*>& GetObstacles();
 	const vector <VehicleAgent*>& GetAllVehicleAgent();
 
+	void AddActor(Actor* _actor);
+	void RemoveActor(Actor* _actor);
+
 
 protected:
-	std::vector<class Actor*> m_Actors;
-
 	GameObject* m_TestObject;
 
 	GameModeBase* m_CurrentMode;
 
 	vector <Walls2D*> m_Walls;
 	vector <GameObject*> m_Obstacles;
+
+	vector<Actor*> m_Actors;
+	vector<Actor*> m_PendingActors;
+	bool m_UpdatingActor;
 };
 
+//Add this function
+//while (!m_Actors.empty())
+//{
+//	delete m_Actors.back();
+//}

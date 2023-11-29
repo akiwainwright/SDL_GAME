@@ -5,6 +5,8 @@
 
 
 class Ball;
+class Region;
+class FootballPitch;
 
 enum Position
 {
@@ -21,7 +23,7 @@ public:
 	virtual ~FootballPlayer();
 
 	void UpdateGameObject(float _deltaTime) override;
-	void Render()override;//remove override and implement in base class if there's a base class called SteeringGameObject (a base class GO that moves)
+	void Render();//remove override and implement in base class if there's a base class called SteeringGameObject (a base class GO that moves)
 
 	//a ball doesnt need to handle messages
 	bool HandleMessage(const Telegram& _msg)override { return false; }
@@ -39,7 +41,6 @@ public:
 	bool IsClosestPlayerOnPitchToBall()const;
 	bool AtTarget()const;
 	bool IsPossessingPlayer()const;
-	bool InHomeRegion()const;
 	bool IsAheadOfAttacker()const;
 	bool PositionInFrontOfPlayer(Vector2 _position)const;
 	bool NextToOppGoal();
@@ -47,7 +48,7 @@ public:
 	void TrackBall();//rotates the player to face the ball 
 	void TrackTarget();//rotates the player to face the target 
 
-	class FootballPitch* GetFootballPitch();
+	FootballPitch* GetFootballPitch() { return m_FootballPitch; }
 
 	void SetDefaultHomeRegion();
 
@@ -78,6 +79,8 @@ protected:
 	int m_DefaultRegion;
 	float m_DistSqToBall;
 
+	FootballPitch* m_FootballPitch;
+	Region* m_Region;
 
 
 private:

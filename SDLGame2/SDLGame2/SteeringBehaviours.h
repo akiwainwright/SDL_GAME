@@ -5,6 +5,9 @@
 class VehicleAgent;
 class GameObject;
 class Actor;
+class Path;
+
+
 //TODO: Dfferent summing method, flocking behaviours + offset pursuit, Space Partitioning(AKI)
 class SteeringBehaviours
 {
@@ -17,14 +20,13 @@ public:
 	float ForwardComponent();
 	float SideComponent();
 
-	void CreatePath(int _numWaypoints, int _mx, int _my, int _cx, int _cy) { m_Path->CreateRandomPath(_numWaypoints, _mx, _my, _cx, _cy); }
+	void CreatePath(int _numWaypoints, int _mx, int _my, int _cx, int _cy);
 	void SetPath(list<Vector2> _newPath);
 	void SetTarget(Vector2 _pos);
 	Vector2 GetTarget() { return m_Target; }
 	void SetTargetAgent(VehicleAgent* _agent);
 	void SetTargetAgent2(VehicleAgent* _agent) { m_TargetAgent2 = _agent; }
 	void SetTargetAgents(VehicleAgent* _agent, VehicleAgent* _agent2) { m_TargetAgent = _agent; m_TargetAgent2 = _agent2; }
-	void SetPath(list<Vector2> _newPath) { m_Path->Set(_newPath); }
 	void CSP(bool _Activate){ m_bCSP = _Activate; }
 	void Seek(bool _Activate){ m_bSeek = _Activate; }
 	void Flee(bool _Activate) { m_bFlee = _Activate; }

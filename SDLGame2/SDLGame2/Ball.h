@@ -13,7 +13,7 @@ public:
 	void CheckCollisionWithWalls(const vector<Walls2D>& _walls);
 
 	void UpdateGameObject(float _deltaTime) override;
-	void Render()override;//remove override and implement in base class if there's a base class called SteeringGameObject (a base class GO that moves)
+	void Render();//remove override and implement in base class if there's a base class called SteeringGameObject (a base class GO that moves)
 
 	//a ball doesnt need to handle messages
 	bool HandleMessage(const Telegram& _msg)override { return false; }

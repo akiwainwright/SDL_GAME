@@ -5,6 +5,7 @@
 #include "consts.h"
 #include "CustomMaths.h"
 #include "Parameters.h"
+#include <stdint.h>
 //#define SteeringParam (*VehicleAgent::m_VehicleParams)
 
 
@@ -15,7 +16,7 @@ class GameModeBase;
 class VehicleAgent : public GameObject
 {
 public:
-	VehicleAgent(class Game* _gameMode, std::string _name, ActorState _state, SteeringVehicleParameter* _vehicleParams, Actor* _parent = nullptr);
+	VehicleAgent(class GameModeBase* _gameMode, std::string _name, ActorState _state, SteeringVehicleParameter* _vehicleParams, Actor* _parent = nullptr);
 	virtual ~VehicleAgent();
 	void SetVelocity(const Vector2& _val) { m_Velocity = _val; }
 	void SetTarget(const Vector2& _target) { m_SteeringBehaviours->SetTarget(_target); }
@@ -23,9 +24,9 @@ public:
 	void UpdateGameObject(float _deltaTime)override;
 
 	void RotateToFaceDirection();
-	Vector2 Side(){ return m_Side; }
+	Vector2& Side(){ return m_Side; }
 	void SetSide(Vector2 _side) { m_Side = _side; }
-	Vector2 Heading() { return m_Heading; }
+	Vector2& Heading() { return m_Heading; }
 	void SetHeading(Vector2 _heading);
 	float GetSpeed() { return m_Velocity.Length(); }
 	float GetSpeedSq() { return m_Velocity.LenghtSqrd(); }
@@ -41,7 +42,7 @@ public:
 	bool IsSpeedMaxedOut() { return (m_VehicleParams->GetMaxSpeed() * m_VehicleParams->GetMaxSpeed() >= m_Velocity.LenghtSqrd()); }
 
 	GameModeBase* GetGamemode();// improve this
-	Game* GetGame();// improve this
+	//Game* GetGame();// improve this
 	
 private:
 

@@ -17,7 +17,14 @@ GameModeBase::GameModeBase()
 
 Actor* GameModeBase::GetActor(Actor* _actor)
 {
-	return nullptr;
+	auto iter = std::find(m_Actors.begin(), m_Actors.end(), _actor);
+
+	if (iter[0] == nullptr)
+	{
+		return nullptr;
+	}
+	return iter[0];
+
 }
 
 void GameModeBase::ProcessInput()
@@ -42,6 +49,35 @@ void GameModeBase::ProcessInput()
 void GameModeBase::UpdateGame(float _deltaTime)
 {
 	MessageDispatcher::Instance()->DispatchDelayedMessages();
+
+	m_UpdatingActor = true;
+	for (auto actor : m_Actors)
+	{
+		actor->Update(_deltaTime);
+
+	}
+	m_UpdatingActor = false;
+	for (auto pending : m_PendingActors)
+	{
+		pending->Update(_deltaTime);
+		m_Actors.emplace_back(pending);
+	}
+	m_PendingActors.clear();
+
+	vector<Actor*> deadActor;
+	for (auto actor : m_Actors)
+	{
+		if (actor->GetState() == ActorState::EDead)
+		{
+			deadActor.emplace_back(actor);
+		}
+	}
+
+	for (auto actors : deadActor)
+	{
+		delete actors;
+	}
+
 }
 
 void GameModeBase::RenderLoop(float _deltaTime)
@@ -62,4 +98,26 @@ void GameModeBase::SetUpGameObjects()
 
 	m_TestObject->AddComponent(new Animator(m_TestObject));
 	m_TestObject->GetComponent<Animator>()->SetAnimValues(768, 64, 1, 8, 1, 8, 30.0f);
+}
+
+void GameModeBase::AddActor(Actor* _actor)
+{
+
+}
+
+void GameModeBase::RemoveActor(Actor* _actor)
+{
+	auto iter = std::find(m_PendingActors.begin(), m_PendingActors.end(), _actor);
+	if (iter != m_PendingActors.end())
+	{
+		iter_swap(iter, m_PendingActors.end() - 1);
+		m_PendingActors.pop_back();
+	}
+
+	iter = std::find(m_Actors.begin(), m_Actors.end(), _actor);
+	if (iter != m_Actors.end())
+	{
+		iter_swap(iter, m_Actors.end() - 1);
+		m_Actors.pop_back();
+	}
 }

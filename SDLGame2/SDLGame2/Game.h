@@ -41,9 +41,7 @@ private:
 
 	SDL_Window* m_Window;
 	SDL_Renderer* m_Renderer;
-	vector<class Actor*> m_Actors;
-	vector<class Actor*> m_PendingActors;
-	bool m_UpdatingActor;
+	
 
 	GameModeBase* MainMenu;
 

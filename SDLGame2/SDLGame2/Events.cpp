@@ -26,7 +26,7 @@ void MessageDispatcher::DispatchMessage(double _delay, class Actor* _sender, cla
 	}
 	else
 	{
-		double currentTime = GameTime::GetInstance()->GetCurrentFrame().time_since_epoch().count();
+		auto currentTime = GameTime::GetInstance()->GetCurrentFrame().time_since_epoch().count();
 		telegram.m_DispatchTime = currentTime + _delay;
 		m_PriorityQueue.insert(telegram);
 	}

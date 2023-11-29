@@ -22,7 +22,7 @@ enum Tag
 class Actor
 {
 public:
-	Actor(class Game* _game, string _Name, Tag _tag = UNTAGGED);
+	Actor(class GameModeBase* _gameMode, string _Name, Tag _tag = UNTAGGED);
 	virtual void Update(float _deltaTime) {}
 	virtual ~Actor();
 	ActorState GetState() const{ return m_ActorState; }

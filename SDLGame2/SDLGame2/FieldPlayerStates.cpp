@@ -28,13 +28,13 @@ void GlobalFieldPlayerState::Execute(FootballFieldPlayer* _agent)
 	//if a playeris in possession and close to the ball, the speed reduces
 	if (_agent->BallWithinReceivingRange() && _agent->IsPossessingPlayer())
 	{
-		//_agent->SetMaxSpeed();//create a class for parameter//maxspeed with ball
-		_agent->GetVehicleParams()->SetMaxSpeed();
+		//create a class for parameter//maxspeed with ball
+		//_agent->GetVehicleParams()->SetMaxSpeed(5.0f);
 	}
 	else
 	{
-		//_agent->SetMaxSpeed();//create a class for parameter//maxspeed without  ball
-		_agent->GetVehicleParams()->SetMaxSpeed();
+		//create a class for parameter//maxspeed without  ball
+		//_agent->GetVehicleParams()->SetMaxSpeed();
 	}
 
 }
@@ -177,8 +177,8 @@ void DribbleState::Enter(FootballFieldPlayer* _agent)
 
 void DribbleState::Execute(FootballFieldPlayer* _agent)
 {
-
-	float dot = Vector2::DotProduct( _agent->GetTeam()->HomeGoal()->Facing(), _agent->Heading());//home goal facing dir 
+	
+	float dot = Vector2::DotProduct(_agent->GetTeam()->HomeGoal()->Facing(), _agent->Heading());//home goal facing dir 
 
 	//if the ball is between the player and the home goal, the player needs to turn around with the ball by doing multiple small kicks and turns until the player is facing in the correct direction
 	if (dot < 0)
@@ -281,7 +281,7 @@ void KickBallState::Execute(FootballFieldPlayer* _agent)
 	power = dot * 10;//create a parameter class and put the variable max passing force here
 	if (_agent->IsBeingPressured() && _agent->GetTeam()->FindPass(_agent,receiver, ballTarget, power, 10))//create a parameter class and put the variable min passing distance here
 	{
-		ballTarget = _agent->GetFootball()->AddNoiseToKick(_agent->GetFootball()->GetTransform()->m_Pos, ballTarget);
+		ballTarget = _agent->GetFootball()->AddNoiseToKick(_agent->GetFootball()->GetTransform()->m_Pos, ballTarget, _agent);
 
 		Vector2 kickDirection = ballTarget - _agent->GetFootball()->GetTransform()->m_Pos;
 

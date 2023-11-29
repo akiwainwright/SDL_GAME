@@ -68,7 +68,7 @@ void Ball::Control(FootballPlayer* _owner)
 Vector2 Ball::AddNoiseToKick(Vector2& _ballPos, Vector2& _ballTarget, FootballPlayer* _player)
 {
     
-    float displacement = (PI - (PI*_player->)) * RandInRange(-1.0f, 1.0f);//kicking accuracy of _player
+    float displacement = (PI - (PI*0.2f)) * RandInRange(-1.0f, 1.0f);//kicking accuracy of _player
     Vector2 toTarget = _ballTarget - _ballPos;
     rotateVector2(toTarget, displacement);
 }

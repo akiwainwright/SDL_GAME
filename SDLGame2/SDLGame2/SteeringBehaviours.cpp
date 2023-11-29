@@ -3,6 +3,7 @@
 #include "Path.h"
 #include "GameModeBase.h"
 #include "Game.h"
+#include "Path.h"
 
 
 SteeringBehaviours::SteeringBehaviours(VehicleAgent* _agent) : m_Agent(_agent)
@@ -21,6 +22,9 @@ Vector2 SteeringBehaviours::Calculate()
 {
 	m_SteeringForce.Zero();
 
+	m_SteeringForce = Vec2_Zero();
+
+
 	//steeringForce = the combination of chosen forces
 	m_SteeringForce = CalculateWeightedSum();
 	//m_SteeringForce.Truncate(m_Agent->GetVehicleParams()->GetMaxSteeringForce());
@@ -38,7 +42,14 @@ float SteeringBehaviours::ForwardComponent()
 
 float SteeringBehaviours::SideComponent()
 {
-	return Vector2::DotProduct(m_Agent->Side(),( m_SteeringForce* m_Agent->GetVehicleParams()->GetMaxTurnRate()));
+	Vector2 steering = m_SteeringForce * m_Agent->GetVehicleParams()->GetMaxTurnRate();
+
+	return Vector2::DotProduct(m_Agent->Side(), steering);
+}
+
+void SteeringBehaviours::CreatePath(int _numWaypoints, int _mx, int _my, int _cx, int _cy)
+{
+
 }
 
 void SteeringBehaviours::SetPath(list<Vector2> _newPath)
@@ -344,7 +355,7 @@ void SteeringBehaviours::CreateFeelers()
 	m_Feelers[1] = temp;
 	
 	//right wall detector 
-	Vector2 temp = m_Agent->GetTransform()->m_Pos + (m_Agent->Heading() * m_Agent->GetVehicleParams()->GetWallDetectionFeelerLength() / 2.0f);
+	temp = m_Agent->GetTransform()->m_Pos + (m_Agent->Heading() * m_Agent->GetVehicleParams()->GetWallDetectionFeelerLength() / 2.0f);
 	temp = rotateVector2(temp, PI * 0.25f, true);
 	m_Feelers[2] = temp;
 
@@ -352,26 +363,32 @@ void SteeringBehaviours::CreateFeelers()
 
 Vector2 SteeringBehaviours::Cohesion(const vector<VehicleAgent*>& _agents)
 {
+	return Vec2_Zero();
 }
 
 Vector2 SteeringBehaviours::Alignment(const vector<VehicleAgent*>& _agents)
 {
+	return Vec2_Zero();
 }
 
 Vector2 SteeringBehaviours::Separation(const vector<VehicleAgent*>& _agents)
 {
+	return Vec2_Zero();
 }
 
 Vector2 SteeringBehaviours::CohesionCSP(const vector<VehicleAgent*>& _agents)
 {
+	return Vec2_Zero();
 }
 
 Vector2 SteeringBehaviours::AlignmentCSP(const vector<VehicleAgent*>& _agents)
 {
+	return Vec2_Zero();
 }
 
 Vector2 SteeringBehaviours::SeparationCSP(const vector<VehicleAgent*>& _agents)
 {
+	return Vec2_Zero();
 }
 
 Vector2 SteeringBehaviours::CalculateWeightedSum()

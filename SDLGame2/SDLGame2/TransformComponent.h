@@ -1,12 +1,13 @@
 #pragma once
 #include "BasicIncludes.h"
 #include "CustomMaths.h"
+#include "Component.h"
 
 //this is just for testing purpose
 class TransformComponent : public Component
 {
 public:
-	TransformComponent();
+	TransformComponent(GameObject* _owner);
 	~TransformComponent();
 
 	void Update(float _deltaTime)override;

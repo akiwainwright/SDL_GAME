@@ -41,7 +41,7 @@ public:
 	}
 
 	//this can be used to vary the accuracy of a player's kick.
-	Vector2 AddNoiseToKick(Vector2& _ballPos, Vector2& _ballTarget);
+	Vector2 AddNoiseToKick(Vector2& _ballPos, Vector2& _ballTarget, FootballPlayer* _player);
 
 private:
 	//keeps a record of the ball's position at the last update

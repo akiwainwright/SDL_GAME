@@ -263,7 +263,7 @@ void KickBallState::Execute(FootballFieldPlayer* _agent)
 	if (_agent->GetTeam()->CanShoot(_agent->GetFootball()->GetTransform()->m_Pos, power, ballTarget)||RandFloat() < 10)//create a parameter class and put the variable chancePlayerAttemptsShot here
 	{
 		//Add some noise to the kick. The amount of noise can be adjusted by altering the kickaccuracy variable in the parameter class
-		ballTarget = _agent->GetFootball()->AddNoiseToKick(_agent->GetFootball()->GetTransform()->m_Pos, ballTarget);
+		ballTarget = _agent->GetFootball()->AddNoiseToKick(_agent->GetFootball()->GetTransform()->m_Pos, ballTarget, _agent);
 
 		Vector2 kickDirection = ballTarget - _agent->GetFootball()->GetTransform()->m_Pos;
 

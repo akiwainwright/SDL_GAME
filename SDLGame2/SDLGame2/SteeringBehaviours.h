@@ -1,6 +1,7 @@
 #pragma once
 #include "CustomMaths.h"
 #include "BasicIncludes.h"
+#include "Path.h"
 
 class VehicleAgent;
 class GameObject;
@@ -18,7 +19,6 @@ public:
 	float SideComponent();
 
 	void CreatePath(int _numWaypoints, int _mx, int _my, int _cx, int _cy) { m_Path->CreateRandomPath(_numWaypoints, _mx, _my, _cx, _cy); }
-	void SetPath(list<Vector2> _newPath);
 	void SetTarget(Vector2 _pos);
 	Vector2 GetTarget() { return m_Target; }
 	void SetTargetAgent(VehicleAgent* _agent);
@@ -31,6 +31,7 @@ public:
 	void Arrive(bool _Activate) { m_bArrive = _Activate; }
 	void Wander(bool _Activate) { m_bWander = _Activate; }
 	void Pursuit(bool _Activate, VehicleAgent* _agent) { m_bPursuit = _Activate; m_TargetAgent = _agent; }
+	bool IsPursuit() { return m_bPursuit; }
 	void Evade(bool _Activate, VehicleAgent* _agent) { m_bEvade = _Activate;  m_TargetAgent = _agent;}
 	void Cohesion(bool _Activate) { m_bCohesion = _Activate; }
 	void Separation(bool _Activate) { m_bSeparation = _Activate; }
@@ -88,7 +89,7 @@ private:
 
 	vector<Vector2> m_Feelers;
 
-	class Path* m_Path;
+	Path* m_Path;
 	float m_WayPointsSeekDist;
 
 	bool m_bCSP;

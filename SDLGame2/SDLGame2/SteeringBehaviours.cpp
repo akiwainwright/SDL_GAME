@@ -41,10 +41,6 @@ float SteeringBehaviours::SideComponent()
 	return Vector2::DotProduct(m_Agent->Side(),( m_SteeringForce* m_Agent->GetVehicleParams()->GetMaxTurnRate()));
 }
 
-void SteeringBehaviours::SetPath(list<Vector2> _newPath)
-{
-	m_Path->Set(_newPath);
-}
 
 void SteeringBehaviours::SetTarget(Vector2 _pos)
 {
@@ -344,7 +340,7 @@ void SteeringBehaviours::CreateFeelers()
 	m_Feelers[1] = temp;
 	
 	//right wall detector 
-	Vector2 temp = m_Agent->GetTransform()->m_Pos + (m_Agent->Heading() * m_Agent->GetVehicleParams()->GetWallDetectionFeelerLength() / 2.0f);
+	temp = m_Agent->GetTransform()->m_Pos + (m_Agent->Heading() * m_Agent->GetVehicleParams()->GetWallDetectionFeelerLength() / 2.0f);
 	temp = rotateVector2(temp, PI * 0.25f, true);
 	m_Feelers[2] = temp;
 

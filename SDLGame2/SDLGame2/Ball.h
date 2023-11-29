@@ -2,6 +2,8 @@
 #include "CustomMaths.h"
 #include "VehicleAgent.h"
 
+class Game;
+
 class Ball: public VehicleAgent
 {
 public:

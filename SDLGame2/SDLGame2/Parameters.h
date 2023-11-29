@@ -332,10 +332,10 @@ private:
 #pragma endregion
 
 
-class FootballParameters
+class FootballPlayerParameters
 {
 public:
-	FootballParameters() {}
+	FootballPlayerParameters() {}
 
 
 
@@ -362,11 +362,9 @@ public:
 
 
 	//max steering force
-	double PlayerMaxForce;
 	double PlayerMaxSpeedWithBall;
 	double PlayerMaxSpeedWithoutBall;
 	double PlayerMaxTurnRate;
-	double PlayerScale;
 	double PlayerComfortZone;
 
 	double PlayerKickingDistance;
@@ -414,8 +412,6 @@ public:
 	double  BallWithinReceivingRange;
 	double  BallWithinReceivingRangeSq;
 
-
-private:
 	
 };
 

@@ -63,6 +63,8 @@ Vector2 Ball::FuturePosition(float _time)
 
 void Ball::Control(FootballPlayer* _owner)
 {
+    SetVelocity(Vector2(0.0f, 0.0f));
+    //Vector2::Zero() - Vector2(0.0f, 0.0f);
 }
 
 Vector2 Ball::AddNoiseToKick(Vector2& _ballPos, Vector2& _ballTarget, FootballPlayer* _player)

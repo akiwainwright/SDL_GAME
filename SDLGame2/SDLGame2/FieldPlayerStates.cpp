@@ -281,7 +281,7 @@ void KickBallState::Execute(FootballFieldPlayer* _agent)
 	power = dot * 10;//create a parameter class and put the variable max passing force here
 	if (_agent->IsBeingPressured() && _agent->GetTeam()->FindPass(_agent,receiver, ballTarget, power, 10))//create a parameter class and put the variable min passing distance here
 	{
-		ballTarget = _agent->GetFootball()->AddNoiseToKick(_agent->GetFootball()->GetTransform()->m_Pos, ballTarget);
+		ballTarget = _agent->GetFootball()->AddNoiseToKick(_agent->GetFootball()->GetTransform()->m_Pos, ballTarget, _agent);
 
 		Vector2 kickDirection = ballTarget - _agent->GetFootball()->GetTransform()->m_Pos;
 
@@ -331,7 +331,7 @@ void ReceiveBallState::Enter(FootballFieldPlayer* _agent)
 	//is in the opponents half
 
 	const float passThreatRadius = 70.0f;
-	if (_agent-> || && !_agent->GetTeam()->IsOpponentWithinRadius(_agent->GetTransform()->m_Pos, ))//in opp's region//parameter - pass threat radius
+	if (_agent-> || && !_agent->GetTeam()->IsOpponentWithinRadius(_agent->GetTransform()->m_Pos, passThreatRadius))//in opp's region//parameter - pass threat radius
 	{
 		_agent->GetSteering()->Arrive(true);
 		//activate arrive
@@ -353,7 +353,7 @@ void ReceiveBallState::Execute(FootballFieldPlayer* _agent)
 
 	}
 
-	if (_agent->GetSteering()->)//pursuit is activate
+	if (_agent->GetSteering()->IsPursuit())//pursuit is activate
 	{
 		_agent->SetTarget(_agent->GetFootball()->GetTransform()->m_Pos);
 	}

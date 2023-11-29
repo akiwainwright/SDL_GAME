@@ -5,6 +5,7 @@
 
 class GameObject;
 class Actor;
+class VehicleAgent;
 
 class GameModeBase
 {

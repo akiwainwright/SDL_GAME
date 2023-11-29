@@ -97,6 +97,12 @@ void Game::Shutdown()
 
 void Game::AddActor(Actor* _actor)
 {
+	if (_actor == nullptr) return;
+	auto iter = std::find(m_Actors.begin(), m_Actors.end(), _actor);
+	if (iter != m_Actors.end())
+	{
+		m_PendingActors.emplace_back(_actor);
+	}
 }
 
 void Game::RemoveActor(Actor* _actor)

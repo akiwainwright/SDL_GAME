@@ -63,6 +63,7 @@ bool GlobalKeeperState::OnMessage(FootballGoalKeeper* _agent, const Telegram& _t
 void TendGoalState::Enter(FootballGoalKeeper* _agent)
 {
 	//activate interpose
+	_agent->GetSteering()->Interpose(true);
 	_agent->SetTarget();
 }
 

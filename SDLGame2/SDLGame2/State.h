@@ -32,7 +32,7 @@ public:
 	State<Actor>* CurrentState() const { return m_CurrentState; }
 	State<Actor>* PreviousState() const { return m_PreviousState; }
 	//bool IsInState(const State<Actor>& _state) const { return _state == m_CurrentState || _state == m_GlobalState; }
-	bool IsInState(const State<Actor>& _state) const { return typeid(*m_CurrentState) == typeid(_state) }
+	bool IsInState(const State<Actor>& _state) const { return typeid(*m_CurrentState) == typeid(_state); }
 
 public:
 	StateMachine(Actor* _agent) :m_Agent(_agent), m_GlobalState(nullptr), m_CurrentState(nullptr), m_PreviousState(nullptr) {}

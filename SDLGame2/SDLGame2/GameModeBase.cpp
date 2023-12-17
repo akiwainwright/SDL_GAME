@@ -58,8 +58,8 @@ void GameModeBase::SetUpGameObjects()
 {
 	TextureManager::GetInstance()->CreateTexture("Player Run", "Assets/Textures/noBKG_KnightRun_strip.png");
 
-	m_TestObject = new GameObject(this, "test", EActive);
+	/*m_TestObject = new GameObject(this, "test", EActive);
 
 	m_TestObject->AddComponent(new Animator(m_TestObject));
-	m_TestObject->GetComponent<Animator>()->SetAnimValues(768, 64, 1, 8, 1, 8, 30.0f);
+	m_TestObject->GetComponent<Animator>()->SetAnimValues(768, 64, 1, 8, 1, 8, 30.0f);*/
 }

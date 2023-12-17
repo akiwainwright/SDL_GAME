@@ -346,29 +346,29 @@ void SteeringBehaviours::CreateFeelers()
 
 }
 
-Vector2 SteeringBehaviours::Cohesion(const vector<VehicleAgent*>& _agents)
-{
-}
-
-Vector2 SteeringBehaviours::Alignment(const vector<VehicleAgent*>& _agents)
-{
-}
-
-Vector2 SteeringBehaviours::Separation(const vector<VehicleAgent*>& _agents)
-{
-}
-
-Vector2 SteeringBehaviours::CohesionCSP(const vector<VehicleAgent*>& _agents)
-{
-}
-
-Vector2 SteeringBehaviours::AlignmentCSP(const vector<VehicleAgent*>& _agents)
-{
-}
-
-Vector2 SteeringBehaviours::SeparationCSP(const vector<VehicleAgent*>& _agents)
-{
-}
+//Vector2 SteeringBehaviours::Cohesion(const vector<VehicleAgent*>& _agents)
+//{
+//}
+//
+//Vector2 SteeringBehaviours::Alignment(const vector<VehicleAgent*>& _agents)
+//{
+//}
+//
+//Vector2 SteeringBehaviours::Separation(const vector<VehicleAgent*>& _agents)
+//{
+//}
+//
+//Vector2 SteeringBehaviours::CohesionCSP(const vector<VehicleAgent*>& _agents)
+//{
+//}
+//
+//Vector2 SteeringBehaviours::AlignmentCSP(const vector<VehicleAgent*>& _agents)
+//{
+//}
+//
+//Vector2 SteeringBehaviours::SeparationCSP(const vector<VehicleAgent*>& _agents)
+//{
+//}
 
 Vector2 SteeringBehaviours::CalculateWeightedSum()
 {

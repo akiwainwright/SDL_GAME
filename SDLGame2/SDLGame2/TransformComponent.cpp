@@ -1,6 +1,6 @@
 #include "TransformComponent.h"
 
-TransformComponent::TransformComponent()
+TransformComponent::TransformComponent(GameObject* _owner) :Component(_owner)
 {
 }
 

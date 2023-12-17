@@ -42,7 +42,7 @@ void FootballFieldPlayer::UpdateGameObject(float _deltaTime)
   //can only turn by PlayerMaxTurnRate rads per update.
 	double TurningForce = GetSteering()->SideComponent();
 
-	 SDL_clamp(TurningForce,PlayerMaxTurnRate, PlayerMaxTurnRate);
+	 SDL_clamp(TurningForce,-GetFootballPlayerParameters()->GetPlayerMaxTurnRate(), GetFootballPlayerParameters()->GetPlayerMaxTurnRate());
 
 	//rotate the heading vector
 	rotateVector2(Heading(), TurningForce);

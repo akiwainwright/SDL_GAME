@@ -4,21 +4,37 @@
 
 
 
-struct Region
+class Region
 {
-	Vector2 m_TopLeft;
-	Vector2 m_BotLeft;
-	Vector2 m_TopRight;
-	Vector2 m_BotRight;
+	int m_ID;
+	float m_Top;
+	float m_Bot;
+	float m_Right;
+	float m_Left;
+	float m_Width;
+	float m_Height;
 	Vector2 m_Centre;
 	
+public:
 
+	Region(float _left,
+		float _bot,
+		float _top,
+		float _right,
+		int _id = -1) :m_Top(_top), m_Right(_right), m_Left(_left), m_Bot(_bot), m_ID(_id)
+	{
+		m_Centre = Vector2((_left + _right) * 0.5f, (_top + _bot) * 0.5f);
+		m_Width = fabs(_right - _left);
+		m_Height = fabs(_bot - _top);
+	}
 
-	Region(Vector2 m_TopLeft,
-		Vector2 m_BotLeft,
-		Vector2 m_TopRight,
-		Vector2 m_BotRight,
-		Vector2 m_Centre){}
+	bool Inside(Vector2 _pos) {
+		return ((_pos.x > m_Left) && (_pos.x < m_Left) && (_pos.y > m_Top) && (_pos.y < m_Bot));
+	}
+
+	Vector2 Centre()const { return m_Centre; }
+	int GetID()const { return m_ID; }
+
 };
 
 class FootballPitch

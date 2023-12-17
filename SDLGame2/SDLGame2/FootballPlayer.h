@@ -4,6 +4,7 @@
 #include "FootballTeam.h"
 
 
+
 class Ball;
 
 enum Position
@@ -17,7 +18,7 @@ enum Position
 class FootballPlayer : public VehicleAgent
 {
 public:
-	FootballPlayer(FootballTeam* _homeTeam, int _homeRegion, Vector2 _heading, Vector2 _velocity,  FootballParameters* _FootballParams, float _scale, Position _playerPosition);
+	FootballPlayer(FootballTeam* _homeTeam, int _homeRegion, Vector2 _heading, Vector2 _velocity, FootballPlayerParameters* _FootballParams, float _scale, Position _playerPosition);
 	virtual ~FootballPlayer();
 
 	void UpdateGameObject(float _deltaTime) override;
@@ -40,6 +41,7 @@ public:
 	bool AtTarget()const;
 	bool IsPossessingPlayer()const;
 	bool InHomeRegion()const;
+	bool InEnemyRegion()const;//if the player is in the opponents goal
 	bool IsAheadOfAttacker()const;
 	bool PositionInFrontOfPlayer(Vector2 _position)const;
 	bool NextToOppGoal();
@@ -48,14 +50,14 @@ public:
 	void TrackTarget();//rotates the player to face the target 
 
 	class FootballPitch* GetFootballPitch();
-
+	FootballPlayerParameters* GetFootballPlayerParameters() { return m_FootballParameters;  }
 	void SetDefaultHomeRegion();
 
 	Ball* const GetFootball()const;
 
 	void FindSupport()const;
 
-	class FootballTeam* GetTeam();
+	FootballTeam* GetTeam();
 
 	Position PlayerPosition()const { return m_PlayerPosition; }
 
@@ -67,7 +69,7 @@ public:
 
 	void SetDefaultHomeRegion() { m_HomeRegion = m_DefaultRegion; }
 
-	const Region* const HomeRegion();
+	 Region* const HomeRegion();
 
 
 protected:
@@ -77,6 +79,7 @@ protected:
 	int m_HomeRegion;
 	int m_DefaultRegion;
 	float m_DistSqToBall;
+	FootballPlayerParameters* m_FootballParameters;
 
 
 

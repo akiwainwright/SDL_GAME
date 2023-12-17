@@ -1,8 +1,8 @@
 #pragma once
+#include "GameModeBase.h"
 
 
-
-class FootballGame
+class FootballGame : GameModeBase
 {
 public:
 	FootballGame();

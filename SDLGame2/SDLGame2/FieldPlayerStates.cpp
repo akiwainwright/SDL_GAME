@@ -29,12 +29,12 @@ void GlobalFieldPlayerState::Execute(FootballFieldPlayer* _agent)
 	if (_agent->BallWithinReceivingRange() && _agent->IsPossessingPlayer())
 	{
 		//_agent->SetMaxSpeed();//create a class for parameter//maxspeed with ball
-		_agent->GetVehicleParams()->SetMaxSpeed();
+		_agent->GetVehicleParams()->SetMaxSpeed(_agent->GetFootballPlayerParameters()->GetPlayerMaxSpeedWithBall());
 	}
 	else
 	{
 		//_agent->SetMaxSpeed();//create a class for parameter//maxspeed without  ball
-		_agent->GetVehicleParams()->SetMaxSpeed();
+		_agent->GetVehicleParams()->SetMaxSpeed(_agent->GetFootballPlayerParameters()->GetPlayerMaxSpeedWithoutBall());
 	}
 
 }
@@ -331,7 +331,7 @@ void ReceiveBallState::Enter(FootballFieldPlayer* _agent)
 	//is in the opponents half
 
 	const float passThreatRadius = 70.0f;
-	if (_agent-> || && !_agent->GetTeam()->IsOpponentWithinRadius(_agent->GetTransform()->m_Pos, passThreatRadius))//in opp's region//parameter - pass threat radius
+	if (_agent->InEnemyRegion() || RandFloat() < _agent->GetFootballPlayerParameters()->GetChanceOfUsingArriveTypeReceiveBehavior() && !_agent->GetTeam()->IsOpponentWithinRadius(_agent->GetTransform()->m_Pos, passThreatRadius))//in opp's region//parameter - pass threat radius
 	{
 		_agent->GetSteering()->Arrive(true);
 		//activate arrive
@@ -454,9 +454,9 @@ void ReturnToHomeRegionState::Enter(FootballFieldPlayer* _agent)
 {
 	//activate arrive
 	_agent->GetSteering()->Arrive(true);
-	if (!_agent->HomeRegion()->) //region code// inside steering target and halfsize
+	if (!_agent->HomeRegion()->Inside(_agent->GetSteering()->GetTarget())) //region code// inside steering target and halfsize
 	{
-		_agent->SetTarget(_agent->HomeRegion()->m_Centre);//home region
+		_agent->SetTarget(_agent->HomeRegion()->Centre());//home region
 	}
 }
 
@@ -475,7 +475,7 @@ void ReturnToHomeRegionState::Execute(FootballFieldPlayer* _agent)
 
 	//if game is in play and close enough to home, change state to wait and set the player target to his current position.
 	//So that if they gets pushed out of the position they can move back
-	if (_agent->GetFootballPitch()->GameIsActive() && _agent->HomeRegion()->)//inside, pos and halfsize
+	if (_agent->GetFootballPitch()->GameIsActive() && _agent->HomeRegion()->Inside(_agent->GetSteering()->GetTarget()))//inside, pos and halfsize
 	{
 		_agent->SetTarget(_agent->GetTransform()->m_Pos);
 		_agent->GetStateMachine()->ChangeState(WaitState::Instance());
@@ -509,7 +509,7 @@ void WaitState::Enter(FootballFieldPlayer* _agent)
 	//if the game is not in play, make sure the target is the center of the player's home region. This makes sure all the players are in the correct region
 	if (!_agent->GetFootballPitch()->GameIsActive())//game is not in play
 	{
-		_agent->SetTarget(_agent->HomeRegion()->m_Centre);//region centre
+		_agent->SetTarget(_agent->HomeRegion()->Centre());//region centre
 
 	}
 }

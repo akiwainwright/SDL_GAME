@@ -52,6 +52,6 @@ private:
 
 	class GameObject* m_TestObject;
 
-	//GameModeBase* MainMenu;
+	GameModeBase* MainMenu;
 
 };

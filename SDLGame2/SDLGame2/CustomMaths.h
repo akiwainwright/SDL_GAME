@@ -103,6 +103,7 @@ public:
 	}
 
 
+
 	Vector2 operator*(const float& scalar)
 	{
 		Vector2 result;
@@ -198,15 +199,8 @@ public:
 };
 
 
-Vector2 operator-(const Vector2& lhs, const Vector2& rhs)
-{
-	Vector2 result(lhs);
 
-	result.x -= rhs.x ;
-	result.y -= rhs.y;
-
-	return result;
-}
+Vector2 operator-(const Vector2& lhs, const Vector2& rhs);
 
 inline Vector2 translateVector2(Vector2 startPos, Vector2 displacementVector) { return startPos + displacementVector; }
 
@@ -219,20 +213,7 @@ inline Vector2 translateVector2(Vector2 startPos, Vector2 displacementVector) { 
 Vector2 rotateVector2(Vector2 position, float angle);
 
 
-Vector2 rotateVector2(Vector2 position, float angle, bool _clockwise) {
-	Vector2 temp;
-	if (_clockwise)
-	{
-		temp.x = position.x * cosf(angle) + position.y * sinf(angle);
-		temp.x = -1 * (position.x * sinf(angle)) + position.y * cosf(angle);
-	}
-	else
-	{
-		temp.x = position.x * cosf(angle) - position.y * sinf(angle);
-		temp.x =  (position.x * sinf(angle)) + position.y * cosf(angle);
-	}
-	return temp;
-}
+Vector2 rotateVector2(Vector2 position, float angle, bool _clockwise);
 
 /// <summary>
 /// Rotates a point around a given pivot anti-clockwise by a given angle in radians
@@ -252,16 +233,9 @@ bool LineIntersection(Vector2 _a, Vector2 _b, Vector2 _c, Vector2 _d, float &_di
 //given 2 lines in 2d space AB, CD this returns true if an intersection occurs and sets dist to the dist the intersection occurs along AB. Also sets the 2D vector point to the point of intersection
 bool LineIntersection(Vector2 _a, Vector2 _b, Vector2 _c, Vector2 _d, float &_dist, Vector2& _point);
 
-//compares two real numbers. Returns true if they are equal
-bool IsEqual(float _a, float _b)
-{
-	if (fabs(_a - _b) < 1E-12)
-	{
-		return true;
-	}
 
-	return false;
-}
+//compares two real numbers. Returns true if they are equal
+bool IsEqual(float _a, float _b);
 
 //returns a random double between zero and 1
 inline double RandFloat() { return ((rand()) / (RAND_MAX + 1.0)); }

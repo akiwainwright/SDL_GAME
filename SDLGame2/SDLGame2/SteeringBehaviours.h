@@ -65,14 +65,14 @@ private:
 
 	//Group behaviours
 	
-	Vector2 Cohesion(const vector<VehicleAgent*> &_agents);
-	Vector2 Alignment(const vector<VehicleAgent*>& _agents);
-	Vector2 Separation(const vector<VehicleAgent*>& _agents);
+	//Vector2 Cohesion(const vector<VehicleAgent*> &_agents);
+	//Vector2 Alignment(const vector<VehicleAgent*>& _agents);
+	//Vector2 Separation(const vector<VehicleAgent*>& _agents);
 
-	//cell space partitioning
-	Vector2 CohesionCSP(const vector<VehicleAgent*>& _agents);
-	Vector2 AlignmentCSP(const vector<VehicleAgent*>& _agents);
-	Vector2 SeparationCSP(const vector<VehicleAgent*>& _agents);
+	////cell space partitioning
+	//Vector2 CohesionCSP(const vector<VehicleAgent*>& _agents);
+	//Vector2 AlignmentCSP(const vector<VehicleAgent*>& _agents);
+	//Vector2 SeparationCSP(const vector<VehicleAgent*>& _agents);
 
 	Vector2 CalculateWeightedSum();
 

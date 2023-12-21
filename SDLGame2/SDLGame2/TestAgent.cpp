@@ -3,14 +3,11 @@
 
 
 
-//TestAgent::TestAgent(GameModeBase* _gameMode, string _name, ActorState _state) : GameObject(_gameMode, _name, _state)
-//{
-//	m_StateMachine = new StateMachine<TestAgent>(this);
-//}
-TestAgent::TestAgent(Game* _gameMode, string _name, ActorState _state) : GameObject(_gameMode, _name, _state)
+TestAgent::TestAgent(GameModeBase* _gameMode, string _name, ActorState _state) : GameObject(_gameMode, _name, _state)
 {
 	m_StateMachine = new StateMachine<TestAgent>(this);
 }
+
 
 void TestAgent::UpdateGameObject(float _deltaTime)
 {

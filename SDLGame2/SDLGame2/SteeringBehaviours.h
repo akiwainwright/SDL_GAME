@@ -1,13 +1,11 @@
 #pragma once
 #include "CustomMaths.h"
 #include "BasicIncludes.h"
+#include "Path.h"
 
 class VehicleAgent;
 class GameObject;
 class Actor;
-class Path;
-
-
 //TODO: Dfferent summing method, flocking behaviours + offset pursuit, Space Partitioning(AKI)
 class SteeringBehaviours
 {
@@ -20,19 +18,20 @@ public:
 	float ForwardComponent();
 	float SideComponent();
 
-	void CreatePath(int _numWaypoints, int _mx, int _my, int _cx, int _cy);
-	void SetPath(list<Vector2> _newPath);
+	void CreatePath(int _numWaypoints, int _mx, int _my, int _cx, int _cy) { m_Path->CreateRandomPath(_numWaypoints, _mx, _my, _cx, _cy); }
 	void SetTarget(Vector2 _pos);
 	Vector2 GetTarget() { return m_Target; }
 	void SetTargetAgent(VehicleAgent* _agent);
 	void SetTargetAgent2(VehicleAgent* _agent) { m_TargetAgent2 = _agent; }
 	void SetTargetAgents(VehicleAgent* _agent, VehicleAgent* _agent2) { m_TargetAgent = _agent; m_TargetAgent2 = _agent2; }
+	void SetPath(list<Vector2> _newPath) { m_Path->Set(_newPath); }
 	void CSP(bool _Activate){ m_bCSP = _Activate; }
 	void Seek(bool _Activate){ m_bSeek = _Activate; }
 	void Flee(bool _Activate) { m_bFlee = _Activate; }
 	void Arrive(bool _Activate) { m_bArrive = _Activate; }
 	void Wander(bool _Activate) { m_bWander = _Activate; }
 	void Pursuit(bool _Activate, VehicleAgent* _agent) { m_bPursuit = _Activate; m_TargetAgent = _agent; }
+	bool IsPursuit() { return m_bPursuit; }
 	void Evade(bool _Activate, VehicleAgent* _agent) { m_bEvade = _Activate;  m_TargetAgent = _agent;}
 	void Cohesion(bool _Activate) { m_bCohesion = _Activate; }
 	void Separation(bool _Activate) { m_bSeparation = _Activate; }
@@ -66,14 +65,14 @@ private:
 
 	//Group behaviours
 	
-	Vector2 Cohesion(const vector<VehicleAgent*> &_agents);
-	Vector2 Alignment(const vector<VehicleAgent*>& _agents);
-	Vector2 Separation(const vector<VehicleAgent*>& _agents);
+	//Vector2 Cohesion(const vector<VehicleAgent*> &_agents);
+	//Vector2 Alignment(const vector<VehicleAgent*>& _agents);
+	//Vector2 Separation(const vector<VehicleAgent*>& _agents);
 
-	//cell space partitioning
-	Vector2 CohesionCSP(const vector<VehicleAgent*>& _agents);
-	Vector2 AlignmentCSP(const vector<VehicleAgent*>& _agents);
-	Vector2 SeparationCSP(const vector<VehicleAgent*>& _agents);
+	////cell space partitioning
+	//Vector2 CohesionCSP(const vector<VehicleAgent*>& _agents);
+	//Vector2 AlignmentCSP(const vector<VehicleAgent*>& _agents);
+	//Vector2 SeparationCSP(const vector<VehicleAgent*>& _agents);
 
 	Vector2 CalculateWeightedSum();
 
@@ -90,7 +89,7 @@ private:
 
 	vector<Vector2> m_Feelers;
 
-	class Path* m_Path;
+	Path* m_Path;
 	float m_WayPointsSeekDist;
 
 	bool m_bCSP;

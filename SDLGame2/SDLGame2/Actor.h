@@ -22,8 +22,9 @@ enum Tag
 class Actor
 {
 public:
-	Actor(class GameModeBase* _gameMode, string _Name, Tag _tag = UNTAGGED);
+	Actor(class GameModeBase* _game, string _Name, Tag _tag = UNTAGGED);
 	virtual void Update(float _deltaTime) {}
+	virtual void Render(){}
 	virtual ~Actor();
 	ActorState GetState() const{ return m_ActorState; }
 	Tag GetTag()const {}
@@ -32,6 +33,7 @@ public:
 
 protected:
 	GameModeBase* m_GameMode;
+	
 	ActorState m_ActorState;
 	string m_Name;
 	Tag m_Tag;

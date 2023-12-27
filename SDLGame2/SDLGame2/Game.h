@@ -35,13 +35,22 @@ private:
 
 	static Game* s_Instance;
 
+
+	 void ProcessInput();
+	 void UpdateGame(float _deltaTime);
+	 void RenderLoop(float _deltaTime);
+
 	bool m_IsRunning;
 
 	float m_deltaTime;
 
 	SDL_Window* m_Window;
 	SDL_Renderer* m_Renderer;
-	
+	vector<class Actor*> m_Actors;
+	vector<class Actor*> m_PendingActors;
+	bool m_UpdatingActor;
+
+	class GameObject* m_TestObject;
 
 	GameModeBase* MainMenu;
 

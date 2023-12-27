@@ -332,90 +332,165 @@ private:
 #pragma endregion
 
 
-class FootballParameters
+class FootballPlayerParameters
 {
 public:
-	FootballParameters() {}
+	FootballPlayerParameters() {}
+
+	int GetNumSupportSpotsX(){return m_NumSupportSpotsX;}
+	int GetNumSupportSpotsY() { return m_NumSupportSpotsY; }
+	void SetNumSupportSpotsX(int& _val){ m_NumSupportSpotsX = _val;}
+	void SetNumSupportSpotsY(int& _val) { m_NumSupportSpotsY = _val; }
 
 
+	void SetSpotPassSafeScore(float& _val){ m_SpotPassSafeScore = _val;}
+	void SetSpotCanScoreFromPositionScore(float& _val) { m_SpotCanScoreFromPositionScore = _val;}
+	void SetSpotDistFromControllingPlayerScore(float& _val) { m_SpotDistFromControllingPlayerScore = _val;}
+	void SetSpotClosenessToSupportingPlayerScore(float& _val) { m_SpotClosenessToSupportingPlayerScore = _val;}
+	void SetSpotAheadOfAttackerScore(float& _val) { m_SpotAheadOfAttackerScore = _val;}
+	void SetSupportSpotUpdateFreq(float& _val) { m_SupportSpotUpdateFreq = _val;}
+	void SetChancePlayerAttemptsPotShot(float& _val) { m_ChancePlayerAttemptsPotShot = _val;}
+	void SetChanceOfUsingArriveTypeReceiveBehavior(float& _val) { m_ChanceOfUsingArriveTypeReceiveBehavior = _val;}
+	void SetKeeperInBallRange(float& _val) { m_KeeperInBallRange = _val;}
+	void SetKeeperInBallRangeSq(float& _val) { m_KeeperInBallRangeSq = _val;}
+	void SetPlayerInTargetRange(float& _val) { m_PlayerInTargetRange = _val;}
+	void SetPlayerInTargetRangeSq(float& _val) { m_PlayerInTargetRangeSq = _val;}
+	void SetPlayerMaxSpeedWithBall(float& _val) { m_PlayerMaxSpeedWithBall = _val;}
+	void SetPlayerMaxSpeedWithoutBall(float& _val) { m_PlayerMaxSpeedWithoutBall = _val;}
+	void SetPlayerMaxTurnRate(float& _val) { m_PlayerMaxTurnRate = _val;}
+	void SetPlayerComfortZone(float& _val) { m_PlayerComfortZone = _val;}
+	void SetPlayerKickingDistance(float& _val) { m_PlayerKickingDistance = _val;}
+	void SetPlayerKickingDistanceSq(float& _val) { m_PlayerKickingDistanceSq = _val;}
+	void SetPlayerKickFrequency(float& _val) { m_PlayerKickFrequency = _val;}
+	void SetMaxDribbleForce(float& _val) { m_MaxDribbleForce = _val;}
+	void SetMaxShootingForce(float& _val) { m_MaxShootingForce = _val;}
+	void SetMaxPassingForce(float& _val) { m_MaxPassingForce = _val;}
+	void SetPlayerComfortZoneSq(float& _val) { m_PlayerComfortZoneSq = _val;}
+	void SetPlayerKickingAccuracy(float& _val) { m_PlayerKickingAccuracy = _val;}
+	void SetNumAttemptsToFindValidStrike(int& _val) { m_NumAttemptsToFindValidStrike = _val;}
+	void SetWithinRangeOfHome(float& _val) { m_WithinRangeOfHome = _val;}
+	void SetWithinRangeOfSupportSpot(float& _val) { m_WithinRangeOfSupportSpot = _val;}
+	void SetWithinRangeOfSupportSpotSq(float& _val) { m_WithinRangeOfSupportSpotSq = _val;}
+	void SetMinPassDist(float& _val) { m_MinPassDist = _val;}
+	void SetGoalkeeperMinPassDist(float& _val) { m_GoalkeeperMinPassDist = _val;}
+	void SetGoalKeeperTendingDistance(float& _val) { m_GoalKeeperTendingDistance = _val;}
+	void SetGoalKeeperInterceptRange(float& _val) { m_GoalKeeperInterceptRange = _val;}
+	void SetGoalKeeperInterceptRangeSq(float& _val) { m_GoalKeeperInterceptRangeSq = _val;}
+	void SetBallWithinReceivingRange(float& _val) { m_BallWithinReceivingRange = _val;}
+	void SetBallWithinReceivingRangeSq(float& _val) { m_BallWithinReceivingRangeSq = _val; }
 
-	int   NumSupportSpotsX;
-	int   NumSupportSpotsY;
+
+	float& GetSpotPassSafeScore(){ return m_SpotPassSafeScore; }
+	float& GetSpotCanScoreFromPositionScore() { return m_SpotCanScoreFromPositionScore; }
+	float& GetSpotDistFromControllingPlayerScore() { return m_SpotDistFromControllingPlayerScore; }
+	float& GetSpotClosenessToSupportingPlayerScore() { return m_SpotClosenessToSupportingPlayerScore; }
+	float& GetSpotAheadOfAttackerScore() { return m_SpotAheadOfAttackerScore; }
+	float& GetSupportSpotUpdateFreq() { return m_SupportSpotUpdateFreq; }
+	float& GetChancePlayerAttemptsPotShot() { return m_ChancePlayerAttemptsPotShot; }
+	float& GetChanceOfUsingArriveTypeReceiveBehavior() { return m_ChanceOfUsingArriveTypeReceiveBehavior; }
+	float& GetKeeperInBallRange() { return m_KeeperInBallRange; }
+	float& GetKeeperInBallRangeSq() { return m_KeeperInBallRangeSq; }
+	float& GetPlayerInTargetRange() { return m_PlayerInTargetRange; }
+	float& GetPlayerInTargetRangeSq() { return m_PlayerInTargetRangeSq; }
+	float& GetPlayerMaxSpeedWithBall() { return m_PlayerMaxSpeedWithBall; }
+	float& GetPlayerMaxSpeedWithoutBall() { return m_PlayerMaxSpeedWithoutBall; }
+	float& GetPlayerMaxTurnRate() { return m_PlayerMaxTurnRate; }
+	float& GetPlayerComfortZone() { return m_PlayerComfortZone; }
+	float& GetPlayerKickingDistance() { return m_PlayerKickingDistance; }
+	float& GetPlayerKickingDistanceSq() { return m_PlayerKickingDistanceSq; }
+	float& GetPlayerKickFrequency() { return m_PlayerKickFrequency; }
+	float& GetMaxDribbleForce() { return m_MaxDribbleForce; }
+	float& GetMaxShootingForce() { return m_MaxShootingForce; }
+	float& GetMaxPassingForce() { return m_MaxPassingForce; }
+	float& GetPlayerComfortZoneSq() { return m_PlayerComfortZoneSq; }
+	float& GetPlayerKickingAccuracy() { return m_PlayerKickingAccuracy; }
+	int  & GetNumAttemptsToFindValidStrike() { return m_NumAttemptsToFindValidStrike; }
+	float& GetWithinRangeOfHome() { return m_WithinRangeOfHome; }
+	float& GetWithinRangeOfSupportSpot() { return m_WithinRangeOfSupportSpot; }
+	float& GetWithinRangeOfSupportSpotSq() { return m_WithinRangeOfSupportSpotSq; }
+	float& GetMinPassDist() { return m_MinPassDist; }
+	float& GetGoalkeeperMinPassDist() { return m_GoalkeeperMinPassDist; }
+	float& GetGoalKeeperTendingDistance() { return m_GoalKeeperTendingDistance; }
+	float& GetGoalKeeperInterceptRange() { return m_GoalKeeperInterceptRange; }
+	float& GetGoalKeeperInterceptRangeSq() { return m_GoalKeeperInterceptRangeSq; }
+	float& GetBallWithinReceivingRange() { return m_BallWithinReceivingRange; }
+	float& GetBallWithinReceivingRangeSq() { return m_BallWithinReceivingRangeSq; }
+
+	private:
+
+	int   m_NumSupportSpotsX;
+	int   m_NumSupportSpotsY;
 
 	//these values tweak the various rules used to calculate the support spots
-	double Spot_PassSafeScore;
-	double Spot_CanScoreFromPositionScore;
-	double Spot_DistFromControllingPlayerScore;
-	double Spot_ClosenessToSupportingPlayerScore;
-	double Spot_AheadOfAttackerScore;
+	float m_SpotPassSafeScore;
+	float m_SpotCanScoreFromPositionScore;
+	float m_SpotDistFromControllingPlayerScore;
+	float m_SpotClosenessToSupportingPlayerScore;
+	float m_SpotAheadOfAttackerScore;
 
-	double SupportSpotUpdateFreq;
+	float m_SupportSpotUpdateFreq;
 
-	double ChancePlayerAttemptsPotShot;
-	double ChanceOfUsingArriveTypeReceiveBehavior;
+	float m_ChancePlayerAttemptsPotShot;
+	float m_ChanceOfUsingArriveTypeReceiveBehavior;
 
-	double KeeperInBallRange;
-	double KeeperInBallRangeSq;
+	float m_KeeperInBallRange;
+	float m_KeeperInBallRangeSq;
 
-	double PlayerInTargetRange;
-	double PlayerInTargetRangeSq;
+	float m_PlayerInTargetRange;
+	float m_PlayerInTargetRangeSq;
 
 
 	//max steering force
-	double PlayerMaxForce;
-	double PlayerMaxSpeedWithBall;
-	double PlayerMaxSpeedWithoutBall;
-	double PlayerMaxTurnRate;
-	double PlayerScale;
-	double PlayerComfortZone;
+	float m_PlayerMaxSpeedWithBall;
+	float m_PlayerMaxSpeedWithoutBall;
+	float m_PlayerMaxTurnRate;
+	float m_PlayerComfortZone;
 
-	double PlayerKickingDistance;
-	double PlayerKickingDistanceSq;
+	float m_PlayerKickingDistance;
+	float m_PlayerKickingDistanceSq;
 
-	double PlayerKickFrequency;
+	float m_PlayerKickFrequency;
 
-	double  MaxDribbleForce;
-	double  MaxShootingForce;
-	double  MaxPassingForce;
+	float  m_MaxDribbleForce;
+	float  m_MaxShootingForce;
+	float  m_MaxPassingForce;
 
-	double  PlayerComfortZoneSq;
+	float  m_PlayerComfortZoneSq;
 
 	//in the range zero to 1.0. adjusts the amount of noise added to a kick,
 	//the lower the value the worse the players get
-	double  PlayerKickingAccuracy;
+	float  m_PlayerKickingAccuracy;
 
 	//the number of times the SoccerTeam::CanShoot method attempts to find
 	//a valid shot
-	int    NumAttemptsToFindValidStrike;
+	int    m_NumAttemptsToFindValidStrike;
 
 	//the distance away from the center of its home region a player
 	//must be to be considered at home
-	double WithinRangeOfHome;
+	float m_WithinRangeOfHome;
 
 	//how close a player must get to a sweet spot before he can change state
-	double WithinRangeOfSupportSpot;
-	double WithinRangeOfSupportSpotSq;
+	float m_WithinRangeOfSupportSpot;
+	float m_WithinRangeOfSupportSpotSq;
 
 
 	//the minimum distance a receiving player must be from the passing player
-	double   MinPassDist;
-	double   GoalkeeperMinPassDist;
+	float m_MinPassDist;
+	float m_GoalkeeperMinPassDist;
 
 	//this is the distance the keeper puts between the back of the net
 	//and the ball when using the interpose steering behavior
-	double  GoalKeeperTendingDistance;
+	float  m_GoalKeeperTendingDistance;
 
 	//when the ball becomes within this distance of the goalkeeper he
 	//changes state to intercept the ball
-	double  GoalKeeperInterceptRange;
-	double  GoalKeeperInterceptRangeSq;
+	float  m_GoalKeeperInterceptRange;
+	float  m_GoalKeeperInterceptRangeSq;
 
 	//how close the ball must be to a receiver before he starts chasing it
-	double  BallWithinReceivingRange;
-	double  BallWithinReceivingRangeSq;
+	float  m_BallWithinReceivingRange;
+	float  m_BallWithinReceivingRangeSq;
 
-
-private:
 	
 };
 
@@ -438,10 +513,10 @@ private:
 	static FootballGameParameters* m_Instance;
 FootballGameParameters(){}
 
-double BallSize;
-double BallMass;
-double Friction;
-double GoalWidth;
+float m_BallSize;
+float m_BallMass;
+float m_Friction;
+float m_GoalWidth;
 
 };
 

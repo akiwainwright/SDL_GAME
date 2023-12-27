@@ -3,7 +3,6 @@
 #include "Path.h"
 #include "GameModeBase.h"
 #include "Game.h"
-#include "Path.h"
 
 
 SteeringBehaviours::SteeringBehaviours(VehicleAgent* _agent) : m_Agent(_agent)
@@ -22,9 +21,6 @@ Vector2 SteeringBehaviours::Calculate()
 {
 	m_SteeringForce.Zero();
 
-	m_SteeringForce = Vec2_Zero();
-
-
 	//steeringForce = the combination of chosen forces
 	m_SteeringForce = CalculateWeightedSum();
 	//m_SteeringForce.Truncate(m_Agent->GetVehicleParams()->GetMaxSteeringForce());
@@ -42,20 +38,9 @@ float SteeringBehaviours::ForwardComponent()
 
 float SteeringBehaviours::SideComponent()
 {
-	Vector2 steering = m_SteeringForce * m_Agent->GetVehicleParams()->GetMaxTurnRate();
-
-	return Vector2::DotProduct(m_Agent->Side(), steering);
+	return Vector2::DotProduct(m_Agent->Side(),( m_SteeringForce* m_Agent->GetVehicleParams()->GetMaxTurnRate()));
 }
 
-void SteeringBehaviours::CreatePath(int _numWaypoints, int _mx, int _my, int _cx, int _cy)
-{
-
-}
-
-void SteeringBehaviours::SetPath(list<Vector2> _newPath)
-{
-	m_Path->Set(_newPath);
-}
 
 void SteeringBehaviours::SetTarget(Vector2 _pos)
 {
@@ -361,45 +346,17 @@ void SteeringBehaviours::CreateFeelers()
 
 }
 
-Vector2 SteeringBehaviours::Cohesion(const vector<VehicleAgent*>& _agents)
-{
-	return Vec2_Zero();
-}
 
-Vector2 SteeringBehaviours::Alignment(const vector<VehicleAgent*>& _agents)
-{
-	return Vec2_Zero();
-}
-
-Vector2 SteeringBehaviours::Separation(const vector<VehicleAgent*>& _agents)
-{
-	return Vec2_Zero();
-}
-
-Vector2 SteeringBehaviours::CohesionCSP(const vector<VehicleAgent*>& _agents)
-{
-	return Vec2_Zero();
-}
-
-Vector2 SteeringBehaviours::AlignmentCSP(const vector<VehicleAgent*>& _agents)
-{
-	return Vec2_Zero();
-}
-
-Vector2 SteeringBehaviours::SeparationCSP(const vector<VehicleAgent*>& _agents)
-{
-	return Vec2_Zero();
-}
 
 Vector2 SteeringBehaviours::CalculateWeightedSum()
 {
 	if (m_bWallAvoidance)
 	{
-		m_SteeringForce += WallAvoidance(m_Agent->GetGamemode()->GetWalls()) * m_Agent->GetVehicleParams()->GetWallAvoidanceWeight();
+		//m_SteeringForce += WallAvoidance(m_Agent->GetGamemode()->GetWalls()) * m_Agent->GetVehicleParams()->GetWallAvoidanceWeight();
 	}
 	if (m_bObstacleAvoidance)
 	{
-		m_SteeringForce += ObstacleAvoidance(m_Agent->GetGamemode()->GetObstacles()) * m_Agent->GetVehicleParams()->GetObstacleAvoidanceWeight();
+		//m_SteeringForce += ObstacleAvoidance(m_Agent->GetGamemode()->GetObstacles()) * m_Agent->GetVehicleParams()->GetObstacleAvoidanceWeight();
 	}
 	if (m_bEvade)
 	{
@@ -407,38 +364,10 @@ Vector2 SteeringBehaviours::CalculateWeightedSum()
 		m_SteeringForce += m_SteeringForce += Evade(m_TargetAgent) * m_Agent->GetVehicleParams()->GetEvadeWeight();
 	}
 
+	//TODO: CSP For flocking behaviours and for non csp flocking behaviours
+
 	//check if cell space partitioning is on
-	if (m_bCSP)
-	{
-		if (m_bSeparation)
-		{
-			m_SteeringForce += SeparationCSP(m_Agent->GetGamemode()->GetAllVehicleAgent()) * m_Agent->GetVehicleParams()->GetSeparationWeight();
-		}
-		if (m_bAlignment)
-		{
-			m_SteeringForce += AlignmentCSP(m_Agent->GetGamemode()->GetAllVehicleAgent()) * m_Agent->GetVehicleParams()->GetAlignmentWeight();
-		}
-		if (m_bCohesion)
-		{
-			m_SteeringForce += CohesionCSP(m_Agent->GetGamemode()->GetAllVehicleAgent()) * m_Agent->GetVehicleParams()->GetCohesionWeight();
-		}
-		
-	}
-	else
-	{
-		if (m_bSeparation)
-		{
-			m_SteeringForce += Separation(m_Agent->GetGamemode()->GetAllVehicleAgent()) * m_Agent->GetVehicleParams()->GetSeparationWeight();
-		}
-		if (m_bAlignment)
-		{
-			m_SteeringForce += Alignment(m_Agent->GetGamemode()->GetAllVehicleAgent()) * m_Agent->GetVehicleParams()->GetAlignmentWeight();
-		}
-		if (m_bCohesion)
-		{
-			m_SteeringForce += Cohesion(m_Agent->GetGamemode()->GetAllVehicleAgent()) * m_Agent->GetVehicleParams()->GetCohesionWeight();
-		}
-	}
+	
 
 	if (m_bWander)
 	{
@@ -466,7 +395,7 @@ Vector2 SteeringBehaviours::CalculateWeightedSum()
 	}	
 	if (m_bHide)
 	{
-		m_SteeringForce += Hide(m_TargetAgent, m_Agent->GetGamemode()->GetObstacles()) * m_Agent->GetVehicleParams()->GetHideWeight();
+		//m_SteeringForce += Hide(m_TargetAgent, m_Agent->GetGamemode()->GetObstacles()) * m_Agent->GetVehicleParams()->GetHideWeight();
 	}	
 	if (m_bFollowPath)
 	{

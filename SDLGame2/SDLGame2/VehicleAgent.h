@@ -5,7 +5,6 @@
 #include "consts.h"
 #include "CustomMaths.h"
 #include "Parameters.h"
-#include <stdint.h>
 //#define SteeringParam (*VehicleAgent::m_VehicleParams)
 
 
@@ -24,9 +23,9 @@ public:
 	void UpdateGameObject(float _deltaTime)override;
 
 	void RotateToFaceDirection();
-	Vector2& Side(){ return m_Side; }
+	Vector2 Side(){ return m_Side; }
 	void SetSide(Vector2 _side) { m_Side = _side; }
-	Vector2& Heading() { return m_Heading; }
+	Vector2 Heading() { return m_Heading; }
 	void SetHeading(Vector2 _heading);
 	float GetSpeed() { return m_Velocity.Length(); }
 	float GetSpeedSq() { return m_Velocity.LenghtSqrd(); }
@@ -41,7 +40,7 @@ public:
 
 	bool IsSpeedMaxedOut() { return (m_VehicleParams->GetMaxSpeed() * m_VehicleParams->GetMaxSpeed() >= m_Velocity.LenghtSqrd()); }
 
-	GameModeBase* GetGamemode();// improve this
+	//GameModeBase* GetGamemode();// improve this
 	//Game* GetGame();// improve this
 	
 private:

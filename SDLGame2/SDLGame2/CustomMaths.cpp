@@ -1,5 +1,29 @@
 #include "CustomMaths.h"
 
+
+
+bool IsEqual(float _a, float _b)
+{
+	if (fabs(_a - _b) < 1E-12)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+
+
+Vector2 operator-(const Vector2& lhs, const Vector2& rhs)
+{
+	Vector2 result(lhs);
+
+	result.x -= rhs.x;
+	result.y -= rhs.y;
+
+	return result;
+}
+
 Vector2 rotateVector2(Vector2 position, float angle)
 {
 	Vector2 result;
@@ -11,6 +35,21 @@ Vector2 rotateVector2(Vector2 position, float angle)
 	floatEpsilonCheck(result.y);
 
 	return result;
+}
+
+Vector2 rotateVector2(Vector2 position, float angle, bool _clockwise) {
+	Vector2 temp;
+	if (_clockwise)
+	{
+		temp.x = position.x * cosf(angle) + position.y * sinf(angle);
+		temp.x = -1 * (position.x * sinf(angle)) + position.y * cosf(angle);
+	}
+	else
+	{
+		temp.x = position.x * cosf(angle) - position.y * sinf(angle);
+		temp.x = (position.x * sinf(angle)) + position.y * cosf(angle);
+	}
+	return temp;
 }
 
 Vector2 rotateVector2pivot(Vector2 position, Vector2 pivot, float angle)
@@ -57,10 +96,10 @@ bool LineIntersection(Vector2 _a, Vector2 _b, Vector2 _c, Vector2 _d, float& _di
 
 	if (bot == 0)//parallel
 	{
-		if (IsEqual(rTop,0) && IsEqual(sTop,0))
-		{
-			return true;
-		}
+		//if (IsEqual(rTop,0) && IsEqual(sTop,0))
+		//{
+		//	return true;
+		//}
 		return false;
 	}
 	float r = rTop / bot;

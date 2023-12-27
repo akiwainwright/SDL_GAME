@@ -1,16 +1,17 @@
 #pragma once
 #include "Actor.h"
-#include "Component.h"
+
 #include "TransformComponent.h"
 #include "CustomMaths.h"
 
 class TextureComponent;
-
+class Component;
 
 class GameObject : public Actor
 {
 public:
 	GameObject(class GameModeBase* _gameMode, string _name, ActorState _state, Actor* _parent = nullptr);
+	
 	virtual ~GameObject();
 
 	//this is the update fuction that will be called from the game class

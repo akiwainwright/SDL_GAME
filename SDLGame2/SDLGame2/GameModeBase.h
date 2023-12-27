@@ -7,6 +7,14 @@ class GameObject;
 class Actor;
 class VehicleAgent;
 
+
+enum GameState {
+	PREGAME,
+	INGAME,
+	PAUSEDGAME,
+	POSTGAME
+};
+
 class GameModeBase
 {
 public:
@@ -24,9 +32,12 @@ public:
 	const vector <GameObject*>& GetObstacles();
 	const vector <VehicleAgent*>& GetAllVehicleAgent();
 
+
 	void AddActor(Actor* _actor);
 	void RemoveActor(Actor* _actor);
 
+	GameState GetGameState()const { m_GameState; }
+	
 
 protected:
 	GameObject* m_TestObject;
@@ -36,9 +47,11 @@ protected:
 	vector <Walls2D*> m_Walls;
 	vector <GameObject*> m_Obstacles;
 
+
 	vector<Actor*> m_Actors;
 	vector<Actor*> m_PendingActors;
 	bool m_UpdatingActor;
+	GameState m_GameState;
 };
 
 //Add this function

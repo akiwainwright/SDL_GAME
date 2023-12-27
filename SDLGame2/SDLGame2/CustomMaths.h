@@ -166,7 +166,7 @@ struct Vector2
 		return _vec / _vec.Length();
 	}
 
-	static float DotProduct(Vector2& _vec1, Vector2& _vec2)
+	static float DotProduct(Vector2 _vec1, Vector2 _vec2)
 	{
 		float newX = _vec1.x * _vec2.x;
 		float newY = _vec1.y * _vec2.y;

@@ -164,6 +164,13 @@ void Game::ProcessInput()
 
 void Game::UpdateGame(float _deltaTime)
 {
+<
+	for (int i = 0; i < 10; ++i)
+	{
+		std::cout << i << ", ";
+	}
+
+	std::cout << "\n" << deltaTime << "\n";
 
 	MessageDispatcher::Instance()->DispatchDelayedMessages();
 	m_UpdatingActor = true;

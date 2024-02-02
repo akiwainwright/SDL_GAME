@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Animator.h" />
+    <ClInclude Include="AnimatorComponent.h" />
     <ClInclude Include="BasicIncludes.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="consts.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Parameters.h" />
     <ClInclude Include="Path.h" />
+    <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="SteeringBehaviours.h" />
     <ClInclude Include="TestAgent.h" />
@@ -44,6 +46,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="AnimatorComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CustomMaths.cpp" />
     <ClCompile Include="Events.cpp" />
@@ -53,6 +56,7 @@
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Path.cpp" />
+    <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="SteeringBehaviours.cpp" />
     <ClCompile Include="TestAgent.cpp" />

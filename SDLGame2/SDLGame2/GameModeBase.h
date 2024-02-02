@@ -2,7 +2,8 @@
 #include <vector>
 #include "BasicIncludes.h"
 #include "CustomMaths.h"
-
+#include <SDL.h>
+#include <SDL_image.h>
 class GameObject;
 class Actor;
 class VehicleAgent;
@@ -36,11 +37,17 @@ public:
 	void AddActor(Actor* _actor);
 	void RemoveActor(Actor* _actor);
 
-	GameState GetGameState()const { m_GameState; }
+
+	
+	void AddSprite(class SpriteComponent* sprite);
+	void RemoveSprite(class SpriteComponent* sprite);
+
+
+	GameState GetGameState()const { return m_GameState; }
 	
 
 protected:
-	GameObject* m_TestObject;
+	VehicleAgent* m_TestObject;
 
 	GameModeBase* m_CurrentMode;
 
@@ -48,10 +55,17 @@ protected:
 	vector <GameObject*> m_Obstacles;
 
 
+
+
 	vector<Actor*> m_Actors;
 	vector<Actor*> m_PendingActors;
 	bool m_UpdatingActor;
+
+
 	GameState m_GameState;
+
+	
+	std::vector<class SpriteComponent*> mSprites;
 };
 
 //Add this function

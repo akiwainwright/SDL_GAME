@@ -28,7 +28,7 @@ public:
 	void SetRunning(bool running) { m_IsRunning = running;  }
 
 	static Game* GetInstance();
-
+	SDL_Texture* GetTextures(const string& fileName);
 private:
 	Game();
 	~Game();
@@ -51,7 +51,10 @@ private:
 	bool m_UpdatingActor;
 
 	class GameObject* m_TestObject;
+	
 
 	GameModeBase* MainMenu;
-
+	
+	
+	std::unordered_map<string, SDL_Texture*> m_Textures;
 };

@@ -5,6 +5,7 @@
 #include "GameTime.h"
 #include "GameModeBase.h"
 #include "TextureManager.h"
+#include <SDL_image.h>
 
 Game* Game::s_Instance = nullptr;
 
@@ -56,12 +57,17 @@ bool Game::Initialize()
 		SDL_Log("Renderer Unsuccessful:  %s", SDL_GetError());
 		return false;
 	}
+	if (IMG_Init(IMG_INIT_PNG) == 0)
+	{
+		SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
+		return false;
+	}
 
 	//TextureManager::GetInstance()->SetRenderer(*m_Renderer);
 	MainMenu = new GameModeBase();
 	
 
-	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
+	//SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 
 	return true;
 }
@@ -74,13 +80,13 @@ void Game::RunLoop()
 	{
 		m_deltaTime = GameTime::GetInstance()->GetDeltaTime();
 		
-		MainMenu->ProcessInput();
-		MainMenu->UpdateGame(m_deltaTime);
-		MainMenu->RenderLoop(m_deltaTime);
+		//MainMenu->ProcessInput();
+		//MainMenu->UpdateGame(m_deltaTime);
+		//MainMenu->RenderLoop(m_deltaTime);
 
-		//ProcessInput();
-		//UpdateGame(m_deltaTime);
-		//RenderLoop(m_deltaTime);
+		ProcessInput();
+		UpdateGame(m_deltaTime);
+		RenderLoop(m_deltaTime);
 	}
 }
 
@@ -201,12 +207,47 @@ void Game::UpdateGame(float _deltaTime)
 
 void Game::RenderLoop(float _deltatime)
 {
-	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
+	SDL_SetRenderDrawColor(m_Renderer, 255, 0, 0, 255);
 	SDL_RenderClear(m_Renderer);
 	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 
 
 	TextureManager::GetInstance()->DrawFrame("Player Run", 250, 250, 768, 64, 1, 8, 1, 8, SDL_FLIP_NONE, 2);
-	m_TestObject->GetComponent<Animator>()->PlayAnimation(_deltatime);
+	//m_TestObject->GetComponent<Animator>()->PlayAnimation(_deltatime);
 	SDL_RenderPresent(m_Renderer);
+}
+
+SDL_Texture* Game::GetTextures(const string& fileName)
+{
+
+		SDL_Texture* tex = nullptr;
+		// Is the texture already in the map?
+		auto iter = m_Textures.find(fileName);
+		if (iter != m_Textures.end())
+		{
+			tex = iter->second;
+		}
+		else
+		{
+			// Load from file
+			SDL_Surface* surf = IMG_Load(fileName.c_str());
+			if (!surf)
+			{
+				SDL_Log("Failed to load texture file %s", fileName.c_str());
+				return nullptr;
+			}
+
+			// Create texture from surface
+			tex = SDL_CreateTextureFromSurface(Game::GetInstance()->GetRenderer(), surf);
+			SDL_FreeSurface(surf);
+			if (!tex)
+			{
+				SDL_Log("Failed to convert surface to texture for %s", fileName.c_str());
+				return nullptr;
+			}
+
+			m_Textures.emplace(fileName.c_str(), tex);
+		}
+		return tex;
+	
 }

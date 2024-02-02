@@ -8,7 +8,7 @@
 SteeringBehaviours::SteeringBehaviours(VehicleAgent* _agent) : m_Agent(_agent)
 {
 	auto theta = RandFloat() * PI * 2.0f;
-	m_WanderTarget = Vector2(m_Agent->GetVehicleParams()->GetWanderRadius() * cos(theta), m_Agent->GetVehicleParams()->GetWanderRadius() * sin(theta));
+	//m_WanderTarget = Vector2(m_Agent->GetVehicleParams()->GetWanderRadius() * cos(theta), m_Agent->GetVehicleParams()->GetWanderRadius() * sin(theta));// when using this ucnomment this line
 }
 
 SteeringBehaviours::~SteeringBehaviours()
@@ -90,7 +90,7 @@ bool SteeringBehaviours::AccumulateForce(Vector2& _steeringForce, Vector2 _force
 
 Vector2 SteeringBehaviours::Seek(const Vector2& _target)
 {
-	Vector2 desiredVelocity = Vector2::Normalized(_target - m_Agent->GetTransform()->m_Pos) * m_Agent->GetVehicleParams()->GetMaxSpeed();
+	Vector2 desiredVelocity = Vector2::Normalized(_target - m_Agent->GetTransform()->GetPosition()) * m_Agent->GetVehicleParams()->GetMaxSpeed();
 
 	return (desiredVelocity - (m_Agent)->GetVelocity());
 
@@ -98,7 +98,7 @@ Vector2 SteeringBehaviours::Seek(const Vector2& _target)
 
 Vector2 SteeringBehaviours::Flee(Vector2& _target)
 {
-	Vector2 desiredVelocity = Vector2::Normalized(m_Agent->GetTransform()->m_Pos - _target) * m_Agent->GetVehicleParams()->GetMaxSpeed();
+	Vector2 desiredVelocity = Vector2::Normalized(m_Agent->GetTransform()->GetPosition() - _target) * m_Agent->GetVehicleParams()->GetMaxSpeed();
 
 	return (desiredVelocity - (m_Agent)->GetVelocity());
 
@@ -106,7 +106,7 @@ Vector2 SteeringBehaviours::Flee(Vector2& _target)
 
 Vector2 SteeringBehaviours::Arrive(const Vector2& _target, float _deceleration)
 {
-	Vector2 toTarget = _target - m_Agent->GetTransform()->m_Pos;
+	Vector2 toTarget = _target - m_Agent->GetTransform()->GetPosition();
 
 	//calculate the distance to the target position
 	double dist = toTarget.Length();
@@ -136,12 +136,12 @@ Vector2 SteeringBehaviours::Arrive(const Vector2& _target, float _deceleration)
 Vector2 SteeringBehaviours::Pursuit(VehicleAgent* _target)
 {
 	//if the evaderis ahead and facing the agent then we can just seek for the evader's current position
-	Vector2 toEvader = _target->GetTransform()->m_Pos - m_Agent->GetTransform()->m_Pos;
+	Vector2 toEvader = _target->GetTransform()->GetPosition() - m_Agent->GetTransform()->GetPosition();
 
 	double relativeHeading = Vector2::DotProduct(m_Agent->Heading(), _target->Heading());
 	if ((Vector2::DotProduct(toEvader, m_Agent->Heading())>0) && (relativeHeading < -0.95f))
 	{
-		return Seek(_target->GetTransform()->m_Pos);
+		return Seek(_target->GetTransform()->GetPosition());
 	}
 
 	//not considered ahead so we predict where the evader will be
@@ -151,7 +151,7 @@ Vector2 SteeringBehaviours::Pursuit(VehicleAgent* _target)
 	float LookAheadTime = toEvader.Length() / (m_Agent->GetVehicleParams()->GetMaxSpeed() + _target->GetVelocity().Length());
 
 	//then seek to the predicted future position of the evader
-	auto targetPos = ((_target->GetTransform()->m_Pos + _target->GetVelocity()) * LookAheadTime);
+	auto targetPos = ((_target->GetTransform()->GetPosition() + _target->GetVelocity()) * LookAheadTime);
 	return Seek(targetPos);
 
 
@@ -160,14 +160,14 @@ Vector2 SteeringBehaviours::Pursuit(VehicleAgent* _target)
 Vector2 SteeringBehaviours::Evade(VehicleAgent* _target)
 {
 	//not necessary to include the check for facing direction this time
-	Vector2 toPursuer = _target->GetTransform()->m_Pos - m_Agent->GetTransform()->m_Pos;
+	Vector2 toPursuer = _target->GetTransform()->GetPosition() - m_Agent->GetTransform()->GetPosition();
 
 	//the look-ahead time is proportional to the distance between the pursuer
 	//and the evader, and is inversely proportional to the sum of the agents' velocities
 	float lookAheadTime = toPursuer.Length() / (m_Agent->GetVehicleParams()->GetMaxSpeed() + _target->GetVelocity().Length());
 
 	//now flee away from predicted future position of the pursuer
-	auto targetPos = _target->GetTransform()->m_Pos + _target->GetVelocity() * lookAheadTime;
+	auto targetPos = _target->GetTransform()->GetPosition() + _target->GetVelocity() * lookAheadTime;
 	return Flee(targetPos);
 
 }
@@ -183,10 +183,10 @@ Vector2 SteeringBehaviours::Wander()
 	Vector2 targetLocal = m_WanderTarget + Vector2(m_Agent->GetVehicleParams()->GetWanderDistance(), 0);
 
 	//project the target into world space
-	Vector2 targetWorld = Vector2::LocalPointToWorld(targetLocal, m_Agent->Heading(), m_Agent->Side(), m_Agent->GetTransform()->m_Pos);
+	Vector2 targetWorld = Vector2::LocalPointToWorld(targetLocal, m_Agent->Heading(), m_Agent->Side(), m_Agent->GetTransform()->GetPosition());
 
 	//steer towards it
-	return targetWorld - m_Agent->GetTransform()->m_Pos;
+	return targetWorld - m_Agent->GetTransform()->GetPosition();
 	
 }
 
@@ -219,7 +219,7 @@ Vector2 SteeringBehaviours::WallAvoidance(const vector< Walls2D*>& _walls)
 		//run through each wall checking for any intersection points 
 		for (int j = 0; j < _walls.size(); j++)
 		{
-			if (LineIntersection(m_Agent->GetTransform()->m_Pos, m_Feelers[i], _walls[j]->From(), _walls[j]->To(), distToThisIP, point))
+			if (LineIntersection(m_Agent->GetTransform()->GetPosition(), m_Feelers[i], _walls[j]->From(), _walls[j]->To(), distToThisIP, point))
 			{
 				//is this the closest found so far? if so keep a record
 				if (distToThisIP < distToClosestIP)
@@ -248,13 +248,13 @@ Vector2 SteeringBehaviours::WallAvoidance(const vector< Walls2D*>& _walls)
 Vector2 SteeringBehaviours::Interpose( VehicleAgent* _agent1, VehicleAgent* _agent2)
 {
 	//first we need to figure out where the 2 agents are going to be at time T in the future. This is approximated by determining the time taken to reach the midway point at the current time and max speed
-	Vector2 midPoint = (_agent1->GetTransform()->m_Pos + _agent2->GetTransform()->m_Pos) / 2.0f;
+	Vector2 midPoint = (_agent1->GetTransform()->GetPosition() + _agent2->GetTransform()->GetPosition()) / 2.0f;
 
-	float timeToReachMidPoint = (midPoint - m_Agent->GetTransform()->m_Pos).Length() / m_Agent->GetVehicleParams()->GetMaxSpeed();
+	float timeToReachMidPoint = (midPoint - m_Agent->GetTransform()->GetPosition()).Length() / m_Agent->GetVehicleParams()->GetMaxSpeed();
 
 	//now we have T, we assume that agent A and agent B will continue on a straight trajectory and extrapolate the midpoint of these predicted positions
-	Vector2 aPos = _agent1->GetTransform()->m_Pos + _agent1->GetVelocity() * timeToReachMidPoint;
-	Vector2 bPos = _agent2->GetTransform()->m_Pos + _agent2->GetVelocity() * timeToReachMidPoint;
+	Vector2 aPos = _agent1->GetTransform()->GetPosition() + _agent1->GetVelocity() * timeToReachMidPoint;
+	Vector2 bPos = _agent2->GetTransform()->GetPosition() + _agent2->GetVelocity() * timeToReachMidPoint;
 
 	//calculate the midpoint of these predicted positions
 	midPoint = (aPos + bPos) / 2.0f;
@@ -286,9 +286,9 @@ Vector2 SteeringBehaviours::Hide( VehicleAgent* _agent, const vector<class GameO
 	vector<GameObject*>::iterator curOb = first.begin();
 	while (curOb != _obstacle.end())
 	{
-		Vector2 hidingSpot = GetHidingPos((*curOb)->GetTransform()->m_Pos, 10, _agent->GetTransform()->m_Pos);
+		Vector2 hidingSpot = GetHidingPos((*curOb)->GetTransform()->GetPosition(), 10, _agent->GetTransform()->GetPosition());
 		//work in distance squared space to find the closest hiding spot to the agent
-		float dist = (m_Agent->GetTransform()->m_Pos - hidingSpot).Length();
+		float dist = (m_Agent->GetTransform()->GetPosition() - hidingSpot).Length();
 
 		if (dist < distToClosest)
 		{
@@ -313,7 +313,7 @@ Vector2 SteeringBehaviours::Hide( VehicleAgent* _agent, const vector<class GameO
 Vector2 SteeringBehaviours::FollowPath()
 {
 	//move to next target if close enough to the current waypoint
-	if ((m_Agent->GetTransform()->m_Pos - m_Path->CurrentWayPoint()).LenghtSqrd() < m_WayPointsSeekDist)
+	if ((m_Agent->GetTransform()->GetPosition() - m_Path->CurrentWayPoint()).LenghtSqrd() < m_WayPointsSeekDist)
 	{
 		m_Path->SetNextWaypoint();
 	}
@@ -332,15 +332,15 @@ Vector2 SteeringBehaviours::FollowPath()
 void SteeringBehaviours::CreateFeelers()
 {
 	//straightt forward feeler/walldetector
-	m_Feelers[0] = m_Agent->GetTransform()->m_Pos + ( m_Agent->Heading() * m_Agent->GetVehicleParams()->GetWallDetectionFeelerLength());
+	m_Feelers[0] = m_Agent->GetTransform()->GetPosition() + ( m_Agent->Heading() * m_Agent->GetVehicleParams()->GetWallDetectionFeelerLength());
 	
 	//left wall detector 
-	Vector2 temp = m_Agent->GetTransform()->m_Pos + (m_Agent->Heading() * m_Agent->GetVehicleParams()->GetWallDetectionFeelerLength() / 2.0f);
+	Vector2 temp = m_Agent->GetTransform()->GetPosition() + (m_Agent->Heading() * m_Agent->GetVehicleParams()->GetWallDetectionFeelerLength() / 2.0f);
 	temp = rotateVector2(temp, PI * (0.5f * 3.5f), false);
 	m_Feelers[1] = temp;
 	
 	//right wall detector 
-	temp = m_Agent->GetTransform()->m_Pos + (m_Agent->Heading() * m_Agent->GetVehicleParams()->GetWallDetectionFeelerLength() / 2.0f);
+	temp = m_Agent->GetTransform()->GetPosition() + (m_Agent->Heading() * m_Agent->GetVehicleParams()->GetWallDetectionFeelerLength() / 2.0f);
 	temp = rotateVector2(temp, PI * 0.25f, true);
 	m_Feelers[2] = temp;
 

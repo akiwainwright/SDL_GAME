@@ -47,7 +47,7 @@ public:
 
 	inline TransformComponent* GetTransform() { return m_Transform; }
 
-	inline TextureComponent* GetTexture() { return m_Texture; }
+	//inline TextureComponent* GetTexture() { return m_Texture; }
 
 protected:
 	vector<Component*> m_Components;

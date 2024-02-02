@@ -31,6 +31,8 @@ public:
 
 	virtual bool HandleMessage(const Telegram& _msg) = 0;
 
+	GameModeBase* GetGameModeBase()const { return m_GameMode; }
+
 protected:
 	GameModeBase* m_GameMode;
 	

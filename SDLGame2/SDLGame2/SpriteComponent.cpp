@@ -1,5 +1,4 @@
 #include "SpriteComponent.h"
-#include "GameModeBase.h"
 #include "GameObject.h"
 #include "CustomMaths.h"
 

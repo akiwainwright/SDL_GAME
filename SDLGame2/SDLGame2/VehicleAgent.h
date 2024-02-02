@@ -15,7 +15,7 @@ class GameModeBase;
 class VehicleAgent : public GameObject
 {
 public:
-	VehicleAgent(class GameModeBase* _gameMode, std::string _name, ActorState _state, SteeringVehicleParameter* _vehicleParams, Actor* _parent = nullptr);
+	VehicleAgent(class Game* _gameMode, std::string _name, ActorState _state, SteeringVehicleParameter* _vehicleParams, Actor* _parent = nullptr);
 	virtual ~VehicleAgent();
 	void SetVelocity(const Vector2& _val) { m_Velocity = _val; }
 	void SetTarget(const Vector2& _target) { m_SteeringBehaviours->SetTarget(_target); }

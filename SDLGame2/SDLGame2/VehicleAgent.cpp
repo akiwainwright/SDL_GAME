@@ -1,16 +1,16 @@
 #include "VehicleAgent.h"
-#include "GameModeBase.h"
+
 #include "Game.h"
 #include "AnimatorComponent.h"
 
 
-VehicleAgent::VehicleAgent( GameModeBase* _game, string _name, ActorState _state,SteeringVehicleParameter* _vehicleParams, Actor* _parent) : GameObject(_game, _name, _state, _parent)
+VehicleAgent::VehicleAgent( Game* _game, string _name, ActorState _state,SteeringVehicleParameter* _vehicleParams, Actor* _parent) : GameObject(_game, _name, _state, _parent)
 {
 	m_SteeringBehaviours = new SteeringBehaviours(this);
 	m_VehicleParams = _vehicleParams;
 
 	SpriteComponent* sc = new SpriteComponent(this, 150);
-	sc->SetTexture(Game::GetInstance()->GetTextures("Assets/Textures/Ship01.png"));
+	sc->SetTexture(m_GameMode->GetTextures("Assets/Textures/Ship01.png"));
 
 }
 

@@ -1,7 +1,6 @@
 #include "SteeringBehaviours.h"
 #include "VehicleAgent.h"
 #include "Path.h"
-#include "GameModeBase.h"
 #include "Game.h"
 
 

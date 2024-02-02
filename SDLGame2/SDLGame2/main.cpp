@@ -13,14 +13,14 @@ int main(int argc, char* args[])
 	srand(time(NULL));
 	float f = (float)(rand()) / (float)(rand());
 	cout << f << endl;
+	Game game;
 
-
-	if (Game::GetInstance()->Initialize())
+	if (game.Initialize())
 	{
-		Game::GetInstance()->RunLoop();
+		game.RunLoop();
 	}
 
-	Game::GetInstance()->Shutdown();
+	game.Shutdown();
 
 
 	return 0;

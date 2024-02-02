@@ -5,12 +5,12 @@
 #include "GameTime.h"
 
 
-class GameModeBase;
 
-//make this a singleton for the different gamemodes
 class Game
 {
 public:
+	Game();
+	~Game();
 	bool Initialize();
 	void RunLoop();
 	void Shutdown();
@@ -23,22 +23,23 @@ public:
 
 	SDL_Renderer* GetRenderer() { return m_Renderer; }
 
+	void AddSprite(class SpriteComponent* sprite);
+	void RemoveSprite(class SpriteComponent* sprite);
+
 	bool GetRunning() { return m_IsRunning; }
 
 	void SetRunning(bool running) { m_IsRunning = running;  }
 
-	static Game* GetInstance();
 	SDL_Texture* GetTextures(const string& fileName);
 private:
-	Game();
-	~Game();
-
-	static Game* s_Instance;
+	std::vector<class SpriteComponent*> mSprites;
 
 
 	 void ProcessInput();
 	 void UpdateGame(float _deltaTime);
 	 void RenderLoop(float _deltaTime);
+	 void LoadData();
+	 void UnloadData();
 
 	bool m_IsRunning;
 
@@ -50,11 +51,9 @@ private:
 	vector<class Actor*> m_PendingActors;
 	bool m_UpdatingActor;
 
-	class GameObject* m_TestObject;
-	
-
-	GameModeBase* MainMenu;
-	
+	class VehicleAgent* m_TestObject;
+	class Ship* mShip;
+		
 	
 	std::unordered_map<string, SDL_Texture*> m_Textures;
 };

@@ -1,23 +1,11 @@
 #include "Game.h"
-#include "TextureManager.h"
 #include "GameObject.h"
-#include "Animator.h"
+#include "SpriteComponent.h"
 #include "GameTime.h"
-#include "GameModeBase.h"
-#include "TextureManager.h"
 #include <SDL_image.h>
+#include "VehicleAgent.h"
+#include "Ship.h"
 
-Game* Game::s_Instance = nullptr;
-
-Game* Game::GetInstance()
-{
-	if (!s_Instance)
-	{
-		s_Instance = new Game();
-	}
-
-	return s_Instance;
-}
 
 Game::Game()
 {
@@ -62,12 +50,8 @@ bool Game::Initialize()
 		SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
 		return false;
 	}
+	LoadData();
 
-	//TextureManager::GetInstance()->SetRenderer(*m_Renderer);
-	MainMenu = new GameModeBase();
-	
-
-	//SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 
 	return true;
 }
@@ -79,10 +63,6 @@ void Game::RunLoop()
 	while (m_IsRunning)
 	{
 		m_deltaTime = GameTime::GetInstance()->GetDeltaTime();
-		
-		//MainMenu->ProcessInput();
-		//MainMenu->UpdateGame(m_deltaTime);
-		//MainMenu->RenderLoop(m_deltaTime);
 
 		ProcessInput();
 		UpdateGame(m_deltaTime);
@@ -92,10 +72,8 @@ void Game::RunLoop()
 
 void Game::Shutdown()
 {
-	while (!m_Actors.empty())
-	{
-		delete m_Actors.back();
-	}
+	UnloadData();
+	IMG_Quit();
 
 	SDL_DestroyRenderer(m_Renderer);
 
@@ -106,11 +84,14 @@ void Game::Shutdown()
 
 void Game::AddActor(Actor* _actor)
 {
-	if (_actor == nullptr) return;
-	auto iter = std::find(m_Actors.begin(), m_Actors.end(), _actor);
-	if (iter != m_Actors.end())
+	// If we're updating actors, need to add to pending
+	if (m_UpdatingActor)
 	{
 		m_PendingActors.emplace_back(_actor);
+	}
+	else
+	{
+		m_Actors.emplace_back(_actor);
 	}
 }
 
@@ -143,6 +124,31 @@ Actor* Game::GetActor(Actor* _actor)
 
 }
 
+void Game::AddSprite(SpriteComponent* sprite)
+{
+	int myDrawOrder = sprite->GetDrawOrder();
+	auto iter = mSprites.begin();
+	for (;
+		iter != mSprites.end();
+		++iter)
+	{
+		if (myDrawOrder < (*iter)->GetDrawOrder())
+		{
+			break;
+		}
+	}
+
+	// Inserts element before position of iterator
+	mSprites.insert(iter, sprite);
+}
+
+void Game::RemoveSprite(SpriteComponent* sprite)
+{
+	// (We can't swap because it ruins ordering)
+	auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
+	mSprites.erase(iter);
+}
+
 void Game::ProcessInput()
 {
 	SDL_Event event;
@@ -159,7 +165,7 @@ void Game::ProcessInput()
 		}
 	}
 	const Uint8* state = SDL_GetKeyboardState(NULL);
-	m_UpdatingActor = true;
+
 	for (auto actors : m_Actors)
 	{
 		GameObject* obj = dynamic_cast<GameObject*>(actors);
@@ -168,7 +174,6 @@ void Game::ProcessInput()
 			obj->ProcessInput(state);
 		}
 	}
-	m_UpdatingActor = false;
 }
 
 void Game::UpdateGame(float _deltaTime)
@@ -207,14 +212,41 @@ void Game::UpdateGame(float _deltaTime)
 
 void Game::RenderLoop(float _deltatime)
 {
-	SDL_SetRenderDrawColor(m_Renderer, 255, 0, 0, 255);
+	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_Renderer);
-	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 
+	// Draw all sprite components
+	for (auto sprite : mSprites)
+	{
+		sprite->Draw(m_Renderer);
+		cout << mSprites.size() << endl;
+	}
 
-	TextureManager::GetInstance()->DrawFrame("Player Run", 250, 250, 768, 64, 1, 8, 1, 8, SDL_FLIP_NONE, 2);
-	//m_TestObject->GetComponent<Animator>()->PlayAnimation(_deltatime);
 	SDL_RenderPresent(m_Renderer);
+}
+
+void Game::LoadData()
+{
+	mShip = new Ship(this, "ship", EActive);
+	mShip->GetTransform()->SetPosition(Vector2(100.0f, 384.0f));
+	mShip->GetTransform()->SetScale(1.5f);
+}
+
+void Game::UnloadData()
+{
+	// Delete actors
+// Because ~Actor calls RemoveActor, have to use a different style loop
+	while (!m_Actors.empty())
+	{
+		delete m_Actors.back();
+	}
+
+	// Destroy textures
+	for (auto i : m_Textures)
+	{
+		SDL_DestroyTexture(i.second);
+	}
+	m_Textures.clear();
 }
 
 SDL_Texture* Game::GetTextures(const string& fileName)
@@ -238,7 +270,7 @@ SDL_Texture* Game::GetTextures(const string& fileName)
 			}
 
 			// Create texture from surface
-			tex = SDL_CreateTextureFromSurface(Game::GetInstance()->GetRenderer(), surf);
+			tex = SDL_CreateTextureFromSurface(m_Renderer, surf);
 			SDL_FreeSurface(surf);
 			if (!tex)
 			{

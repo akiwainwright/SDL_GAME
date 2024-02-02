@@ -1,7 +1,7 @@
 #include "Actor.h"
 #include "Game.h"
-#include "GameModeBase.h"
-Actor::Actor(GameModeBase* _game, string _Name, Tag _tag)
+
+Actor::Actor(Game* _game, string _Name, Tag _tag)
 {
 	m_GameMode = _game;
 	//use game to add actor
@@ -10,12 +10,12 @@ Actor::Actor(GameModeBase* _game, string _Name, Tag _tag)
 	m_Tag = _tag;
 	m_ActorState = ActorState::EActive;
 	_game->AddActor(this);
-	Game::GetInstance()->AddActor(this);
+	
 }
 
 Actor::~Actor()
 {
-	Game::GetInstance()->RemoveActor(this);
+	m_GameMode->RemoveActor(this);
 }
 
 

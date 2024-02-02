@@ -1,7 +1,6 @@
 #pragma once
 #include "BasicIncludes.h"
-
-class GameModeBase;
+#include "Game.h"
 class Actor;
 
 enum MessageType
@@ -60,9 +59,7 @@ public:
 	//send out any delay messages. this method is called each time through the main game loop
 	void DispatchDelayedMessages();
 
-	inline void SetGame(GameModeBase* _gameMode) {
-		m_GameMode = _gameMode;
-	}
+	void SetGame(class Game* _gameMode);
 
 	~MessageDispatcher();
 
@@ -78,8 +75,8 @@ private:
 	void Discharge(Actor* _receiver, const Telegram& _msg);
 
 	MessageDispatcher();
-
-	GameModeBase* m_GameMode;
+	
+	class Game* m_GameMode;
 
 };
 

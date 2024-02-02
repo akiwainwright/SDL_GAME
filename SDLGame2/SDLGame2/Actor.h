@@ -22,7 +22,7 @@ enum Tag
 class Actor
 {
 public:
-	Actor(class GameModeBase* _game, string _Name, Tag _tag = UNTAGGED);
+	Actor(class Game* _game, string _Name, Tag _tag = UNTAGGED);
 	virtual void Update(float _deltaTime) {}
 	virtual void Render(){}
 	virtual ~Actor();
@@ -31,10 +31,10 @@ public:
 
 	virtual bool HandleMessage(const Telegram& _msg) = 0;
 
-	GameModeBase* GetGameModeBase()const { return m_GameMode; }
+	Game* GetGameModeBase()const { return m_GameMode; }
 
 protected:
-	GameModeBase* m_GameMode;
+	Game* m_GameMode;
 	
 	ActorState m_ActorState;
 	string m_Name;

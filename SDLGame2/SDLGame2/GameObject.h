@@ -10,7 +10,7 @@ class Component;
 class GameObject : public Actor
 {
 public:
-	GameObject(class GameModeBase* _gameMode, string _name, ActorState _state, Actor* _parent = nullptr);
+	GameObject(class Game* _gameMode, string _name, ActorState _state, Actor* _parent = nullptr);
 	
 	virtual ~GameObject();
 

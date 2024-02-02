@@ -1,7 +1,6 @@
 #include "Events.h"
 #include "GameObject.h"
 #include "GameTime.h"
-#include "GameModeBase.h"
 
 
 MessageDispatcher* MessageDispatcher::m_Instance = nullptr;
@@ -46,6 +45,11 @@ void MessageDispatcher::DispatchDelayedMessages()
 	}
 
 
+}
+
+void MessageDispatcher::SetGame(Game* _gameMode)
+{
+	m_GameMode = _gameMode;
 }
 
 MessageDispatcher::~MessageDispatcher()
